@@ -5,7 +5,7 @@ const path = require('path');
 const aliases = Object.entries({
   '@components': 'src/components',
   '@presenters': 'src/presenters',
-  '@constants': 'src/constants',
+  '@theme': 'src/theme',
 });
 
 const webpackAliases = Object.fromEntries(

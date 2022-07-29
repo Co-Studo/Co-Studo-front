@@ -16,7 +16,7 @@
     "paths": {
       "@components/*": ["src/components/*"],
       "@presenters/*": ["src/presenters/*"],
-      "@constants/*": ["src/constants/*"]
+      "@theme/*": ["src/theme/*"]
     }
   },
   "include": ["src", "webpack"],
