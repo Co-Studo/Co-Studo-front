@@ -1,12 +1,15 @@
 const path = require('path');
+const tsconfigPath = require('./tsconfig.path.json');
 
-// 1. 여기에 alias 추가
-// 2. tsconfig.json 에 path 추가
-const aliases = Object.entries({
-  '@components': 'src/components',
-  '@presenters': 'src/presenters',
-  '@theme': 'src/theme',
-});
+const aliases = Object.entries(tsconfigPath.compilerOptions.paths).map(
+  ([key, value]) => {
+    // "@components/*" -> "@components"
+    const k = key.slice(0, key.length - 2);
+    // "src/components/*" -> "src/components"
+    const v = value[0].slice(0, value[0].length - 2);
+    return [k, v];
+  },
+);
 
 const webpackAliases = Object.fromEntries(
   aliases.map(([key, value]) => [key, path.resolve(__dirname, value)]),

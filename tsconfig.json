@@ -11,14 +11,9 @@
     "noImplicitAny": false,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
-    "paths": {
-      "@components/*": ["src/components/*"],
-      "@presenters/*": ["src/presenters/*"],
-      "@theme/*": ["src/theme/*"]
-    }
+    "skipLibCheck": true
   },
   "include": ["src", "webpack"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "extends": "./tsconfig.path.json"
 }

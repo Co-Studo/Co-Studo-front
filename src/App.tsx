@@ -5,8 +5,8 @@ import { TodoType } from '@components/Todo';
 import TodoAddForm from '@components/TodoAddForm';
 import Todos from '@components/Todos';
 import TodosPresenter from '@presenters/todosPresenter';
-import { darkTheme, lightTheme } from '@theme/theme';
 import GlobalStyle from '@theme/GlobalStyle';
+import { darkTheme, lightTheme } from '@theme/theme';
 
 const todosPresenter = new TodosPresenter([{ id: 1, title: 'ㅎㅇ' }]);
 

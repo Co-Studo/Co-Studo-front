@@ -21,7 +21,7 @@ export interface ITheme extends DefaultTheme {
 const darkPalette: IPalette = {
   primary: colors.blue900,
   warning: colors.red900,
-  bgColor: colors.greyOpacity50,
+  bgColor: colors.grey900,
   fontColor: colors.white,
 };
 
