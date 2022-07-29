@@ -2,8 +2,7 @@
 
 ### 절대경로 설정법
 
-1. Root 에 있는 aliases.js 에서 경로 설정
-2. tsconfig.json 에 paths 수정
+tsconfig.path.json 에서 수정하면 jest, webpack 모두 설정됨
 
 ### Webpack
 
