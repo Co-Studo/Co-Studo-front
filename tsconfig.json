@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "target": "ESNext",
+    "module": "commonjs",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@presenters/*": ["src/presenters/*"]
+    }
+  },
+  "include": ["src", "webpack"],
+  "exclude": ["node_modules"]
+}
