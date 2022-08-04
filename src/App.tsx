@@ -1,5 +1,6 @@
 import { ThemeProvider } from 'styled-components';
 
+import LoginPage from '@pages/LoginPage';
 import GlobalStyle from '@theme/GlobalStyle';
 import { darkTheme, lightTheme } from '@theme/theme';
 
@@ -11,7 +12,7 @@ const App: React.FC = () => {
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
       <GlobalStyle />
-      <h1>Hello World</h1>
+      <LoginPage />
     </ThemeProvider>
   );
 };

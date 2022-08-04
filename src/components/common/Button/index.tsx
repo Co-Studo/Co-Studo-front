@@ -1,24 +1,28 @@
-import { PaletteOption } from '@theme/theme';
-import * as S from './button.style';
+import { ButtonHTMLAttributes } from 'react';
 
-type ButtonProps = {
-  variant: PaletteOption;
+import { PaletteOption } from '@theme/theme';
+
+import StyledButton from './button.style';
+
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  color: PaletteOption;
   width: 'small' | 'medium' | 'large';
   height: 'small' | 'medium' | 'large';
-  children: React.ReactNode;
-};
+  right?: React.ReactNode;
+}
 
 const Button: React.FC<ButtonProps> = ({
-  variant,
+  children,
   width = 'small',
   height = 'small',
-  children = 'button',
-}) => {
-  return (
-    <S.ButtonWrapper variant={variant} width={width} height={height}>
-      {children}
-    </S.ButtonWrapper>
-  );
-};
+  color = 'primary',
+  right,
+  ...props
+}) => (
+  <StyledButton width={width} height={height} color={color} {...props}>
+    {children}
+    {right}
+  </StyledButton>
+);
 
 export default Button;
