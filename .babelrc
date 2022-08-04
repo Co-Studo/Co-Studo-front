@@ -11,5 +11,5 @@
     ["@babel/preset-react", { "runtime": "automatic" }],
     "@babel/preset-typescript"
   ],
-  "plugins": [["@babel/plugin-transform-runtime", { "corejs": 3 }]]
+  "plugins": [["@babel/plugin-transform-runtime", { "corejs": 3 }], "macros"]
 }
