@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Button from '@components/common/Button';
 
 export default {
-  title: 'category/Button',
+  title: 'common/Button',
   component: Button,
   args: {
     color: 'primary',

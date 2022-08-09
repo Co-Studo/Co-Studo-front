@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 
 import { PaletteOption } from '@theme/theme';
 
-import StyledButton from './button.style';
+import StyledButton from './button.styled';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   color: PaletteOption;
