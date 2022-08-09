@@ -31,6 +31,11 @@ const API_URL = {
   PROD: '',
 };
 
+const HOME_PAGE = {
+  DEV: 'http://localhost:8801',
+  PROD: getPublicUrl(),
+};
+
 process.env = { ...process.env, PUBLIC_URL: getPublicUrl() };
 
 module.exports = {
@@ -57,6 +62,14 @@ module.exports = {
                     process.env.NODE_ENV === 'development'
                       ? API_URL.DEV
                       : API_URL.PROD,
+                  flags: 'g',
+                },
+                {
+                  search: '__HOME_PAGE__',
+                  replace:
+                    process.env.NODE_ENV === 'development'
+                      ? HOME_PAGE.DEV
+                      : HOME_PAGE.PROD,
                   flags: 'g',
                 },
               ],
