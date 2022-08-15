@@ -1,7 +1,7 @@
 import { brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import Button from '@components/common/Button';
+import StyledButton from '@components/common/Button/button.styled';
 
 const GithubLoginButton: React.FC = () => {
   const handleGithubLoginClick = async () => {
@@ -18,13 +18,12 @@ const GithubLoginButton: React.FC = () => {
 
     const searchParamsObj = new URLSearchParams(queryConfig);
     const queryString = `?${searchParamsObj.toString()}`;
-
     const githubLoginUrl = githubAuthUrl + queryString;
     window.location.href = githubLoginUrl;
   };
 
   return (
-    <Button
+    <StyledButton
       width="large"
       height="medium"
       color="github"
@@ -32,7 +31,7 @@ const GithubLoginButton: React.FC = () => {
     >
       <span>Github Login</span>
       <FontAwesomeIcon icon={brands('github')} />
-    </Button>
+    </StyledButton>
   );
 };
 

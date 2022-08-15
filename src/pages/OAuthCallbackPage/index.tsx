@@ -1,6 +1,11 @@
 import axios from 'axios';
 import { useEffect } from 'react';
 
+interface JwtResponse {
+  accessToken: string;
+  refreshToken: string;
+}
+
 const OAuthCallbackPage: React.FC = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const code = searchParams.get('code');
@@ -8,9 +13,11 @@ const OAuthCallbackPage: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const jwtResponse = await axios.get(loginUrl);
-      const accessToken = jwtResponse.headers['access-token'];
-      console.log(accessToken);
+      const {
+        data: { results: jwtResponse },
+      } = await axios.get<{ ok: boolean; results: JwtResponse }>(loginUrl);
+
+      console.log(jwtResponse);
     })();
   }, [loginUrl]);
 

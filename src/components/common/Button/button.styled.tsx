@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 
+import Button, { ButtonProps } from '@components/common/Button';
 import colors from '@theme/colors';
+import { PaletteOption } from '@theme/theme';
+
+export interface StyledButtonProps extends ButtonProps {
+  color: PaletteOption;
+  width: 'small' | 'medium' | 'large';
+  height: 'small' | 'medium' | 'large';
+}
 
 const buttonWidth = {
   small: '5rem',
@@ -26,7 +34,7 @@ const buttonFontSize = {
   large: '1.3rem',
 };
 
-const StyledButton = styled.button`
+const StyledButtonWrapper = styled(Button)<StyledButtonProps>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -39,5 +47,17 @@ const StyledButton = styled.button`
   font-size: ${({ height }) => buttonFontSize[height]};
   cursor: pointer;
 `;
+
+const StyledButton: React.FC<StyledButtonProps> = ({
+  width = 'small',
+  height = 'small',
+  color = 'primary',
+  children,
+  ...props
+}) => (
+  <StyledButtonWrapper width={width} height={height} color={color} {...props}>
+    {children}
+  </StyledButtonWrapper>
+);
 
 export default StyledButton;
