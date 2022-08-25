@@ -1,3 +1,4 @@
+import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
 import Routes from '@pages/Routes';
@@ -8,14 +9,15 @@ const App: React.FC = () => {
   // const isDarkMode =
   //   window.matchMedia &&
   //   window.matchMedia('(prefers-color-scheme: dark)').matches;
-
   const isDarkMode = false;
 
   return (
-    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-      <GlobalStyle />
-      <Routes />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyle />
+        <Routes />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 };
 

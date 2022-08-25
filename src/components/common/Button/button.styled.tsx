@@ -8,6 +8,7 @@ export interface StyledButtonProps extends ButtonProps {
   color: PaletteOption;
   width: 'small' | 'medium' | 'large';
   height: 'small' | 'medium' | 'large';
+  bgcolor?: string;
 }
 
 const buttonWidth = {
@@ -39,7 +40,8 @@ const StyledButtonWrapper = styled(Button)<StyledButtonProps>`
   align-items: center;
   justify-content: center;
   gap: 0.2rem;
-  background-color: ${({ theme, color }) => theme.palette[color]};
+  background-color: ${({ theme, color, bgcolor }) =>
+    bgcolor || theme.palette[color]};
   width: ${({ width }) => buttonWidth[width]};
   height: ${({ height }) => buttonHeight[height]};
   border-radius: ${({ height }) => buttonBorderRadius[height]};
@@ -48,14 +50,21 @@ const StyledButtonWrapper = styled(Button)<StyledButtonProps>`
   cursor: pointer;
 `;
 
-const StyledButton: React.FC<StyledButtonProps> = ({
+const StyledButton: React.FC<Partial<StyledButtonProps>> = ({
   width = 'small',
   height = 'small',
   color = 'primary',
+  bgcolor,
   children,
-  ...props
+  ...rest
 }) => (
-  <StyledButtonWrapper width={width} height={height} color={color} {...props}>
+  <StyledButtonWrapper
+    bgcolor={bgcolor}
+    width={width}
+    height={height}
+    color={color}
+    {...rest}
+  >
     {children}
   </StyledButtonWrapper>
 );

@@ -31,7 +31,7 @@ const lightPalette: IPalette = {
   primary: colors.blue900,
   warning: colors.red900,
   github: colors.black,
-  bgColor: colors.white,
+  bgColor: colors.grey50,
   fontColor: colors.black,
 };
 

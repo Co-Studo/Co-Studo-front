@@ -1,14 +1,11 @@
 import { ButtonHTMLAttributes } from 'react';
 
-export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  right?: React.ReactNode;
-}
+export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button: React.FC<ButtonProps> = ({ children, right, ...props }) => (
-  <button type="button" {...props}>
-    {children}
-    {right}
-  </button>
-);
+const Button: React.FC<ButtonProps> = ({ children, ...rest }) => (
+    <button type="button" {...rest}>
+      {children}
+    </button>
+  );
 
 export default Button;
