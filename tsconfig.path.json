@@ -5,7 +5,9 @@
       "@components/*": ["src/components/*"],
       "@pages/*": ["src/pages/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@theme/*": ["src/theme/*"]
+      "@theme/*": ["src/theme/*"],
+      "@store/*": ["src/store/*"],
+      "@layouts/*": ["src/layouts/*"]
     }
   }
 }
