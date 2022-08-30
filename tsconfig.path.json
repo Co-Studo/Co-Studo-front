@@ -7,7 +7,9 @@
       "@hooks/*": ["src/hooks/*"],
       "@theme/*": ["src/theme/*"],
       "@store/*": ["src/store/*"],
-      "@layouts/*": ["src/layouts/*"]
+      "@layouts/*": ["src/layouts/*"],
+      "@queries/*": ["src/queries/*"],
+      "@apis/*": ["src/apis/*"]
     }
   }
 }

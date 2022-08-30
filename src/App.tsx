@@ -1,4 +1,3 @@
-import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
 import Routes from '@pages/Routes';
@@ -12,12 +11,10 @@ const App: React.FC = () => {
   const isDarkMode = false;
 
   return (
-    <RecoilRoot>
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <GlobalStyle />
-        <Routes />
-      </ThemeProvider>
-    </RecoilRoot>
+    <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <GlobalStyle />
+      <Routes />
+    </ThemeProvider>
   );
 };
 

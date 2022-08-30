@@ -1,33 +1,23 @@
-import axios from 'axios';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 
-import { userState, User } from '@store/user';
+import { fetchGithubLogin } from '@apis/user';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 const OAuthCallbackPage: React.FC = () => {
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(window.location.search);
   const code = searchParams.get('code');
-  const loginUrl = `__API_END_POINT__/api/user/githubLogin?code=${code}`;
-  const setUser = useSetRecoilState(userState);
+  const [, setIsLogin] = useLocalStorage('isLogin', false);
+
+  if (!code) {
+    throw Error('Github Code Undefined');
+  }
 
   useEffect(() => {
     (async () => {
-      await axios.get<{ ok: boolean }>(loginUrl, {
-        withCredentials: true,
-      });
-      const {
-        data: {
-          results: { email, nickname, avatarUrl },
-        },
-      } = await axios.get<{ ok: boolean; results: User }>(
-        `__API_END_POINT__/api/user/me`,
-        {
-          withCredentials: true,
-        },
-      );
-      setUser({ email, nickname, avatarUrl });
+      await fetchGithubLogin(code);
+      setIsLogin(true);
       navigate('/');
     })();
   }, []);

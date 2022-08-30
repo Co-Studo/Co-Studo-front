@@ -1,13 +1,13 @@
-import { useRecoilValue } from 'recoil';
+import { useQueryClient } from '@tanstack/react-query';
 
+import { UserEntity } from '@apis/user';
 import PageLayout from '@components/common/PageLayout';
-import { userState } from '@store/user';
-
 
 const HomePage: React.FC = () => {
-  const user = useRecoilValue(userState);
+  const queryClient = useQueryClient();
+  const user = queryClient.getQueryData<UserEntity>(['fetchMe']);
 
-  return <PageLayout>Hello {user.nickname}</PageLayout>;
+  return <PageLayout>Hello {user?.nickname}</PageLayout>;
 };
 
 export default HomePage;

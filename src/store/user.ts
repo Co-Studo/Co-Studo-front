@@ -1,16 +1,14 @@
 import { atom } from 'recoil';
 
-export type User = {
-  email: string;
-  nickname: string;
-  avatarUrl: string;
+export type UserState = {
+  isLogin: boolean;
 };
 
-export const userState = atom<User>({
+const defaultState: UserState = {
+  isLogin: JSON.parse(localStorage.getItem('isLogin') || 'false'),
+};
+
+export const userState = atom({
   key: 'userState',
-  default: {
-    email: '',
-    nickname: 'anonymous',
-    avatarUrl: '',
-  },
+  default: defaultState,
 });

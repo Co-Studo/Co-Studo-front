@@ -1,15 +1,13 @@
-import { useNavigate } from 'react-router-dom';
 import { css } from 'styled-components';
 
-import StyledButton from '@components/common/Button/button.styled';
+import useLocalStorage from '@hooks/useLocalStorage';
+import LoginButton from '@layouts/Header/LoginButton';
+import UserInfo from '@layouts/Header/UserInfo';
+import UserInfoErrorBoundary from '@layouts/Header/UserInfo/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
 const Header: React.FC = () => {
-  const navigate = useNavigate();
-
-  const handleClickLoginButton = () => {
-    navigate('/login');
-  };
+  const [isLogin] = useLocalStorage('isLogin', false);
 
   return (
     <header
@@ -29,9 +27,13 @@ const Header: React.FC = () => {
     >
       <h1>Logo</h1>
       <div>
-        <StyledButton bgcolor={colors.grey600} onClick={handleClickLoginButton}>
-          Login
-        </StyledButton>
+        {isLogin ? (
+          <UserInfoErrorBoundary>
+            <UserInfo />
+          </UserInfoErrorBoundary>
+        ) : (
+          <LoginButton />
+        )}
       </div>
     </header>
   );
