@@ -1,9 +1,9 @@
 import { css } from 'styled-components';
 
 import useLocalStorage from '@hooks/useLocalStorage';
-import LoginButton from '@layouts/Header/LoginButton';
-import UserInfo from '@layouts/Header/UserInfo';
-import UserInfoErrorBoundary from '@layouts/Header/UserInfo/UserInfoErrorBoundary';
+import AnonymousCircle from '@layouts/Header/AnonymousCircle';
+import UserInfoCircle from '@layouts/Header/UserInfoCircle';
+import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
 const Header: React.FC = () => {
@@ -29,10 +29,10 @@ const Header: React.FC = () => {
       <div>
         {isLogin ? (
           <UserInfoErrorBoundary>
-            <UserInfo />
+            <UserInfoCircle />
           </UserInfoErrorBoundary>
         ) : (
-          <LoginButton />
+          <AnonymousCircle />
         )}
       </div>
     </header>

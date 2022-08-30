@@ -13,6 +13,7 @@ export interface IPaletteOptions {
 export interface IPalette extends IPaletteOptions {
   bgColor: string;
   fontColor: string;
+  borderLine: string;
 }
 
 export interface ITheme extends DefaultTheme {
@@ -25,6 +26,7 @@ const darkPalette: IPalette = {
   github: colors.black,
   bgColor: colors.grey900,
   fontColor: colors.white,
+  borderLine: colors.white,
 };
 
 const lightPalette: IPalette = {
@@ -33,6 +35,7 @@ const lightPalette: IPalette = {
   github: colors.black,
   bgColor: colors.grey50,
   fontColor: colors.black,
+  borderLine: colors.grey500,
 };
 
 const darkTheme: ITheme = {

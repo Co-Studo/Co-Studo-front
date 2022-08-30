@@ -1,6 +1,6 @@
 import React from 'react';
 
-import LoginButton from '@layouts/Header/LoginButton';
+import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 
 type Props = {
   children: React.ReactNode;
@@ -25,7 +25,7 @@ class UserInfoErrorBoundary extends React.Component<Props, StateType> {
     const { children } = this.props;
     if (hasError) {
       // 재 로그인 Modal 생성하면 좋을 듯
-      return <LoginButton />;
+      return <AnonymousCircle />;
     }
     return children;
   }

@@ -26,9 +26,9 @@ const getPublicUrl = () => {
 };
 
 const API_URL = {
-  DEV: 'http://localhost:3000',
+  DEV: 'http://localhost:8801',
   // TODO: Prod API url
-  PROD: '',
+  PROD: 'http://localhost:3000',
 };
 
 const HOME_PAGE = {
