@@ -3,8 +3,13 @@
     "baseUrl": "./",
     "paths": {
       "@components/*": ["src/components/*"],
-      "@presenters/*": ["src/presenters/*"],
-      "@theme/*": ["src/theme/*"]
+      "@pages/*": ["src/pages/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@theme/*": ["src/theme/*"],
+      "@store/*": ["src/store/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@queries/*": ["src/queries/*"],
+      "@apis/*": ["src/apis/*"]
     }
   }
 }

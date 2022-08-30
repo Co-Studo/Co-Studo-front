@@ -19,6 +19,16 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'import/prefer-default-export': 'off',
+    'import/no-extraneous-dependencies': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': [
+      'warn',
+      {
+        additionalHooks: 'useRecoilCallback',
+      },
+    ],
+    'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
     // only use arrow-function component
     // https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/function-component-definition.md
