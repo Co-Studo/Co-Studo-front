@@ -1,8 +1,15 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
+import fonts from '@assets/fonts';
+
 const GlobalStyle = createGlobalStyle`
   ${reset}
+  ${fonts}
+
+  html {
+    font-family: Roboto, NotoSansKR;
+  }
   *{
     box-sizing: border-box;
   }

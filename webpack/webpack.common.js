@@ -82,6 +82,10 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.(jpe?g|png|gif|woff2?)$/,
+        type: 'asset/resource',
+      },
     ],
   },
   plugins: [

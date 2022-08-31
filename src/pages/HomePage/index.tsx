@@ -1,13 +1,13 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { UserEntity } from '@apis/user';
+import { ServerResponse } from '@apis/http';
+import { fetchMe, UserEntity } from '@apis/user';
 import PageLayout from '@components/common/PageLayout';
 
 const HomePage: React.FC = () => {
-  const queryClient = useQueryClient();
-  const user = queryClient.getQueryData<UserEntity>(['fetchMe']);
+  const { data } = useQuery<ServerResponse<UserEntity>>(['fetchMe'], fetchMe);
 
-  return <PageLayout>Hello {user?.nickname}</PageLayout>;
+  return <PageLayout>안녕하세요! {data?.results?.nickname}</PageLayout>;
 };
 
 export default HomePage;

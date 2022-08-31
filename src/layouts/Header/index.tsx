@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 
+import BigText from '@components/BigText';
 import useLocalStorage from '@hooks/useLocalStorage';
 import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
@@ -25,7 +26,7 @@ const Header: React.FC = () => {
         padding: 1.5rem 2rem;
       `}
     >
-      <h1>Logo</h1>
+      <BigText>Co Studo</BigText>
       <div>
         {isLogin ? (
           <UserInfoErrorBoundary>
