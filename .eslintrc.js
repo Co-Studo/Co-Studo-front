@@ -19,6 +19,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    'no-console': ['off', { allow: ['error'] }],
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
     'react-hooks/rules-of-hooks': 'error',
