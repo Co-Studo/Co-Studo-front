@@ -2,9 +2,7 @@ import {
   createContext,
   Dispatch,
   ReactNode,
-  useCallback,
   useContext,
-  useEffect,
   useReducer,
   useRef,
 } from 'react';
@@ -12,17 +10,10 @@ import { css } from 'styled-components';
 
 type DropdownState = {
   isOpen: boolean;
-  bottom: number;
-  left: number;
+  height: number;
 };
 
-type DropdownAction =
-  | { type: 'TOGGLE_OPEN' }
-  | {
-      type: 'UPDATE_TRIGGER_POSITION';
-      bottom: number;
-      left: number;
-    };
+type DropdownAction = { type: 'TOGGLE_OPEN'; height: number };
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,14 +21,9 @@ const reducer = (state, action) => {
       return {
         ...state,
         isOpen: !state.isOpen,
+        height: action.height,
       };
     }
-    case 'UPDATE_TRIGGER_POSITION':
-      return {
-        ...state,
-        bottom: action.bottom,
-        left: action.left,
-      };
     default:
       return state;
   }
@@ -45,8 +31,7 @@ const reducer = (state, action) => {
 
 const initState = {
   isOpen: false,
-  bottom: 0,
-  left: 0,
+  height: 0,
 };
 
 const DropdownContext = createContext<
@@ -57,7 +42,7 @@ const Dropdown = ({ children }) => {
   const dropdownReducer = useReducer(reducer, initState);
   return (
     <DropdownContext.Provider value={dropdownReducer}>
-      {children}
+      <div css={{ position: 'relative' }}>{children}</div>
     </DropdownContext.Provider>
   );
 };
@@ -73,19 +58,9 @@ const DropdownTrigger = (props: { trigger: ReactNode }) => {
   const { trigger } = props;
 
   const handleTrigger = () => {
-    dispatch({ type: 'TOGGLE_OPEN' });
+    if (!triggerRef.current) return;
+    dispatch({ type: 'TOGGLE_OPEN', height: triggerRef.current.offsetHeight });
   };
-
-  useEffect(() => {
-    const { bottom, left } =
-      triggerRef.current?.getBoundingClientRect() as DOMRect;
-
-    dispatch({
-      type: 'UPDATE_TRIGGER_POSITION',
-      bottom,
-      left,
-    });
-  }, [dispatch]);
 
   return (
     <button type="button" onClick={handleTrigger} ref={triggerRef}>
@@ -95,41 +70,23 @@ const DropdownTrigger = (props: { trigger: ReactNode }) => {
 };
 
 const DropdownList = (props) => {
-  const listRef = useRef<HTMLUListElement>(null);
-  const [{ isOpen, bottom, left }] = useDropdownContext();
+  const [{ isOpen, height }] = useDropdownContext();
   const { children, transformOrigin } = props;
-
-  const getPositioningStyle = useCallback(
-    (element) => {
-      const elementTop = bottom;
-      let elementLeft = left;
-      if (transformOrigin === 'right') {
-        elementLeft = left - element.offsetWidth;
-      }
-      return {
-        elementTop,
-        elementLeft,
-      };
-    },
-    [left, bottom, transformOrigin],
-  );
-
-  useEffect(() => {
-    if (isOpen) {
-      const element = listRef.current;
-      if (!element) return;
-      const { elementTop, elementLeft } = getPositioningStyle(element);
-      element.style.top = `${elementTop}px`;
-      element.style.left = `${elementLeft}px`;
-    }
-  }, [isOpen, getPositioningStyle]);
 
   return isOpen ? (
     <ul
-      ref={listRef}
       css={css`
+        width: max-content;
         position: absolute;
+        top: ${height}px;
         background-color: ${({ theme }) => theme.palette.bgColor};
+        ${transformOrigin === 'right'
+          ? css`
+              right: 0;
+            `
+          : css`
+              left: 0;
+            `}
       `}
       {...props}
     >
