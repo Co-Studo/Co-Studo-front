@@ -32,7 +32,6 @@ const UserInfoCircle: React.FC = () => {
       >
         <Dropdown.Item>안녕하세요</Dropdown.Item>
         <Dropdown.Item>무야호</Dropdown.Item>
-        <Dropdown.Item>안녕안녕안녕안녕안녕안녕안녕안녕</Dropdown.Item>
       </Dropdown.List>
     </Dropdown>
   );
