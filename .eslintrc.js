@@ -19,6 +19,11 @@ module.exports = {
     project: './tsconfig.json',
   },
   rules: {
+    // ---------------------------------------
+    // Dropdown click away listener 만들면서 off
+    'jsx-a11y/no-static-element-interactions': 'off',
+    'jsx-a11y/click-events-have-key-events': 'off',
+    // ---------------------------------------
     'no-console': ['off', { allow: ['error'] }],
     'import/prefer-default-export': 'off',
     'import/no-extraneous-dependencies': 'off',
