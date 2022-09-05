@@ -79,7 +79,6 @@ const DropdownList = (props) => {
         width: max-content;
         position: absolute;
         top: ${height}px;
-        background-color: ${({ theme }) => theme.palette.bgColor};
         ${transformOrigin === 'right'
           ? css`
               right: 0;

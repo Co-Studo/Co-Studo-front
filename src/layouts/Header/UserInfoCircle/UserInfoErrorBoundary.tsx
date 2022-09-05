@@ -16,11 +16,11 @@ class UserInfoErrorBoundary extends React.Component<Props, StateType> {
     this.state = { hasError: false };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true };
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     console.error(error);
   }
 
