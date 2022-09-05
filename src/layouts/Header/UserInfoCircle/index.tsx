@@ -1,12 +1,22 @@
+import { useMutation } from '@tanstack/react-query';
 import { css } from 'styled-components';
 
+import { fetchLogout } from '@apis/user';
 import Dropdown from '@components/common/Dropdown';
+import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
 import useFetchMeInterval from '@queries/useFetchMeInterval';
-import colors from '@theme/colors';
 
-const UserInfoCircle: React.FC = () => {
+const UserInfoCircle: React.FC<{ setIsLogin: (isLogin: boolean) => void }> = ({
+  setIsLogin,
+}) => {
   const { data } = useFetchMeInterval();
-  // buttonOnClick => modalOpen
+  const logoutMutation = useMutation(fetchLogout);
+
+  const handleLogoutClick = () => {
+    setIsLogin(false);
+    logoutMutation.mutate();
+  };
+
   return (
     <Dropdown>
       <Dropdown.Trigger
@@ -22,17 +32,11 @@ const UserInfoCircle: React.FC = () => {
           />
         }
       />
-      <Dropdown.List
-        transformOrigin="right"
-        css={css`
-          padding: 1rem;
-          box-shadow: 0px 4px 10px ${colors.greyOpacity100},
-            0px 0px 4px ${colors.greyOpacity500};
-        `}
-      >
-        <Dropdown.Item>안녕하세요</Dropdown.Item>
-        <Dropdown.Item>무야호</Dropdown.Item>
-      </Dropdown.List>
+      <StyledDropdown.List transformOrigin="right">
+        <StyledDropdown.Item onClick={handleLogoutClick}>
+          로그아웃
+        </StyledDropdown.Item>
+      </StyledDropdown.List>
     </Dropdown>
   );
 };

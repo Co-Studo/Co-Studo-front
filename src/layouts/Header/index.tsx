@@ -8,7 +8,7 @@ import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorB
 import colors from '@theme/colors';
 
 const Header: React.FC = () => {
-  const [isLogin] = useLocalStorage('isLogin', false);
+  const [isLogin, setIsLogin] = useLocalStorage('isLogin', false);
 
   return (
     <header
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
       <div>
         {isLogin ? (
           <UserInfoErrorBoundary>
-            <UserInfoCircle />
+            <UserInfoCircle setIsLogin={setIsLogin} />
           </UserInfoErrorBoundary>
         ) : (
           <AnonymousCircle />
