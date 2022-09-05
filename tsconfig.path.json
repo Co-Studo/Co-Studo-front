@@ -10,7 +10,8 @@
       "@layouts/*": ["src/layouts/*"],
       "@queries/*": ["src/queries/*"],
       "@apis/*": ["src/apis/*"],
-      "@mocks/*": ["src/mocks/*"]
+      "@mocks/*": ["src/mocks/*"],
+      "@assets/*": ["src/assets/*"]
     }
   }
 }

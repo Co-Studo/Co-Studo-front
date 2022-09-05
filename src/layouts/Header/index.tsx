@@ -1,13 +1,14 @@
 import { css } from 'styled-components';
 
+import BigText from '@components/BigText';
 import useLocalStorage from '@hooks/useLocalStorage';
-import LoginButton from '@layouts/Header/LoginButton';
-import UserInfo from '@layouts/Header/UserInfo';
-import UserInfoErrorBoundary from '@layouts/Header/UserInfo/UserInfoErrorBoundary';
+import AnonymousCircle from '@layouts/Header/AnonymousCircle';
+import UserInfoCircle from '@layouts/Header/UserInfoCircle';
+import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
 const Header: React.FC = () => {
-  const [isLogin] = useLocalStorage('isLogin', false);
+  const [isLogin, setIsLogin] = useLocalStorage('isLogin', false);
 
   return (
     <header
@@ -25,14 +26,14 @@ const Header: React.FC = () => {
         padding: 1.5rem 2rem;
       `}
     >
-      <h1>Logo</h1>
+      <BigText>Co Studo</BigText>
       <div>
         {isLogin ? (
           <UserInfoErrorBoundary>
-            <UserInfo />
+            <UserInfoCircle setIsLogin={setIsLogin} />
           </UserInfoErrorBoundary>
         ) : (
-          <LoginButton />
+          <AnonymousCircle />
         )}
       </div>
     </header>
