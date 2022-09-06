@@ -11,7 +11,8 @@
       "@queries/*": ["src/queries/*"],
       "@apis/*": ["src/apis/*"],
       "@mocks/*": ["src/mocks/*"],
-      "@assets/*": ["src/assets/*"]
+      "@assets/*": ["src/assets/*"],
+      "@utils/*": ["src/utils/*"]
     }
   }
 }

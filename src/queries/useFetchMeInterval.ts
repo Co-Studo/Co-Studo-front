@@ -7,8 +7,9 @@ import { AxiosError } from 'axios';
 
 import { ServerResponse } from '@apis/http';
 import { fetchMe, UserEntity } from '@apis/user';
+import { minute } from '@utils/units';
 
-const accessTokenExpireIn = 2_000;
+const accessTokenExpireIn = minute(5);
 
 const useFetchMeInterval = (
   options?: UseQueryOptions<
