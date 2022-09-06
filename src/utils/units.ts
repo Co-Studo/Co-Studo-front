@@ -1,8 +1,8 @@
-export const 초 = (time: number) => time * 1000;
+export const second = (time: number) => time * 1000;
 
-export const 분 = (time: number) => 60 * 초(time);
+export const minute = (time: number) => 60 * second(time);
 
-export const 시간 = (time: number) => 60 * 분(time);
+export const hour = (time: number) => 60 * minute(time);
 
 export const 만 = (number: number) => 10_000 * number;
 
