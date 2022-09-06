@@ -26,7 +26,8 @@ const getPublicUrl = () => {
 };
 
 const API_URL = {
-  DEV: 'http://localhost:8801',
+  // msw 적용 위해 API root 삭제
+  DEV: '',
   // TODO: Prod API url
   PROD: 'http://localhost:3000',
 };
