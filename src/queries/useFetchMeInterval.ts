@@ -3,12 +3,13 @@ import {
   UseQueryOptions,
   UseQueryResult,
 } from '@tanstack/react-query';
+import { 분 } from '@utils/units';
 import { AxiosError } from 'axios';
 
 import { ServerResponse } from '@apis/http';
 import { fetchMe, UserEntity } from '@apis/user';
 
-const accessTokenExpireIn = 2_000;
+const accessTokenExpireIn = 분(5);
 
 const useFetchMeInterval = (
   options?: UseQueryOptions<
