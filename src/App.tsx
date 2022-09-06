@@ -1,3 +1,4 @@
+import './app.css';
 import { ThemeProvider } from 'styled-components';
 
 import Routes from '@pages/Routes';

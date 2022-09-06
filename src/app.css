@@ -1,0 +1,12 @@
+@font-face {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/noto-sans-kr-regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: NotoSansKR;
+  font-style: normal;
+  font-weight: 400;
+  src: url('./assets/fonts/roboto-regular.woff2') format('woff2');
+}
