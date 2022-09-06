@@ -7,8 +7,10 @@ import UserInfoCircle from '@layouts/Header/UserInfoCircle';
 import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
+const initIsLogin = process.env.NODE_ENV === 'development';
+
 const Header: React.FC = () => {
-  const [isLogin, setIsLogin] = useLocalStorage('isLogin', false);
+  const [isLogin, setIsLogin] = useLocalStorage('isLogin', initIsLogin);
 
   return (
     <header
