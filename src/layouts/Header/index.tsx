@@ -7,6 +7,7 @@ import UserInfoCircle from '@layouts/Header/UserInfoCircle';
 import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
+// 개발 환경 중일 때는 로그인으로 시작
 const initIsLogin = process.env.NODE_ENV === 'development';
 
 const Header: React.FC = () => {
