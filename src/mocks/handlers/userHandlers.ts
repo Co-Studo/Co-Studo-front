@@ -7,7 +7,7 @@ const getMe = (req, res, ctx) => {
   const {
     cookies: { refreshToken },
   } = req;
-  if (refreshToken.includes('Expire')) {
+  if (refreshToken?.includes('Expire')) {
     return res(
       ctx.status(400),
       ctx.json({
