@@ -1,8 +1,8 @@
 import { css } from 'styled-components';
 
 import { StudyEntity } from '@apis/study';
-import AvatarGroup from '@components/AvatarGroup';
 import Avatar from '@components/common/Avatar';
+import AvatarGroup from '@components/common/AvatarGroup';
 import Paper from '@components/common/Paper';
 import colors from '@theme/colors';
 

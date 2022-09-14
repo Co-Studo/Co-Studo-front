@@ -28,6 +28,8 @@ const AvatarGroup: React.FC<AvatarGropProps> = (props) => {
   } = props;
 
   const theme = useTheme();
+  
+  // child.props 처럼 props 속성을 사용하기 위해 as 사용
   const children = Children.toArray(childrenProp) as ReactElement[];
 
   if (total > max) {
