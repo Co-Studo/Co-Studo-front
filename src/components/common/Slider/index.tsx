@@ -12,12 +12,14 @@ type SliderOptions = {
   slidesToShow: number;
   slidesToScroll: number;
   slidesMargin: string;
+  arrows: boolean;
 };
 
 const defaultSliderOptions = {
   slidesToShow: 1,
   slidesToScroll: 1,
   slidesMargin: '0px',
+  arrows: true,
 };
 
 type SliderProps = {
@@ -154,7 +156,7 @@ const setCurrentIndex = (
 
 const SliderPrevButton = ({ children, ...props }) => {
   const [{ options, currentIndex }, dispatch] = useSliderContext();
-  const { slidesToScroll } = options;
+  const { slidesToScroll, arrows } = options;
   const limitIndex = 0;
   const disabled = currentIndex <= limitIndex;
 
@@ -170,7 +172,7 @@ const SliderPrevButton = ({ children, ...props }) => {
     slideToPrev();
   };
 
-  return (
+  return arrows ? (
     <button
       type="button"
       onClick={handlePrevButtonClick}
@@ -179,12 +181,12 @@ const SliderPrevButton = ({ children, ...props }) => {
     >
       {children}
     </button>
-  );
+  ) : null;
 };
 
 const SliderNextButton = ({ children, ...props }) => {
   const [{ options, currentIndex, slideLength }, dispatch] = useSliderContext();
-  const { slidesToShow, slidesToScroll } = options;
+  const { slidesToShow, slidesToScroll, arrows } = options;
   const limitIndex = slideLength - slidesToShow;
   const disabled = currentIndex >= limitIndex;
 
@@ -200,7 +202,7 @@ const SliderNextButton = ({ children, ...props }) => {
     slideToNext();
   };
 
-  return (
+  return arrows ? (
     <button
       type="button"
       onClick={handleNextButtonClick}
@@ -209,7 +211,7 @@ const SliderNextButton = ({ children, ...props }) => {
     >
       {children}
     </button>
-  );
+  ) : null;
 };
 
 Slider.List = SliderList;
