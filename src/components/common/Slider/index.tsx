@@ -8,7 +8,7 @@ import {
 } from 'react';
 import { css } from 'styled-components';
 
-import throttle from '@utils/throttle';
+import throttle from '@utils/eventDelay';
 
 type SliderOptions = {
   slidesToShow: number;
@@ -16,6 +16,7 @@ type SliderOptions = {
   slidesMargin: string;
   arrows: boolean;
   speed: number;
+  initialSlide: number;
 };
 
 const defaultSliderOptions = {
@@ -24,6 +25,7 @@ const defaultSliderOptions = {
   slidesMargin: '0px',
   arrows: true,
   speed: 1000,
+  initialSlide: 0,
 };
 
 type SliderProps = {
@@ -80,7 +82,7 @@ const Slider = ({ options = defaultSliderOptions, children }: SliderProps) => {
   const sliderOptions = { ...defaultSliderOptions, ...options };
   const initState = {
     options: sliderOptions,
-    currentIndex: 0,
+    currentIndex: sliderOptions.initialSlide,
     slideLength: 0,
   };
   const sliderReducer = useReducer(reducer, initState);
@@ -167,7 +169,10 @@ const SliderPrevButton = ({ children, ...props }) => {
   const slideToPrev = () => {
     if (disabled) return;
 
-    const newIndex = currentIndex - slidesToScroll;
+    const newIndex =
+      currentIndex - slidesToScroll > limitIndex
+        ? currentIndex - slidesToScroll
+        : limitIndex;
 
     throttle(() => setCurrentIndex(newIndex, dispatch), speed);
   };
@@ -197,7 +202,10 @@ const SliderNextButton = ({ children, ...props }) => {
   const slideToNext = () => {
     if (disabled) return;
 
-    const newIndex = currentIndex + slidesToScroll;
+    const newIndex =
+      currentIndex + slidesToScroll < limitIndex
+        ? currentIndex + slidesToScroll
+        : limitIndex;
 
     throttle(() => setCurrentIndex(newIndex, dispatch), speed);
   };
