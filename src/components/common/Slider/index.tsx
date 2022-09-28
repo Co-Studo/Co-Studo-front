@@ -11,11 +11,13 @@ import { css } from 'styled-components';
 type SliderOptions = {
   slidesToShow: number;
   slidesToScroll: number;
+  slidesMargin: string;
 };
 
 const defaultSliderOptions = {
   slidesToShow: 1,
   slidesToScroll: 1,
+  slidesMargin: '0px',
 };
 
 type SliderProps = {
@@ -93,7 +95,7 @@ const Slider = ({ options = defaultSliderOptions, children }: SliderProps) => {
 };
 
 const SliderList = ({ children, ...props }) => {
-  const [, dispatch] = useSliderContext();
+  const [{ options }, dispatch] = useSliderContext();
 
   useEffect(() => {
     dispatch({
@@ -106,6 +108,7 @@ const SliderList = ({ children, ...props }) => {
     <ul
       css={css`
         display: flex;
+        gap: ${options.slidesMargin};
       `}
       {...props}
     >
@@ -116,14 +119,20 @@ const SliderList = ({ children, ...props }) => {
 
 const SliderItem = ({ children, ...props }) => {
   const [{ options, currentIndex }] = useSliderContext();
-  const { slidesToShow } = options;
+  const { slidesToShow, slidesMargin } = options;
 
   return (
     <li
       css={css`
         flex: 0 0 auto;
-        width: calc(100% / ${slidesToShow});
-        transform: translate(calc(100% * ${-currentIndex}), 0);
+        width: calc(
+          100% / ${slidesToShow} -
+            (${slidesMargin} * (${slidesToShow - 1}) / ${slidesToShow})
+        );
+        transform: translate(
+          calc((100% + ${slidesMargin}) * ${-currentIndex}),
+          0
+        );
         transition: transform 1s ease-in-out;
       `}
       {...props}
