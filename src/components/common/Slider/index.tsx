@@ -49,9 +49,13 @@ const reducer = (state: SliderContextValues, action: SliderAction) => {
 
   switch (type) {
     case 'UPDATE_CURRENT_INDEX':
-      return { ...state, currentIndex: payload.currentIndex };
+      return payload.currentIndex
+        ? { ...state, currentIndex: payload.currentIndex }
+        : state;
     case 'SET_SLIDES_LENGTH':
-      return { ...state, slideLength: payload.slideLength };
+      return payload.slideLength
+        ? { ...state, slideLength: payload.slideLength }
+        : state;
     default:
       return state;
   }
