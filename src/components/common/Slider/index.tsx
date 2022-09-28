@@ -8,11 +8,14 @@ import {
 } from 'react';
 import { css } from 'styled-components';
 
+import throttle from '@utils/throttle';
+
 type SliderOptions = {
   slidesToShow: number;
   slidesToScroll: number;
   slidesMargin: string;
   arrows: boolean;
+  speed: number;
 };
 
 const defaultSliderOptions = {
@@ -20,6 +23,7 @@ const defaultSliderOptions = {
   slidesToScroll: 1,
   slidesMargin: '0px',
   arrows: true,
+  speed: 1000,
 };
 
 type SliderProps = {
@@ -121,7 +125,7 @@ const SliderList = ({ children, ...props }) => {
 
 const SliderItem = ({ children, ...props }) => {
   const [{ options, currentIndex }] = useSliderContext();
-  const { slidesToShow, slidesMargin } = options;
+  const { slidesToShow, slidesMargin, speed } = options;
 
   return (
     <li
@@ -135,7 +139,7 @@ const SliderItem = ({ children, ...props }) => {
           calc((100% + ${slidesMargin}) * ${-currentIndex}),
           0
         );
-        transition: transform 1s ease-in-out;
+        transition: transform calc(${speed}s / 1000) ease-in-out;
       `}
       {...props}
     >
@@ -156,7 +160,7 @@ const setCurrentIndex = (
 
 const SliderPrevButton = ({ children, ...props }) => {
   const [{ options, currentIndex }, dispatch] = useSliderContext();
-  const { slidesToScroll, arrows } = options;
+  const { slidesToScroll, arrows, speed } = options;
   const limitIndex = 0;
   const disabled = currentIndex <= limitIndex;
 
@@ -165,7 +169,7 @@ const SliderPrevButton = ({ children, ...props }) => {
 
     const newIndex = currentIndex - slidesToScroll;
 
-    setCurrentIndex(newIndex, dispatch);
+    throttle(() => setCurrentIndex(newIndex, dispatch), speed);
   };
 
   const handlePrevButtonClick = () => {
@@ -186,7 +190,7 @@ const SliderPrevButton = ({ children, ...props }) => {
 
 const SliderNextButton = ({ children, ...props }) => {
   const [{ options, currentIndex, slideLength }, dispatch] = useSliderContext();
-  const { slidesToShow, slidesToScroll, arrows } = options;
+  const { slidesToShow, slidesToScroll, arrows, speed } = options;
   const limitIndex = slideLength - slidesToShow;
   const disabled = currentIndex >= limitIndex;
 
@@ -195,7 +199,7 @@ const SliderNextButton = ({ children, ...props }) => {
 
     const newIndex = currentIndex + slidesToScroll;
 
-    setCurrentIndex(newIndex, dispatch);
+    throttle(() => setCurrentIndex(newIndex, dispatch), speed);
   };
 
   const handleNextButtonClick = () => {
