@@ -210,7 +210,6 @@ const SliderPrevButton = ({ children, ...restProps }) => {
 
   const handlePrevButtonClick = () => {
     if (disabled) return;
-    console.log(currentIndex);
 
     const decreasedIndex =
       currentIndex - slidesToScroll > limitIndex
