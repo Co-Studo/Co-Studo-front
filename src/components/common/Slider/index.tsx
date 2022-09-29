@@ -3,12 +3,14 @@ import {
   useContext,
   Dispatch,
   useReducer,
-  useEffect,
   ReactNode,
+  Children,
 } from 'react';
 import { css } from 'styled-components';
 
 import throttle from '@utils/eventDelay';
+
+type ChildrenType = ReactNode | ReactNode[];
 
 type SliderOptions = {
   slidesToShow: number;
@@ -17,6 +19,99 @@ type SliderOptions = {
   arrows: boolean;
   speed: number;
   initialSlide: number;
+};
+
+type SliderInfoContextValues = {
+  options: SliderOptions;
+  slidesLength: number;
+};
+
+const SliderInfoContext = createContext<SliderInfoContextValues | null>(null);
+
+const useSliderInfoContext = () => {
+  const context = useContext(SliderInfoContext);
+
+  if (!context)
+    throw new Error(
+      'useSliderInfoContext should be used within SliderInfoContext.Provider',
+    );
+
+  return context;
+};
+
+type SliderItemIndexContextValues = {
+  currentIndex: number;
+};
+
+type SliderItemIndexAction = {
+  type: 'INCREASE_CURRENT_INDEX' | 'DECREASE_CURRENT_INDEX';
+  slidesToScroll: number;
+};
+
+const reducer = (
+  { currentIndex }: SliderItemIndexContextValues,
+  action: SliderItemIndexAction,
+) => {
+  const { type, slidesToScroll } = action;
+
+  switch (type) {
+    case 'INCREASE_CURRENT_INDEX':
+      return { currentIndex: currentIndex + slidesToScroll };
+    case 'DECREASE_CURRENT_INDEX':
+      return { currentIndex: currentIndex - slidesToScroll };
+    default:
+      throw new Error(`There is no type '${type}'. Please check the type.`);
+  }
+};
+
+const SliderItemIndexContext =
+  createContext<
+    [SliderItemIndexContextValues, Dispatch<SliderItemIndexAction>] | null
+  >(null);
+
+const useSliderItemIndexContext = () => {
+  const context = useContext(SliderItemIndexContext);
+
+  if (!context)
+    throw new Error(
+      'useSliderItemIndexContext should be used within SliderItemIndexContext.Provider',
+    );
+
+  return context;
+};
+
+type SliderProviderProps = {
+  options: SliderOptions;
+  slidesLength: number;
+  children: ChildrenType;
+};
+
+const SliderProvider = ({
+  options,
+  slidesLength,
+  children,
+}: SliderProviderProps) => {
+  const sliderInfo = {
+    options,
+    slidesLength,
+  };
+
+  const sliderItemIndexReducer = useReducer(reducer, {
+    currentIndex: options.initialSlide,
+  });
+
+  return (
+    <SliderInfoContext.Provider value={sliderInfo}>
+      <SliderItemIndexContext.Provider value={sliderItemIndexReducer}>
+        {children}
+      </SliderItemIndexContext.Provider>
+    </SliderInfoContext.Provider>
+  );
+};
+
+type SliderProps = {
+  options?: Partial<SliderOptions>;
+  children: ChildrenType;
 };
 
 const defaultSliderOptions = {
@@ -28,71 +123,25 @@ const defaultSliderOptions = {
   initialSlide: 0,
 };
 
-type SliderProps = {
-  options?: Partial<SliderOptions>;
-  children: ReactNode;
-};
-
-type SliderContextValues = {
-  options: SliderOptions;
-  currentIndex: number;
-  slideLength: number;
-};
-
-type SliderAction = {
-  type: 'UPDATE_CURRENT_INDEX' | 'SET_SLIDES_LENGTH';
-  payload: Partial<Omit<SliderContextValues, 'options'>>;
-};
-
-const reducer = (state: SliderContextValues, action: SliderAction) => {
-  const { type, payload } = action;
-
-  switch (type) {
-    case 'UPDATE_CURRENT_INDEX':
-      return payload.currentIndex
-        ? { ...state, currentIndex: payload.currentIndex }
-        : state;
-    case 'SET_SLIDES_LENGTH':
-      return payload.slideLength
-        ? { ...state, slideLength: payload.slideLength }
-        : state;
-    default:
-      return state;
-  }
-};
-
-const initSliderState = {
-  options: defaultSliderOptions,
-  slideLength: 0,
-  currentIndex: 0,
-};
-
-const SliderContext = createContext<
-  [SliderContextValues, Dispatch<SliderAction>]
->([initSliderState, () => null]);
-
-const useSliderContext = () => {
-  const context = useContext(SliderContext);
-
-  if (context === undefined)
-    throw new Error(
-      'useSliderContext should be used within SliderContext.Provider',
-    );
-
-  return context;
-};
-
 const Slider = ({ options = defaultSliderOptions, children }: SliderProps) => {
   const sliderOptions = { ...defaultSliderOptions, ...options };
-  const initState = {
-    options: sliderOptions,
-    currentIndex: sliderOptions.initialSlide,
-    slideLength: 0,
+
+  const getSlidesLength = () => {
+    const sliderList = Children.toArray(children).find((child: ReactNode) => {
+      if (
+        child?.type.name === 'SliderList' ||
+        child?.type.target.name === 'SliderList'
+      )
+        return true;
+      return false;
+    });
+    const slidesLength = sliderList ? sliderList.props.children.length : 0;
+
+    return slidesLength;
   };
-  const sliderReducer = useReducer(reducer, initState);
 
   return (
-    <SliderContext.Provider value={sliderReducer}>
+    <SliderProvider options={sliderOptions} slidesLength={getSlidesLength()}>
       <div
         css={css`
           position: relative;
@@ -102,36 +151,33 @@ const Slider = ({ options = defaultSliderOptions, children }: SliderProps) => {
       >
         {children}
       </div>
-    </SliderContext.Provider>
+    </SliderProvider>
   );
 };
 
-const SliderList = ({ children, ...props }) => {
-  const [{ options }, dispatch] = useSliderContext();
-
-  useEffect(() => {
-    dispatch({
-      type: 'SET_SLIDES_LENGTH',
-      payload: { slideLength: children.length },
-    });
-  }, [dispatch, children.length]);
+const SliderList = ({ children, ...restProps }) => {
+  const {
+    options: { slidesMargin },
+  } = useSliderInfoContext();
 
   return (
     <ul
       css={css`
         display: flex;
-        gap: ${options.slidesMargin};
+        gap: ${slidesMargin};
       `}
-      {...props}
+      {...restProps}
     >
       {children}
     </ul>
   );
 };
 
-const SliderItem = ({ children, ...props }) => {
-  const [{ options, currentIndex }] = useSliderContext();
-  const { slidesToShow, slidesMargin, speed } = options;
+const SliderItem = ({ children, ...restProps }) => {
+  const [{ currentIndex }] = useSliderItemIndexContext();
+  const {
+    options: { slidesToShow, slidesMargin, speed },
+  } = useSliderInfoContext();
 
   return (
     <li
@@ -147,42 +193,38 @@ const SliderItem = ({ children, ...props }) => {
         );
         transition: transform calc(${speed}s / 1000) ease-in-out;
       `}
-      {...props}
+      {...restProps}
     >
       {children}
     </li>
   );
 };
 
-const setCurrentIndex = (
-  newIndex: number,
-  dispatch: Dispatch<SliderAction>,
-) => {
-  dispatch({
-    type: 'UPDATE_CURRENT_INDEX',
-    payload: { currentIndex: newIndex },
-  });
-};
-
-const SliderPrevButton = ({ children, ...props }) => {
-  const [{ options, currentIndex }, dispatch] = useSliderContext();
-  const { slidesToScroll, arrows, speed } = options;
+const SliderPrevButton = ({ children, ...restProps }) => {
+  const [{ currentIndex }, dispatch] = useSliderItemIndexContext();
+  const {
+    options: { slidesToScroll, arrows, speed },
+  } = useSliderInfoContext();
   const limitIndex = 0;
   const disabled = currentIndex <= limitIndex;
 
-  const slideToPrev = () => {
-    if (disabled) return;
-
-    const newIndex =
-      currentIndex - slidesToScroll > limitIndex
-        ? currentIndex - slidesToScroll
-        : limitIndex;
-
-    throttle(() => setCurrentIndex(newIndex, dispatch), speed);
-  };
-
   const handlePrevButtonClick = () => {
-    slideToPrev();
+    if (disabled) return;
+    console.log(currentIndex);
+
+    const decreasedIndex =
+      currentIndex - slidesToScroll > limitIndex
+        ? slidesToScroll
+        : currentIndex - limitIndex;
+
+    throttle(
+      () =>
+        dispatch({
+          type: 'DECREASE_CURRENT_INDEX',
+          slidesToScroll: decreasedIndex,
+        }),
+      speed,
+    );
   };
 
   return arrows ? (
@@ -190,32 +232,38 @@ const SliderPrevButton = ({ children, ...props }) => {
       type="button"
       onClick={handlePrevButtonClick}
       disabled={disabled}
-      {...props}
+      {...restProps}
     >
       {children}
     </button>
   ) : null;
 };
 
-const SliderNextButton = ({ children, ...props }) => {
-  const [{ options, currentIndex, slideLength }, dispatch] = useSliderContext();
-  const { slidesToShow, slidesToScroll, arrows, speed } = options;
-  const limitIndex = slideLength - slidesToShow;
+const SliderNextButton = ({ children, ...restProps }) => {
+  const [{ currentIndex }, dispatch] = useSliderItemIndexContext();
+  const {
+    options: { slidesToShow, slidesToScroll, arrows, speed },
+    slidesLength,
+  } = useSliderInfoContext();
+  const limitIndex = slidesLength - slidesToShow;
   const disabled = currentIndex >= limitIndex;
 
-  const slideToNext = () => {
+  const handleNextButtonClick = () => {
     if (disabled) return;
 
-    const newIndex =
+    const increasedIndex =
       currentIndex + slidesToScroll < limitIndex
-        ? currentIndex + slidesToScroll
-        : limitIndex;
+        ? slidesToScroll
+        : limitIndex - currentIndex;
 
-    throttle(() => setCurrentIndex(newIndex, dispatch), speed);
-  };
-
-  const handleNextButtonClick = () => {
-    slideToNext();
+    throttle(
+      () =>
+        dispatch({
+          type: 'INCREASE_CURRENT_INDEX',
+          slidesToScroll: increasedIndex,
+        }),
+      speed,
+    );
   };
 
   return arrows ? (
@@ -223,7 +271,7 @@ const SliderNextButton = ({ children, ...props }) => {
       type="button"
       onClick={handleNextButtonClick}
       disabled={disabled}
-      {...props}
+      {...restProps}
     >
       {children}
     </button>
