@@ -1,16 +1,16 @@
 import {
   useMemo,
-  FormEvent,
   ReactNode,
   useContext,
   createContext,
+  ChangeEvent,
   PropsWithChildren,
 } from 'react';
 
 type RadioState = {
   name: string;
   selectedValue: string;
-  onChange: (e: FormEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const RadioGroupContext = createContext<RadioState>({
