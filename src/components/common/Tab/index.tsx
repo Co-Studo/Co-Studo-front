@@ -4,10 +4,8 @@ import {
   Dispatch,
   SetStateAction,
   useContext,
-  useMemo,
   Children,
   cloneElement,
-  FC,
   ReactNode,
   ReactElement,
 } from 'react';
@@ -17,12 +15,7 @@ type TabState = {
   activateTab: Dispatch<SetStateAction<number>>;
 };
 
-const initState = {
-  activeIndex: 0,
-  activateTab: () => {},
-};
-
-const TabContext = createContext<TabState>(initState);
+const TabContext = createContext<TabState | null>(null);
 TabContext.displayName = 'TabContext';
 
 const useTabContext = () => {
@@ -38,14 +31,14 @@ type TabGroupProps = {
   children: ReactNode;
 };
 
-const TabGroup: FC<TabGroupProps> = ({ defaultIndex, children, ...props }) => {
+const TabGroup = ({ defaultIndex, children, ...restProps }: TabGroupProps) => {
   const [activeIndex, activateTab] = useState(defaultIndex || 0);
 
-  const value = useMemo(() => ({ activeIndex, activateTab }), [activeIndex]);
+  const value = { activeIndex, activateTab };
 
   return (
     <TabContext.Provider value={value}>
-      <div {...props}>{children}</div>
+      <div {...restProps}>{children}</div>
     </TabContext.Provider>
   );
 };
@@ -54,8 +47,8 @@ type TabListProps = {
   children: ReactElement[];
 };
 
-const TabList: FC<TabListProps> = ({ children, ...props }) => (
-  <ul {...props}>
+const TabList = ({ children, ...restProps }: TabListProps) => (
+  <ul {...restProps}>
     {Children.map(children, (child, index) =>
       cloneElement(child, {
         tabId: index,
@@ -69,14 +62,14 @@ type TabPropsType = {
   children: ReactNode;
 };
 
-const TabRoot: FC<TabPropsType> = ({ tabId, children, ...props }) => {
+const Tab = ({ tabId, children, ...restProps }: TabPropsType) => {
   const { activeIndex, activateTab } = useTabContext();
 
   const isActive = activeIndex === tabId;
   const handleTabClick = () => tabId !== undefined && activateTab(tabId);
 
   return (
-    <li {...props} data-selected={isActive}>
+    <li {...restProps} data-selected={isActive}>
       <button type="button" onClick={handleTabClick}>
         {children}
       </button>
@@ -88,7 +81,7 @@ type TabPanelsProps = {
   children: ReactElement[];
 };
 
-const TabPanels: FC<TabPanelsProps> = ({ children }) => (
+const TabPanels = ({ children }: TabPanelsProps) => (
   <>
     {Children.map(children, (child, index) =>
       cloneElement(child, {
@@ -103,19 +96,17 @@ type TabPanelProps = {
   children: ReactNode;
 };
 
-const TabPanel: FC<TabPanelProps> = ({ tabId, children, ...props }) => {
+const TabPanel = ({ tabId, children, ...restProps }: TabPanelProps) => {
   const { activeIndex } = useTabContext();
 
   const isActive = activeIndex === tabId;
 
-  return isActive ? <div {...props}>{children}</div> : null;
+  return isActive ? <div {...restProps}>{children}</div> : null;
 };
 
-const Tab = Object.assign(TabRoot, {
-  Group: TabGroup,
-  List: TabList,
-  Panels: TabPanels,
-  Panel: TabPanel,
-});
+Tab.Group = TabGroup;
+Tab.List = TabList;
+Tab.Panels = TabPanels;
+Tab.Panel = TabPanel;
 
 export default Tab;
