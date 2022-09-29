@@ -4,6 +4,7 @@ import {
   ReactNode,
   useContext,
   createContext,
+  PropsWithChildren,
 } from 'react';
 
 type RadioState = {
@@ -26,22 +27,15 @@ const useRadioContext = () => {
   return context;
 };
 
-type RadioGroupProps = RadioState & {
-  children: ReactNode;
-};
+type RadioGroupProps = PropsWithChildren<RadioState>;
 
-type RadioGroupChildren = {
-  Title: React.FC<TitleProps>;
-  Option: React.FC<OptionProps>;
-};
-
-const RadioGroup: React.FC<RadioGroupProps> & RadioGroupChildren = ({
+const RadioGroup = ({
   name,
   children,
   onChange,
   selectedValue,
   ...props
-}) => {
+}: RadioGroupProps) => {
   const values = useMemo(
     () => ({ name, selectedValue, onChange }),
     [name, selectedValue, onChange],
@@ -61,13 +55,7 @@ type OptionProps = {
   disabled?: boolean;
 };
 
-const Option: React.FC<OptionProps> = ({
-  id,
-  value,
-  children,
-  disabled,
-  ...props
-}) => {
+const Option = ({ id, value, children, disabled, ...props }: OptionProps) => {
   const { name, selectedValue, onChange } = useRadioContext();
   const optionId = id || `option-${name}-${value}`;
   return (
@@ -91,7 +79,7 @@ type TitleProps = {
   children: ReactNode;
 };
 
-const Title: React.FC<TitleProps> = ({ children, ...props }) => (
+const Title = ({ children, ...props }: TitleProps) => (
   <div {...props}>{children}</div>
 );
 
