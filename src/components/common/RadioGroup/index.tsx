@@ -13,16 +13,14 @@ type RadioState = {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const RadioGroupContext = createContext<RadioState>({
-  name: '',
-  selectedValue: '',
-  onChange: () => {},
-});
+const RadioGroupContext = createContext<RadioState | null>(null);
 
 const useRadioContext = () => {
   const context = useContext(RadioGroupContext);
-  if (context === undefined) {
-    throw new Error('useMyContext should be used within MyContext.Provider');
+  if (!context) {
+    throw new Error(
+      'useRadioContext should be used within RadioGroupContext.Provider',
+    );
   }
   return context;
 };
