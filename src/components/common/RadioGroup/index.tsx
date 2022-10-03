@@ -91,16 +91,6 @@ const Option = ({
   );
 };
 
-type TitleProps = {
-  id?: string;
-  children: ReactNode;
-};
-
-const Title = ({ children, ...props }: TitleProps) => (
-  <div {...props}>{children}</div>
-);
-
 RadioGroup.Option = Option;
-RadioGroup.Title = Title;
 
 export default RadioGroup;
