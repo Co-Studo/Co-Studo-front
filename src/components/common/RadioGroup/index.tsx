@@ -57,25 +57,33 @@ const RadioGroup = ({
 
 type OptionProps = {
   id?: string;
+  name?: string;
   value: string;
   children: ReactNode;
   disabled?: boolean;
-  name?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
-const Option = ({ id, value, children, disabled, ...props }: OptionProps) => {
-  const { name, selectedValue, onChange } = useRadioContext();
+const Option = ({
+  id,
+  name,
+  value,
+  children,
+  onChange,
+  disabled,
+  ...restProps
+}: OptionProps) => {
+  const { selectedValue } = useRadioContext();
   const optionId = id || `option-${name}-${value}`;
   return (
-    <div {...props}>
+    <div {...restProps}>
       <input
         type="radio"
-        name={name}
         id={optionId}
+        name={name}
         value={value}
-        disabled={disabled}
         onChange={onChange}
+        disabled={disabled}
         checked={value === selectedValue}
       />
       <label htmlFor={optionId}>{children}</label>
