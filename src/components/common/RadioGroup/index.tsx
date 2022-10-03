@@ -1,17 +1,16 @@
 import {
-  useMemo,
   ReactNode,
   useContext,
   createContext,
   ChangeEvent,
-  PropsWithChildren,
+  cloneElement,
+  Children,
+  isValidElement,
 } from 'react';
 
-type RadioState = {
-  name: string;
+interface RadioState {
   selectedValue: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-};
+}
 
 const RadioGroupContext = createContext<RadioState | null>(null);
 
@@ -25,23 +24,32 @@ const useRadioContext = () => {
   return context;
 };
 
-type RadioGroupProps = PropsWithChildren<RadioState>;
+const passPropsToChildren = <T,>(children: ReactNode, props: T) =>
+  Children.map(children, (child) => {
+    if (isValidElement(child)) {
+      return cloneElement(child, { ...props });
+    }
+    return child;
+  });
+
+export interface RadioGroupProps extends RadioState {
+  name: string;
+  children: ReactNode;
+  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+}
 
 const RadioGroup = ({
+  selectedValue,
   name,
   children,
   onChange,
-  selectedValue,
-  ...props
+  ...restProps
 }: RadioGroupProps) => {
-  const values = useMemo(
-    () => ({ name, selectedValue, onChange }),
-    [name, selectedValue, onChange],
-  );
-
+  const state = { selectedValue };
+  const childrenProps = { name, onChange };
   return (
-    <RadioGroupContext.Provider value={values}>
-      <div {...props}>{children}</div>
+    <RadioGroupContext.Provider value={state}>
+      <div {...restProps}>{passPropsToChildren(children, childrenProps)}</div>
     </RadioGroupContext.Provider>
   );
 };
@@ -51,6 +59,8 @@ type OptionProps = {
   value: string;
   children: ReactNode;
   disabled?: boolean;
+  name?: string;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Option = ({ id, value, children, disabled, ...props }: OptionProps) => {
