@@ -35,6 +35,8 @@ module.exports = {
       namedComponents: 'arrow-function'
     }],
     'react/react-in-jsx-scope': 'off',
+    'react/require-default-props': 'off',
+    'react/jsx-no-constructed-context-values': 'off',
     'import/order': ['error', {
       groups: ['builtin', 'external', 'internal', 'index'],
       alphabetize: {
