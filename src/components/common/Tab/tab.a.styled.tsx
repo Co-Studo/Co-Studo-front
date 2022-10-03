@@ -7,7 +7,7 @@ const StyledTabList = styled(Tab.List)`
   gap: 20px;
 `;
 
-const StyledTabRoot = styled(Tab)`
+const StyledTab = styled(Tab)`
   cursor: pointer;
   
   * {
@@ -26,11 +26,9 @@ const StyledTabPanel = styled(Tab.Panel)`
   color: #939393;
 `;
 
-const StyledTab = Object.assign(StyledTabRoot, {
-  Group: Tab.Group,
-  List: StyledTabList,
-  Panels: Tab.Panels,
-  Panel: StyledTabPanel,
-})
+StyledTab.Group = Tab.Group;
+StyledTab.List = StyledTabList;
+StyledTab.Panels = Tab.Panels;
+StyledTab.Panel = StyledTabPanel;
 
 export default StyledTab;
