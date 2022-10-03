@@ -13,6 +13,7 @@ interface RadioState {
 }
 
 const RadioGroupContext = createContext<RadioState | null>(null);
+RadioGroupContext.displayName = 'RadioGroupContext';
 
 const useRadioContext = () => {
   const context = useContext(RadioGroupContext);
