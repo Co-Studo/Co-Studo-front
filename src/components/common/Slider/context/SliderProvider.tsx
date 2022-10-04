@@ -1,4 +1,4 @@
-import { ReactNode, useReducer } from 'react';
+import { ReactElement, useReducer } from 'react';
 
 import {
   reducer,
@@ -12,7 +12,7 @@ import {
 type SliderProviderProps = {
   options: SliderOptions;
   SlideLength: number;
-  children: ReactNode | ReactNode[];
+  children: ReactElement | ReactElement[];
 };
 
 const SliderProvider = ({

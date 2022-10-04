@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 import { css } from 'styled-components';
 
 import { SliderOptions } from '@components/common/Slider/context/SliderInfoContext';
@@ -10,7 +10,7 @@ import SlideList from '@components/common/Slider/SlideList';
 
 type SliderProps = {
   options?: Partial<SliderOptions>;
-  children: ReactNode | ReactNode[];
+  children: ReactElement | ReactElement[];
 };
 
 const defaultOptions = {
