@@ -14,19 +14,17 @@ const NextButton = ({ children, ...restProps }) => {
   const handleNextButtonClick = () => {
     if (disabled) return;
 
-    const increasedIndex =
-      currentIndex + slidesToScroll < limitIndex
-        ? slidesToScroll
-        : limitIndex - currentIndex;
+    throttle(() => {
+      const increasedIndex =
+        currentIndex + slidesToScroll < limitIndex
+          ? slidesToScroll
+          : limitIndex - currentIndex;
 
-    throttle(
-      () =>
-        dispatch({
-          type: 'INCREASE_CURRENT_INDEX',
-          slidesToScroll: increasedIndex,
-        }),
-      speed,
-    );
+      dispatch({
+        type: 'INCREASE_CURRENT_INDEX',
+        slidesToScroll: increasedIndex,
+      });
+    }, speed);
   };
 
   return (

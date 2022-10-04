@@ -13,19 +13,17 @@ const PrevButton = ({ children, ...restProps }) => {
   const handlePrevButtonClick = () => {
     if (disabled) return;
 
-    const decreasedIndex =
-      currentIndex - slidesToScroll > limitIndex
-        ? slidesToScroll
-        : currentIndex - limitIndex;
+    throttle(() => {
+      const decreasedIndex =
+        currentIndex - slidesToScroll > limitIndex
+          ? slidesToScroll
+          : currentIndex - limitIndex;
 
-    throttle(
-      () =>
-        dispatch({
-          type: 'DECREASE_CURRENT_INDEX',
-          slidesToScroll: decreasedIndex,
-        }),
-      speed,
-    );
+      dispatch({
+        type: 'DECREASE_CURRENT_INDEX',
+        slidesToScroll: decreasedIndex,
+      });
+    }, speed);
   };
 
   return (
