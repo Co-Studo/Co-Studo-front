@@ -1,12 +1,11 @@
 import { useSlideIndexContext } from '@components/common/Slider/context/SlideIndexContext';
-
 import { useSliderInfoContext } from '@components/common/Slider/context/SliderInfoContext';
 import throttle from '@utils/eventDelay';
 
 const NextButton = ({ children, ...restProps }) => {
   const [{ currentIndex }, dispatch] = useSlideIndexContext();
   const {
-    options: { slidesToShow, slidesToScroll, arrows, speed },
+    options: { slidesToShow, slidesToScroll, speed },
     SlideLength,
   } = useSliderInfoContext();
   const limitIndex = SlideLength - slidesToShow;
@@ -30,7 +29,7 @@ const NextButton = ({ children, ...restProps }) => {
     );
   };
 
-  return arrows ? (
+  return (
     <button
       type="button"
       onClick={handleNextButtonClick}
@@ -39,7 +38,7 @@ const NextButton = ({ children, ...restProps }) => {
     >
       {children}
     </button>
-  ) : null;
+  );
 };
 
 export default NextButton;

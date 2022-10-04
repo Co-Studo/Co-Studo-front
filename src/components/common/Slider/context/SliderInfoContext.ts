@@ -4,7 +4,6 @@ export type SliderOptions = {
   slidesToShow: number;
   slidesToScroll: number;
   slidesMargin: string;
-  arrows: boolean;
   speed: number;
   initialSlide: number;
 };

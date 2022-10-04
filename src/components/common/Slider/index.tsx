@@ -17,7 +17,6 @@ const defaultOptions = {
   slidesToShow: 1,
   slidesToScroll: 1,
   slidesMargin: '0px',
-  arrows: true,
   speed: 1000,
   initialSlide: 0,
 };

@@ -1,12 +1,11 @@
 import { useSlideIndexContext } from '@components/common/Slider/context/SlideIndexContext';
-
 import { useSliderInfoContext } from '@components/common/Slider/context/SliderInfoContext';
 import throttle from '@utils/eventDelay';
 
 const PrevButton = ({ children, ...restProps }) => {
   const [{ currentIndex }, dispatch] = useSlideIndexContext();
   const {
-    options: { slidesToScroll, arrows, speed },
+    options: { slidesToScroll, speed },
   } = useSliderInfoContext();
   const limitIndex = 0;
   const disabled = currentIndex <= limitIndex;
@@ -29,7 +28,7 @@ const PrevButton = ({ children, ...restProps }) => {
     );
   };
 
-  return arrows ? (
+  return (
     <button
       type="button"
       onClick={handlePrevButtonClick}
@@ -38,7 +37,7 @@ const PrevButton = ({ children, ...restProps }) => {
     >
       {children}
     </button>
-  ) : null;
+  );
 };
 
 export default PrevButton;
