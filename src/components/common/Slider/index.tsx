@@ -27,12 +27,8 @@ const Slider = ({ options = defaultOptions, children }: SliderProps) => {
   const getSlideLength = () => {
     const Children = Array.isArray(children) ? children : [children];
     const slideList = Children.find((child) => {
-      if (
-        child?.type.name === 'SlideList' ||
-        child?.type.target.name === 'SlideList'
-      )
-        return true;
-      return false;
+      if (typeof child.type === 'string') return false;
+      return child?.type.name === 'SlideList';
     });
     const SlideLength = slideList ? slideList.props.children.length : 0;
 

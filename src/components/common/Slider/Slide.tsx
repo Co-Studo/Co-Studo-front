@@ -1,6 +1,6 @@
-import { useSlideIndexContext } from '@components/common/Slider/context/SlideIndexContext';
 import { css } from 'styled-components';
 
+import { useSlideIndexContext } from '@components/common/Slider/context/SlideIndexContext';
 import { useSliderInfoContext } from '@components/common/Slider/context/SliderInfoContext';
 
 const Slide = ({ children, ...restProps }) => {
