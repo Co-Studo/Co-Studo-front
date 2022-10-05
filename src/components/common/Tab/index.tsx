@@ -10,10 +10,10 @@ import {
   ReactElement,
 } from 'react';
 
-type TabState = {
-  activeIndex: number;
-  activateTab: Dispatch<SetStateAction<number>>;
-};
+type TabState = [
+  activeIndex: number,
+  setActiveIndex: Dispatch<SetStateAction<number>>,
+];
 
 const TabContext = createContext<TabState | null>(null);
 TabContext.displayName = 'TabContext';
@@ -32,12 +32,10 @@ type TabGroupProps = {
 };
 
 const TabGroup = ({ defaultIndex, children, ...restProps }: TabGroupProps) => {
-  const [activeIndex, activateTab] = useState(defaultIndex || 0);
-
-  const value = { activeIndex, activateTab };
+  const activeIndexState = useState(defaultIndex || 0);
 
   return (
-    <TabContext.Provider value={value}>
+    <TabContext.Provider value={activeIndexState}>
       <div {...restProps}>{children}</div>
     </TabContext.Provider>
   );
@@ -63,10 +61,10 @@ type TabPropsType = {
 };
 
 const Tab = ({ tabId, children, ...restProps }: TabPropsType) => {
-  const { activeIndex, activateTab } = useTabContext();
-
+  const [activeIndex, setActiveIndex] = useTabContext();
   const isActive = activeIndex === tabId;
-  const handleTabClick = () => tabId !== undefined && activateTab(tabId);
+
+  const handleTabClick = () => tabId !== undefined && setActiveIndex(tabId);
 
   return (
     <li {...restProps} data-selected={isActive}>
@@ -97,8 +95,7 @@ type TabPanelProps = {
 };
 
 const TabPanel = ({ tabId, children, ...restProps }: TabPanelProps) => {
-  const { activeIndex } = useTabContext();
-
+  const [activeIndex] = useTabContext();
   const isActive = activeIndex === tabId;
 
   return isActive ? <div {...restProps}>{children}</div> : null;
