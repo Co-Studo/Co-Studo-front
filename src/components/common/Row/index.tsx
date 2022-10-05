@@ -9,15 +9,20 @@ type RowProps = {
   right?: ReactElement;
 };
 
-const Row = ({ title, description, left, right }: RowProps) => (
-  <S.Container>
-    <S.Box>{left}</S.Box>
-    <S.Main>
-      <S.Box>{title}</S.Box>
-      <S.Box>{description}</S.Box>
-    </S.Main>
-    <S.Box>{right}</S.Box>
-  </S.Container>
-);
+const Row = ({ title, description, left, right }: RowProps) => {
+  const isString = (prop) => prop && typeof prop === 'string';
+  const wrapString = (prop) => isString(prop) && <S.Box>{prop}</S.Box>; // TODO: Text 컴포넌트로 교체
+
+  return (
+    <S.Container>
+      {left}
+      <S.Main>
+        {isString(title) ? wrapString(title) : title}
+        {isString(description) ? wrapString(description) : description}
+      </S.Main>
+      {right}
+    </S.Container>
+  );
+};
 
 export default Row;
