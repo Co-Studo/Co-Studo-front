@@ -1,12 +1,12 @@
-import { ReactNode } from 'react';
+import { ReactElement } from 'react';
 
 import * as S from '@components/common/Row/row.styled';
 
 type RowProps = {
-  title: ReactNode;
-  description: ReactNode;
-  left: ReactNode;
-  right: ReactNode;
+  title: ReactElement | string;
+  description?: ReactElement | string;
+  left?: ReactElement;
+  right?: ReactElement;
 };
 
 const Row = ({ title, description, left, right }: RowProps) => (
