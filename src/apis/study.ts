@@ -1,18 +1,21 @@
 import http from '@apis/http';
 import { UserEntity } from '@apis/user';
 
-type TechStackEntity = {
+type TagEntity = {
   id: number;
   name: string;
-  imageUrl: string;
 };
 
 export type StudyEntity = {
   id: number;
-  users: UserEntity[];
+  owner: UserEntity;
+  participants: UserEntity[];
   title: string;
   description?: string;
-  techStacks: TechStackEntity[];
+  tags: TagEntity[];
+  isPublic: boolean;
+  isRecruiting: boolean;
+  isBookmarked: boolean;
   checkInRangeStart?: string;
   checkInRangeEnd: string;
   checkOutRangeStart?: string;
@@ -20,6 +23,6 @@ export type StudyEntity = {
 };
 
 export const fetchMyStudies = () =>
-  http.get<StudyEntity[]>(`__API_END_POINT__/api/study/mine`, {
+  http.get<StudyEntity[]>(`__API_END_POINT__/study/mine`, {
     withCredentials: true,
   });
