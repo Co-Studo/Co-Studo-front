@@ -6,3 +6,6 @@ coverage/
 .env
 # Local Netlify folder
 .netlify
+
+# storybook
+build-storybook.log
