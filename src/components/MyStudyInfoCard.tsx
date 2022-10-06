@@ -10,11 +10,11 @@ import Paper from '@components/common/Paper';
 import Row from '@components/common/Row';
 import colors from '@theme/colors';
 
-type StudyInfoProps = {
+type MyStudyInfoCardProps = {
   study: StudyEntity;
 };
 
-const StudyInfo = ({ study }: StudyInfoProps) => {
+const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => {
   const bookmarkCss = css`
     color: ${({ theme }) =>
       study.isBookmarked ? theme.palette.primary : colors.grey300};
@@ -103,4 +103,4 @@ const StudyInfo = ({ study }: StudyInfoProps) => {
   );
 };
 
-export default StudyInfo;
+export default MyStudyInfoCard;

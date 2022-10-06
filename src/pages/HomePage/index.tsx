@@ -4,7 +4,7 @@ import { css } from 'styled-components';
 import { fetchMyStudies } from '@apis/study';
 import BigText from '@components/BigText';
 import PageLayout from '@components/common/PageLayout';
-import StudyInfo from '@components/StudyInfo';
+import MyStudyInfoCard from '@components/MyStudyInfoCard';
 
 // Paper List -> Carousel 가능성
 
@@ -23,7 +23,7 @@ const HomePage: React.FC = () => {
         `}
       >
         {data?.results?.map((study) => (
-          <StudyInfo key={study.id} study={study} />
+          <MyStudyInfoCard key={study.id} study={study} />
         ))}
       </ul>
     </PageLayout>
