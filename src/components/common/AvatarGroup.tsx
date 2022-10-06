@@ -8,6 +8,7 @@ type AvatarGropProps = {
   children: ReactNode;
   max?: number;
   total?: number;
+  flexAlign?: 'flex-start' | 'center' | 'flex-end';
 };
 
 const AvatarGroupAvatar = styled(Avatar)`
@@ -25,10 +26,11 @@ const AvatarGroup: React.FC<AvatarGropProps> = (props) => {
     children: childrenProp,
     max = 5,
     total = Children.count(childrenProp),
+    flexAlign = 'center',
   } = props;
 
   const theme = useTheme();
-  
+
   // child.props 처럼 props 속성을 사용하기 위해 as 사용
   const children = Children.toArray(childrenProp) as ReactElement[];
 
@@ -37,7 +39,7 @@ const AvatarGroup: React.FC<AvatarGropProps> = (props) => {
       <div
         css={css`
           display: flex;
-          align-items: center;
+          align-items: ${flexAlign};
         `}
       >
         {children.slice(0, max).map((child, index) => {
