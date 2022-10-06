@@ -1,12 +1,16 @@
+import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '@theme/theme';
 import GlobalStyle from '@theme/GlobalStyle';
 
+// msw init
+initialize();
+
 export const decorators = [
   (Story) => {
-    const isDarkMode =
-      window.matchMedia &&
-      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isDarkMode = false;
+    // window.matchMedia &&
+    // window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     return (
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
@@ -15,6 +19,7 @@ export const decorators = [
       </ThemeProvider>
     );
   },
+  mswDecorator,
 ];
 
 export const parameters = {
