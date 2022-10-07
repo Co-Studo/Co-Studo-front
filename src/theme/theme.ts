@@ -2,11 +2,12 @@ import { DefaultTheme } from 'styled-components';
 
 import colors from './colors';
 
-export type PaletteOption = 'primary' | 'warning' | 'github';
+export type PaletteOption = 'primary' | 'warning' | 'github' | 'danger';
 
 export interface IPaletteOptions {
   primary: string;
   warning: string;
+  danger: string;
   github: string;
 }
 
@@ -23,7 +24,8 @@ export interface ITheme extends DefaultTheme {
 
 const darkPalette: IPalette = {
   primary: colors.blue650,
-  warning: colors.red450,
+  warning: colors.yellow600,
+  danger: colors.red450,
   github: colors.black,
   bgColor: colors.grey900,
   fontColor: colors.white,
@@ -33,7 +35,8 @@ const darkPalette: IPalette = {
 
 const lightPalette: IPalette = {
   primary: colors.blue650,
-  warning: colors.red450,
+  warning: colors.yellow600,
+  danger: colors.red450,
   github: colors.black,
   bgColor: colors.grey100,
   fontColor: colors.black,
