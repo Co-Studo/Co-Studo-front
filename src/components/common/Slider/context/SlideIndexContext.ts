@@ -1,6 +1,6 @@
 import { createContext, Dispatch, useContext } from 'react';
 
-type SlideIndexContextValues = {
+type SlideIndexState = {
   currentIndex: number;
 };
 
@@ -9,8 +9,10 @@ type SlideIndexAction = {
   slidesToScroll: number;
 };
 
+type SlideIndexContextValues = [SlideIndexState, Dispatch<SlideIndexAction>];
+
 export const reducer = (
-  { currentIndex }: SlideIndexContextValues,
+  { currentIndex }: SlideIndexState,
   action: SlideIndexAction,
 ) => {
   const { type, slidesToScroll } = action;
@@ -26,9 +28,8 @@ export const reducer = (
 };
 
 export const SlideIndexContext =
-  createContext<[SlideIndexContextValues, Dispatch<SlideIndexAction>] | null>(
-    null,
-  );
+  createContext<SlideIndexContextValues | null>(null);
+SlideIndexContext.displayName = 'SlideIndexContext';
 
 export const useSlideIndexContext = () => {
   const context = useContext(SlideIndexContext);

@@ -8,12 +8,14 @@ export type SliderOptions = {
   initialSlide: number;
 };
 
-type SliderInfoState = {
+type SliderInfoContextValue = {
   options: SliderOptions;
   SlideLength: number;
 };
 
-export const SliderInfoContext = createContext<SliderInfoState | null>(null);
+export const SliderInfoContext =
+  createContext<SliderInfoContextValue | null>(null);
+SliderInfoContext.displayName = 'SliderInfoContext';
 
 export const useSliderInfoContext = () => {
   const context = useContext(SliderInfoContext);
