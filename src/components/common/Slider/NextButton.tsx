@@ -14,23 +14,21 @@ const NextButton = ({ children, ...restProps }) => {
   const handleNextButtonClick = () => {
     if (disabled) return;
 
-    throttle(() => {
-      const increasedIndex =
-        currentIndex + slidesToScroll < limitIndex
-          ? slidesToScroll
-          : limitIndex - currentIndex;
+    const increasedIndex =
+      currentIndex + slidesToScroll < limitIndex
+        ? slidesToScroll
+        : limitIndex - currentIndex;
 
-      dispatch({
-        type: 'INCREASE_CURRENT_INDEX',
-        slidesToScroll: increasedIndex,
-      });
-    }, speed);
+    dispatch({
+      type: 'INCREASE_CURRENT_INDEX',
+      slidesToScroll: increasedIndex,
+    });
   };
 
   return (
     <button
       type="button"
-      onClick={handleNextButtonClick}
+      onClick={throttle(handleNextButtonClick, speed)}
       disabled={disabled}
       {...restProps}
     >

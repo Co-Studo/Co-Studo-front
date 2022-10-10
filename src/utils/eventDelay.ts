@@ -1,15 +1,15 @@
-const throttle = (() => {
+const throttle = (callback: (args) => void, limit = 100) => {
   let waiting = false;
 
-  return (callback: () => void, limit = 100) => {
+  return (...args) => {
     if (waiting) return;
 
-    callback();
+    callback(args);
     waiting = true;
     setTimeout(() => {
       waiting = false;
     }, limit);
   };
-})();
+};
 
 export default throttle;
