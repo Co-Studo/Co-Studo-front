@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
-import { css } from 'styled-components';
 
 import { fetchLogout } from '@apis/user';
+import Avatar from '@components/common/Avatar';
 import Dropdown from '@components/common/Dropdown';
 import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
 import useFetchMeInterval from '@queries/useFetchMeInterval';
@@ -21,12 +21,7 @@ const UserInfoCircle: React.FC<{ setIsLogin: (isLogin: boolean) => void }> = ({
     <Dropdown>
       <Dropdown.Trigger
         trigger={
-          <img
-            css={css`
-              width: 2.4rem;
-              height: 2.4rem;
-              border-radius: 1.2rem;
-            `}
+          <Avatar
             src={data?.results?.avatarUrl}
             alt={data?.results?.nickname}
           />

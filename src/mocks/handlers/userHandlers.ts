@@ -34,7 +34,7 @@ const logout = (_, res, ctx) =>
   );
 
 export default [
-  rest.get('/api/user/githubLogin', githubLogin),
-  rest.get('/api/user/me', getMe),
-  rest.get('/api/user/logout', logout),
+  rest.get('/user/githubLogin', githubLogin),
+  rest.get('/user/me', getMe),
+  rest.get('/user/logout', logout),
 ];

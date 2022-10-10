@@ -6,12 +6,13 @@ const PageLayout: React.FC<{ children: ReactNode; sx?: object }> = (props) => {
   return (
     <main
       css={{
+        marginTop: '9rem',
+        marginLeft: '2rem',
+        marginRight: '2rem',
         width: '100vw',
-        height: '100vh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center',
         ...sx,
       }}
       {...props}
