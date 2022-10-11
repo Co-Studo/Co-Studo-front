@@ -4,12 +4,15 @@ import { useNavigate } from 'react-router-dom';
 
 import StyledButton from '@components/common/Button/button.styled';
 import { login } from '@fbase/auth';
+import useLocalStorage from '@hooks/useLocalStorage';
 
 const GithubLoginButton: React.FC = () => {
+  const [, setIsLogin] = useLocalStorage('isLogin', false);
   const navigate = useNavigate();
 
   const handleGithubLoginClick = async () => {
     await login({ authProvider: 'github' });
+    setIsLogin(true);
     navigate('/');
   };
 
