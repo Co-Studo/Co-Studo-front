@@ -1,25 +1,23 @@
 import { brands } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useNavigate } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import StyledButton from '@components/common/Button/button.styled';
+import { login, setMe } from '@fbase/auth';
+import useLocalStorage from '@hooks/useLocalStorage';
+import { userState } from '@store/user';
 
 const GithubLoginButton: React.FC = () => {
+  const navigate = useNavigate();
+  const [, setIsLogin] = useLocalStorage('isLogin', false);
+  const setUser = useSetRecoilState(userState);
+
   const handleGithubLoginClick = async () => {
-    const githubAuthUrl = 'https://github.com/login/oauth/authorize';
-    const redirectUri = `__HOME_PAGE__/callback`;
-
-    if (!process.env.CLIENT_ID) {
-      throw new Error('Cannot find client id');
-    }
-    const queryConfig = {
-      client_id: process.env.CLIENT_ID,
-      redirect_uri: redirectUri,
-    };
-
-    const searchParamsObj = new URLSearchParams(queryConfig);
-    const queryString = `?${searchParamsObj.toString()}`;
-    const githubLoginUrl = githubAuthUrl + queryString;
-    window.location.href = githubLoginUrl;
+    await login({ authProvider: 'github' });
+    setIsLogin(true);
+    setMe({ setUser });
+    navigate('/');
   };
 
   return (

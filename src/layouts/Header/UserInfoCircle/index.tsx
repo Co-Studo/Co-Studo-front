@@ -1,31 +1,23 @@
-import { useMutation } from '@tanstack/react-query';
+import { useRecoilState } from 'recoil';
 
-import { fetchLogout } from '@apis/user';
 import Avatar from '@components/common/Avatar';
 import Dropdown from '@components/common/Dropdown';
 import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
-import useFetchMeInterval from '@queries/useFetchMeInterval';
+import { logout } from '@fbase/auth';
+import { userState } from '@store/user';
 
-const UserInfoCircle: React.FC<{ setIsLogin: (isLogin: boolean) => void }> = ({
-  setIsLogin,
-}) => {
-  const { data } = useFetchMeInterval();
-  const logoutMutation = useMutation(fetchLogout);
+const UserInfoCircle = ({ setIsLogin }) => {
+  const [user] = useRecoilState(userState);
 
   const handleLogoutClick = () => {
     setIsLogin(false);
-    logoutMutation.mutate();
+    logout();
   };
 
   return (
     <Dropdown>
       <Dropdown.Trigger
-        trigger={
-          <Avatar
-            src={data?.results?.avatarUrl}
-            alt={data?.results?.nickname}
-          />
-        }
+        trigger={<Avatar src={user?.photoURL || ''} alt="" />}
       />
       <StyledDropdown.List transformOrigin="right">
         <StyledDropdown.Item onClick={handleLogoutClick}>

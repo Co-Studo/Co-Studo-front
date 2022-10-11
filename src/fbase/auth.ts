@@ -10,8 +10,8 @@ import app from '@fbase/app';
 type AuthProvider = 'github' | 'email';
 
 type LoginInput = {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
   authProvider: AuthProvider;
 };
 
@@ -22,6 +22,12 @@ export const login = ({ email, password, authProvider }: LoginInput) => {
     const provider = new GithubAuthProvider();
     return signInWithPopup(auth, provider);
   }
+  if (!email) {
+    throw new Error('Email is required.');
+  }
+  if (!password) {
+    throw new Error('Password is required.');
+  }
   return signInWithEmailAndPassword(auth, email, password);
 };
 
@@ -29,4 +35,12 @@ export const logout = () => {
   auth.signOut();
 };
 
-export const getMe = () => auth.currentUser;
+export const setMe = ({ setUser }) => {
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      setUser(user);
+    } else {
+      setUser(null);
+    }
+  });
+};
