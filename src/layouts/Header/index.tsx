@@ -7,7 +7,7 @@ import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
 import colors from '@theme/colors';
 
-const Header: React.FC = () => {
+const Header = () => {
   const user = useMe();
   const navigate = useNavigate();
 

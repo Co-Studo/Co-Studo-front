@@ -7,6 +7,4 @@ export default {
   component: LoginPage,
 } as ComponentMeta<typeof LoginPage>;
 
-export const Default: ComponentStory<typeof LoginPage> = (args) => (
-  <LoginPage {...args} />
-);
+export const Default: ComponentStory<typeof LoginPage> = () => <LoginPage />;

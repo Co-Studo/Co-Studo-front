@@ -6,7 +6,7 @@ import StyledButton from '@components/common/Button/button.styled';
 import { login } from '@fbase/auth';
 import useLocalStorage from '@hooks/useLocalStorage';
 
-const GithubLoginButton: React.FC = () => {
+const GithubLoginButton = () => {
   const [, setIsLogin] = useLocalStorage('isLogin', false);
   const navigate = useNavigate();
 
