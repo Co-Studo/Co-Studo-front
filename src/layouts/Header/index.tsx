@@ -1,5 +1,7 @@
+import { useNavigate } from 'react-router-dom';
 import { css } from 'styled-components';
 
+import StyledButton from '@components/common/Button/button.styled';
 import useLocalStorage from '@hooks/useLocalStorage';
 import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
@@ -11,6 +13,11 @@ const initIsLogin = process.env.NODE_ENV === 'development';
 
 const Header: React.FC = () => {
   const [isLogin, setIsLogin] = useLocalStorage('isLogin', initIsLogin);
+  const navigate = useNavigate();
+
+  const handleStudyCreateButtonClick = () => {
+    navigate('/study/create');
+  };
 
   return (
     <header
@@ -38,7 +45,10 @@ const Header: React.FC = () => {
       >
         Co Studo
       </h1>
-      <div>
+      <div css={{ display: 'flex', alignItems: 'center' }}>
+        <StyledButton onClick={handleStudyCreateButtonClick}>
+          스터디 생성
+        </StyledButton>
         {isLogin ? (
           <UserInfoErrorBoundary>
             <UserInfoCircle setIsLogin={setIsLogin} />
