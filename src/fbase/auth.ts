@@ -3,7 +3,9 @@ import {
   GithubAuthProvider,
   signInWithEmailAndPassword,
   signInWithPopup,
+  User,
 } from 'firebase/auth';
+import { useEffect, useState } from 'react';
 
 import app from '@fbase/app';
 
@@ -35,12 +37,15 @@ export const logout = () => {
   auth.signOut();
 };
 
-export const setMe = ({ setUser }) => {
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      setUser(null);
-    }
-  });
+export const useMe = () => {
+  const [me, setMe] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setMe(user);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return me;
 };

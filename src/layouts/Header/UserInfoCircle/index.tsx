@@ -1,23 +1,28 @@
-import { useRecoilState } from 'recoil';
+import { User } from 'firebase/auth';
 
 import Avatar from '@components/common/Avatar';
 import Dropdown from '@components/common/Dropdown';
 import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
 import { logout } from '@fbase/auth';
-import { userState } from '@store/user';
 
-const UserInfoCircle = ({ setIsLogin }) => {
-  const [user] = useRecoilState(userState);
+type UserInfoCircleProps = {
+  user: User;
+};
 
+const UserInfoCircle = ({ user }: UserInfoCircleProps) => {
   const handleLogoutClick = () => {
-    setIsLogin(false);
     logout();
   };
 
   return (
     <Dropdown>
       <Dropdown.Trigger
-        trigger={<Avatar src={user?.photoURL || ''} alt="" />}
+        trigger={
+          <Avatar
+            src={user.photoURL || ''}
+            alt={user.displayName || 'no display name'}
+          />
+        }
       />
       <StyledDropdown.List transformOrigin="right">
         <StyledDropdown.Item onClick={handleLogoutClick}>
