@@ -1,5 +1,5 @@
 import PageLayout from '@components/common/PageLayout';
-import GithubLoginButton from '@pages/LoginPage/GithubLoginButton';
+import GithubLoginButton from '@components/GithubLoginButton';
 
 const LoginPage = () => (
   <PageLayout>

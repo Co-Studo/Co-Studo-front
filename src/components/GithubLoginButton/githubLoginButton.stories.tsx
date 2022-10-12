@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import GithubLoginButton from '.';
 
 export default {
-  title: 'Login Page/GithubLoginButton',
+  title: 'Button/GithubLoginButton',
   component: GithubLoginButton,
   args: {},
 } as ComponentMeta<typeof GithubLoginButton>;
