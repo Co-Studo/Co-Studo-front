@@ -2,6 +2,7 @@ import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeProvider } from 'styled-components';
 import { darkTheme, lightTheme } from '@theme/theme';
 import GlobalStyle from '@theme/GlobalStyle';
+import { BrowserRouter } from 'react-router-dom';
 
 // msw init
 initialize();
@@ -15,7 +16,9 @@ export const decorators = [
     return (
       <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
         <GlobalStyle />
-        <Story />
+        <BrowserRouter>
+          <Story />
+        </BrowserRouter>
       </ThemeProvider>
     );
   },
