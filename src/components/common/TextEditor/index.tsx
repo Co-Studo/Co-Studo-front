@@ -1,6 +1,6 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { forwardRef, useImperativeHandle, useMemo, useRef } from 'react';
+import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import * as React from 'react';
 import ReactQuill from 'react-quill';
 import { css } from 'styled-components';
@@ -32,7 +32,7 @@ const toolbarOptions = [
   ['clean'], // toolbar 설정 초기화 설정
 ];
 
-export const formats = [
+const formats = [
   'header',
   'font',
   'size',
@@ -153,4 +153,4 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
   },
 );
 
-export default TextEditor;
+export default memo(TextEditor);
