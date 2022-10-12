@@ -6,26 +6,32 @@ const GlobalStyle = createGlobalStyle`
   html {
     font-family: Roboto, NotoSansKR;
   }
-  *{
+
+  * {
     box-sizing: border-box;
   }
-  button{
-    margin:0;
-    padding:0;
-    border:none;
-    background-color:inherit;
+
+  button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background-color: inherit;
     border-radius: inherit;
-    cursor:pointer;
+    cursor: pointer;
+    font: inherit;
   }
-  input{
-    border:none;
-    border-radius:inherit;
-    margin:0;
-    padding:0;
-    :focus-visible{
-      outline:none;
+
+  input {
+    border: none;
+    border-radius: inherit;
+    margin: 0;
+    padding: 0;
+
+    :focus-visible {
+      outline: none;
     }
   }
+
   input[type="file"] {
     position: absolute;
     width: 0;
@@ -34,24 +40,28 @@ const GlobalStyle = createGlobalStyle`
     overflow: hidden;
     border: 0;
   }
-  textarea{
-    margin:0;
-    padding:0;
-    border:none;
-    height:auto;
-    max-width:100%;
-    background-color:inherit;
-    border-radius:inherit;
-    color:inherit;
-    :focus-visible{
-      outline:none;
+
+  textarea {
+    margin: 0;
+    padding: 0;
+    border: none;
+    height: auto;
+    max-width: 100%;
+    background-color: inherit;
+    border-radius: inherit;
+    color: inherit;
+
+    :focus-visible {
+      outline: none;
     }
   }
-  a{
-    color:inherit;
-    text-decoration:none;
+
+  a {
+    color: inherit;
+    text-decoration: none;
   }
-  body{
+
+  body {
     background-color: ${({ theme }) => theme.palette.bgColor};
     color: ${({ theme }) => theme.palette.fontColor};
   }
