@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
 import StyledButton from '@components/common/Button/button.styled';
-// import { login } from '@fbase/auth';
+import { login } from '@fbase/auth';
 import useLocalStorage from '@hooks/useLocalStorage';
 
 const GithubLoginButton = () => {
@@ -11,7 +11,7 @@ const GithubLoginButton = () => {
   const navigate = useNavigate();
 
   const handleGithubLoginClick = async () => {
-    // await login({ authProvider: 'github' });
+    await login({ authProvider: 'github' });
     setIsLogin(true);
     navigate('/');
   };
