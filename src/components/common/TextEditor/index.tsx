@@ -1,11 +1,14 @@
 import 'react-quill/dist/quill.snow.css';
 
+import ImageResize from 'quill-image-resize-module-react';
 import { forwardRef, memo, useImperativeHandle, useMemo, useRef } from 'react';
 import * as React from 'react';
-import ReactQuill from 'react-quill';
+import ReactQuill, { Quill } from 'react-quill';
 import { css } from 'styled-components';
 
 import { getImageUrl } from '@apis/image';
+
+Quill.register("modules/imageResize", ImageResize);
 
 const editorStyle = css`
   * {
@@ -131,6 +134,10 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
           handlers: {
             image: handleImage,
           },
+        },
+        imageResize: {
+          parchment: Quill.import('parchment'),
+          modules: ['Resize', 'DisplaySize', 'Toolbar'],
         },
       }),
       [],
