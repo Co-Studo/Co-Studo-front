@@ -112,6 +112,8 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
           const editor = editorRef.current.getEditor();
 
           const { index = 0 } = editor.getSelection() || {};
+
+          editor.removeFormat(index, 0);
           const loadingText = `${index !== 0 ? '\n' : ''}Uploading image...`;
           editor.insertText(index, loadingText);
 
@@ -144,7 +146,7 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
     );
 
     return (
-      <div css={{ ...editorStyle, width }}>
+      <div css={editorStyle} style={{ width }}>
         <ReactQuill
           ref={editorRef}
           theme="snow"
