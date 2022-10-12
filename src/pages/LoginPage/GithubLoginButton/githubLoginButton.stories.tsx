@@ -8,6 +8,6 @@ export default {
   args: {},
 } as ComponentMeta<typeof GithubLoginButton>;
 
-export const Default: ComponentStory<typeof GithubLoginButton> = (args) => (
-  <GithubLoginButton {...args} />
+export const Default: ComponentStory<typeof GithubLoginButton> = () => (
+  <GithubLoginButton />
 );
