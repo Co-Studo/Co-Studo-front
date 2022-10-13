@@ -1,16 +1,19 @@
+import { useNavigate } from 'react-router-dom';
 import { css } from 'styled-components';
 
-import useLocalStorage from '@hooks/useLocalStorage';
+import StyledButton from '@components/common/Button/button.styled';
+import { useMe } from '@fbase/auth';
 import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
-import UserInfoErrorBoundary from '@layouts/Header/UserInfoCircle/UserInfoErrorBoundary';
 import colors from '@theme/colors';
 
-// 개발 환경 중일 때는 로그인으로 시작
-const initIsLogin = process.env.NODE_ENV === 'development';
+const Header = () => {
+  const user = useMe();
+  const navigate = useNavigate();
 
-const Header: React.FC = () => {
-  const [isLogin, setIsLogin] = useLocalStorage('isLogin', initIsLogin);
+  const handleStudyCreateButtonClick = () => {
+    navigate('/study/create');
+  };
 
   return (
     <header
@@ -38,14 +41,11 @@ const Header: React.FC = () => {
       >
         Co Studo
       </h1>
-      <div>
-        {isLogin ? (
-          <UserInfoErrorBoundary>
-            <UserInfoCircle setIsLogin={setIsLogin} />
-          </UserInfoErrorBoundary>
-        ) : (
-          <AnonymousCircle />
-        )}
+      <div css={{ display: 'flex', alignItems: 'center' }}>
+        <StyledButton onClick={handleStudyCreateButtonClick}>
+          스터디 생성
+        </StyledButton>
+        {user ? <UserInfoCircle user={user} /> : <AnonymousCircle />}
       </div>
     </header>
   );

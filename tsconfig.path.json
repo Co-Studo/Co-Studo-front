@@ -12,7 +12,8 @@
       "@apis/*": ["src/apis/*"],
       "@mocks/*": ["src/mocks/*"],
       "@assets/*": ["src/assets/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@fbase/*": ["src/fbase/*"]
     }
   }
 }

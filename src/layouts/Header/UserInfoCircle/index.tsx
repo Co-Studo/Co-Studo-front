@@ -1,20 +1,21 @@
-import { useMutation } from '@tanstack/react-query';
+import { User } from 'firebase/auth';
 
-import { fetchLogout } from '@apis/user';
 import Avatar from '@components/common/Avatar';
 import Dropdown from '@components/common/Dropdown';
 import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
-import useFetchMeInterval from '@queries/useFetchMeInterval';
+import { logout } from '@fbase/auth';
+import useLocalStorage from '@hooks/useLocalStorage';
 
-const UserInfoCircle: React.FC<{ setIsLogin: (isLogin: boolean) => void }> = ({
-  setIsLogin,
-}) => {
-  const { data } = useFetchMeInterval();
-  const logoutMutation = useMutation(fetchLogout);
+type UserInfoCircleProps = {
+  user: User;
+};
+
+const UserInfoCircle = ({ user }: UserInfoCircleProps) => {
+  const [, setIsLogin] = useLocalStorage('isLogin', false);
 
   const handleLogoutClick = () => {
     setIsLogin(false);
-    logoutMutation.mutate();
+    logout();
   };
 
   return (
@@ -22,8 +23,8 @@ const UserInfoCircle: React.FC<{ setIsLogin: (isLogin: boolean) => void }> = ({
       <Dropdown.Trigger
         trigger={
           <Avatar
-            src={data?.results?.avatarUrl}
-            alt={data?.results?.nickname}
+            src={user.photoURL || ''}
+            alt={user.displayName || 'no display name'}
           />
         }
       />

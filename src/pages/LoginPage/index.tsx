@@ -1,7 +1,7 @@
 import PageLayout from '@components/common/PageLayout';
-import GithubLoginButton from '@pages/LoginPage/GithubLoginButton';
+import GithubLoginButton from '@components/GithubLoginButton';
 
-const LoginPage: React.FC = () => (
+const LoginPage = () => (
   <PageLayout>
     <h1>Login Page !</h1>
     <GithubLoginButton />
