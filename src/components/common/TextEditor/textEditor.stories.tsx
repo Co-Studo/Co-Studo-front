@@ -29,7 +29,7 @@ export const Default: ComponentStory<typeof TextEditor> = () => {
         flexDirection: 'column',
         alignItems: 'flex-end',
         gap: '8px',
-        width: 'fit-content',
+        width: '90vw',
       }}
     >
       <TextEditor ref={editorRef} />

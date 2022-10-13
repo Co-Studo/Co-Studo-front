@@ -6,11 +6,13 @@ import * as React from 'react';
 import ReactQuill, { Quill } from 'react-quill';
 import { css } from 'styled-components';
 
-import { getImageUrl } from '@apis/image';
+import { uploadImage } from '@apis/image';
 
 Quill.register("modules/imageResize", ImageResize);
 
 const editorStyle = css`
+  max-width: 1180px;
+  
   * {
     font-weight: revert;
     font-style: revert;
@@ -58,15 +60,15 @@ const formats = [
 
 export type TextEditorOptions = {
   width?: string;
-  editAreaHeight?: string;
+  editingAreaHeight?: string;
   defaultValue?: string;
   readOnly?: boolean;
   placeholder?: string;
 };
 
 const defaultEditorOptions: TextEditorOptions = {
-  width: '800px',
-  editAreaHeight: '300px',
+  width: '100%',
+  editingAreaHeight: '30rem',
   defaultValue: '',
   readOnly: false,
   placeholder: '',
@@ -83,7 +85,7 @@ export type TextEditorHandle = {
 const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
   (
     {
-      options: { width, editAreaHeight, ...restOptions } = defaultEditorOptions,
+      options: { width, editingAreaHeight, ...restOptions } = defaultEditorOptions,
     },
     ref,
   ) => {
@@ -111,19 +113,19 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
         if (editorRef.current) {
           const editor = editorRef.current.getEditor();
 
-          const { index = 0 } = editor.getSelection() || {};
+          const { index = 0 } = editor.getSelection() || {}; // 현재 커서 위치 가져오기
 
-          editor.removeFormat(index, 0);
+          editor.removeFormat(index, 0); // 에디터에 적용되어있는 스타일 제거
           const loadingText = `${index !== 0 ? '\n' : ''}Uploading image...`;
-          editor.insertText(index, loadingText);
+          editor.insertText(index, loadingText); // 로딩 텍스트 삽입
 
           if (file) {
             const {
               results: { imageUrl },
-            } = await getImageUrl(file[0]);
-            editor.deleteText(index, 19);
-            editor.insertEmbed(index, 'image', imageUrl);
-            editor.setSelection(index + 1, 0);
+            } = await uploadImage(file[0]);
+            editor.deleteText(index, loadingText.length); // 로딩 텍스트 제거
+            editor.insertEmbed(index, 'image', imageUrl); // 이미지 삽입
+            editor.setSelection(index + 1, 0); // 사용자가 바로 텍스트를 입력할 수 있도록 커서 이동
           }
         }
       });
@@ -155,7 +157,7 @@ const TextEditor = forwardRef<TextEditorHandle, TextEditorProps>(
           onChange={handleEditorChange}
           {...restOptions}
         >
-          <div css={{ height: editAreaHeight }} />
+          <div css={{ height: editingAreaHeight }} />
         </ReactQuill>
       </div>
     );

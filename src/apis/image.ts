@@ -4,7 +4,7 @@ export type ImageEntity = {
   imageUrl: string;
 }
 
-export const getImageUrl = (image: File) => {
+export const uploadImage = (image: File) => {
   const formData = new FormData();
   formData.append('image', image);
 
