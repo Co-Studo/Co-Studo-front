@@ -1,28 +1,46 @@
 import { ReactElement } from 'react';
 
-import * as S from '@components/common/Row/row.styled';
-
 type RowProps = {
-  title: ReactElement | string;
-  description?: ReactElement | string;
+  content?: ReactElement;
   left?: ReactElement;
   right?: ReactElement;
 };
 
-const Row = ({ title, description, left, right }: RowProps) => {
-  const isString = (prop) => prop && typeof prop === 'string';
-  const wrapString = (prop) => isString(prop) && <S.Box>{prop}</S.Box>; // TODO: Text 컴포넌트로 교체
-
-  return (
-    <S.Container>
-      {left}
-      <S.Main>
-        {isString(title) ? wrapString(title) : title}
-        {isString(description) ? wrapString(description) : description}
-      </S.Main>
-      {right}
-    </S.Container>
-  );
+type RowContentProps = {
+  top?: ReactElement | string;
+  bottom?: ReactElement | string;
+  noGap?: boolean;
 };
+
+const Row = ({ content, left, right }: RowProps) => (
+  <div
+    css={{
+      display: 'flex',
+      gap: '0.5rem',
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    }}
+  >
+    {left}
+    {content && <div css={{ flexGrow: 1 }}>{content}</div>}
+    {right}
+  </div>
+);
+
+const Column2Row = ({ top, bottom, noGap }: RowContentProps) => (
+  <div
+    css={{
+      display: 'flex',
+      flexDirection: 'column',
+      ...(noGap ? {} : { gap: '0.5rem' }),
+    }}
+  >
+    {top}
+    {bottom}
+  </div>
+);
+
+Row.Column2Row = Column2Row;
 
 export default Row;
