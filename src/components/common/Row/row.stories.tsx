@@ -53,3 +53,20 @@ LeftRight.args = {
   left: <div>left</div>,
   right: <div>right</div>,
 };
+
+const ContentTemplate: ComponentStory<typeof Row> = (args) => (
+  <Paper sx={{ width: '15rem' }}>
+    <Row {...args} />
+  </Paper>
+);
+
+export const Content = ContentTemplate.bind({});
+
+Content.args = {
+  content: (
+    <>
+      <div>안녕</div>
+      <div>하세요</div>
+    </>
+  ),
+};

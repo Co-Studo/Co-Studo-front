@@ -23,7 +23,7 @@ const Row = ({ content, left, right }: RowProps) => (
     }}
   >
     {left}
-    {content && <div css={{ flexGrow: 1 }}>{content}</div>}
+    {content && <div css={{ display: 'flex', flexGrow: 1 }}>{content}</div>}
     {right}
   </div>
 );
