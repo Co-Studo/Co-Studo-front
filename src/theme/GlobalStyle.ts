@@ -13,7 +13,8 @@ const GlobalStyle = createGlobalStyle`
   }
 
   html {
-    font-size: 62.5%;
+    font-size: 62.5%; // 10px
+    // 참고: https://github.com/Co-Studo/Co-Studo-front/discussions/53
   }
   
   body {
