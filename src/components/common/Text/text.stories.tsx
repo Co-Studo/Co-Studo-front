@@ -30,11 +30,22 @@ export const Default: ComponentStory<typeof Text> = () => (
     />
     <Text
       variant="sectionDescription"
-      sx={{ fontSize: 'large', fontStyle: 'italic', color: 'primary' }}
+      sx={{
+        fontSize: 'large',
+        fontWeight: 'bold',
+        fontStyle: 'italic',
+        color: 'primary',
+      }}
       render={(style) => (
-        <a href="https://github.com/Co-Studo" style={style}>
-          custom Text
-        </a>
+        <p style={style}>
+          여기는 문장이고,
+          <Text
+            variant="inherit"
+            sx={{ color: 'warning' }}
+            render={(style2) => <strong style={style2}>강조단어</strong>}
+          />
+          입니다.
+        </p>
       )}
     />
   </>

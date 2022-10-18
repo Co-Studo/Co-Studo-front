@@ -40,4 +40,12 @@ export const typography = {
     fontSize: fonts.fontSize.small,
     fontWeight: fonts.fontWeight.bold,
   },
+  inherit: {
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+    fontFamily: 'inherit',
+    fontStyle: 'inherit',
+    lineHeight: 'inherit',
+    letterSpacing: 'inherit',
+  },
 };
