@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
 import { useTheme } from 'styled-components';
 
-import fonts from '@theme/fonts';
-import { IPalette } from '@theme/theme';
-import { typography } from '@theme/typography';
+import fonts from '@styles/fonts';
+import { IPalette } from '@styles/theme';
+import { typography } from '@styles/typography';
 
 type TextSX = {
   fontSize?: keyof typeof fonts.fontSize;

@@ -8,7 +8,7 @@ import AvatarGroup from '@components/common/AvatarGroup';
 import StyledButton from '@components/common/Button/button.styled';
 import Paper from '@components/common/Paper';
 import Row from '@components/common/Row';
-import colors from '@theme/colors';
+import colors from '@styles/colors';
 
 type MyStudyInfoCardProps = {
   study: StudyEntity;

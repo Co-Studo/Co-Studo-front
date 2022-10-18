@@ -1,4 +1,4 @@
-import { IPalette } from '@theme/theme';
+import { IPalette } from '@styles/theme';
 import {} from 'styled-components/cssprop';
 
 declare module 'styled-components' {

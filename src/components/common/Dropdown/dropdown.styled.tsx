@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import Dropdown from '@components/common/Dropdown';
-import colors from '@theme/colors';
+import colors from '@styles/colors';
 
 const StyledDropdownList = styled(Dropdown.List)`
   padding: 0.1rem;

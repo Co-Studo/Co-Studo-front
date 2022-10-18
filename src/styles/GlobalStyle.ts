@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-import fonts from '@theme/fonts';
+import fonts from '@styles/fonts';
 
 import { typography } from './typography';
 

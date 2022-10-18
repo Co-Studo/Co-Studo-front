@@ -2,7 +2,7 @@ import React, { Children, cloneElement, ReactElement, ReactNode } from 'react';
 import styled, { css, useTheme } from 'styled-components';
 
 import Avatar from '@components/common/Avatar';
-import colors from '@theme/colors';
+import colors from '@styles/colors';
 
 type AvatarGropProps = {
   children: ReactNode;
