@@ -27,9 +27,7 @@ const Text = ({ variant, sx, render }: TextProps) => {
   const getCustomStyle = () => {
     const customStyle = { ...sx };
 
-    Object.keys(customStyle).forEach((key) => {
-      const value = customStyle[key];
-
+    Object.entries(customStyle).forEach(([key, value]) => {
       customStyle[key] =
         key === 'color' ? theme.palette[value] : fonts[key][value];
     });
