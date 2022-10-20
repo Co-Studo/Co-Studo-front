@@ -18,7 +18,26 @@ type TextSX = {
 type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
-  as?: ElementType;
+  as?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'p'
+    | 'span'
+    | 'em'
+    | 'i'
+    | 'strong'
+    | 'b'
+    | 'del'
+    | 's'
+    | 'u'
+    | 'q'
+    | 'ins'
+    | 'sub'
+    | 'sup';
   children: ReactNode;
 };
 
@@ -31,6 +50,7 @@ const StyledText = styled.span<StyledTextProp>`
 `;
 
 const Text = ({ variant, sx, as = 'span', children }: TextProps) => {
+  const Component = as as ElementType;
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const getCustomStyle = () => {
@@ -49,7 +69,7 @@ const Text = ({ variant, sx, as = 'span', children }: TextProps) => {
   };
 
   return (
-    <StyledText as={as} textStyle={textStyle}>
+    <StyledText as={Component} textStyle={textStyle}>
       {children}
     </StyledText>
   );
