@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactNode, ElementType } from 'react';
 import { useTheme } from 'styled-components';
 
 import fonts from '@styles/fonts';
@@ -18,10 +18,11 @@ type TextSX = {
 type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
-  render: (style) => ReactElement;
+  as?: ElementType;
+  children: ReactNode;
 };
 
-const Text = ({ variant, sx, render }: TextProps) => {
+const Text = ({ variant, sx, as: Component = 'span', children }: TextProps) => {
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const getCustomStyle = () => {
@@ -39,7 +40,7 @@ const Text = ({ variant, sx, render }: TextProps) => {
     ...getCustomStyle(),
   };
 
-  return render(textStyle);
+  return <Component style={textStyle}>{children}</Component>;
 };
 
 export default Text;
