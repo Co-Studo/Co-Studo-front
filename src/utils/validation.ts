@@ -13,7 +13,7 @@ type ValidationFunction<V> = (value: V) => boolean;
 
 const validate = <V>(values: Values<V>, funcs: ValidationFunction<V>[]) => {
   Object.entries(values).forEach(([key, value]) => {
-    if (value && all(...funcs)(value)) throw new Error(`Please check ${key}.`);
+    if (!all(...funcs)(value)) throw new Error(`Please check ${key}.`);
   });
 };
 
