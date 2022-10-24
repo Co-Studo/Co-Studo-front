@@ -49,20 +49,15 @@ const StyledText = styled.span<StyledTextProp>`
   ${({ textStyle }) => textStyle};
 `;
 
-const Text = ({ variant, sx, as = 'span', children }: TextProps) => {
+const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
   const Component = as as ElementType;
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
-  const getCustomStyle = () => {
-    const customStyle = { ...sx };
-
-    Object.entries(customStyle).forEach(([key, value]) => {
-      customStyle[key] =
-        key === 'color' ? theme.palette[value] : fonts[key][value];
-    });
-
-    return customStyle;
-  };
+  const getCustomStyle = () =>
+    Object.entries(sx).reduce((acc, [key, value]) => {
+      acc[key] = key === 'color' ? theme.palette[value] : fonts[key][value];
+      return acc;
+    }, {});
   const textStyle = {
     ...getVariantStyle(),
     ...getCustomStyle(),
