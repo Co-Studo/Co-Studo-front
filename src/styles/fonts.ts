@@ -6,6 +6,7 @@ const fonts = {
     medium: '1.8rem',
     large: '2rem',
     xLarge: '2.2rem',
+    xxLarge: '3.3rem',
     inherit: 'inherit',
   },
   fontWeight: {

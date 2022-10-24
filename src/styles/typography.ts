@@ -10,7 +10,7 @@ export const typography = {
     letterSpacing: fonts.letterSpacing.base,
   },
   logo: {
-    fontSize: '3.3rem',
+    fontSize: fonts.fontSize.xxLarge,
     fontWeight: fonts.fontWeight.bold,
     lineHeight: fonts.lineHeight.reset,
   },
