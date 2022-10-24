@@ -33,9 +33,9 @@ export const Default: ComponentStory<typeof Text> = () => (
       }}
     >
       여기는 문장이고,
-      <Text variant="inherit" as="strong" sx={{ color: 'warning' }}>
+      <Text.Highlight as="strong" sx={{ color: 'warning' }}>
         강조단어
-      </Text>
+      </Text.Highlight>
     </Text>
   </div>
 );

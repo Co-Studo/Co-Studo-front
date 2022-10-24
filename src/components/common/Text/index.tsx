@@ -1,5 +1,5 @@
 import { ReactNode, ElementType } from 'react';
-import styled, { useTheme } from 'styled-components';
+import styled, { DefaultTheme, useTheme } from 'styled-components';
 
 import fonts from '@styles/fonts';
 import { IPalette } from '@styles/theme';
@@ -15,18 +15,46 @@ type TextSX = {
   letterSpacing?: keyof typeof fonts.letterSpacing;
 };
 
+const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
+  Object.entries(sx).reduce((acc, [key, value]) => {
+    acc[key] = key === 'color' ? theme.palette[value] : fonts[key][value];
+    return acc;
+  }, {});
+
 type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+  children: ReactNode;
+};
+
+type StyledProp = {
+  fontCss: TextSX;
+};
+
+const StyledText = styled.span<StyledProp>`
+  ${({ fontCss }) => fontCss};
+`;
+
+const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
+  const Component = as as ElementType;
+  const theme = useTheme();
+  const getVariantStyle = () => variant && typography[variant];
+  const fontCss = {
+    ...getVariantStyle(),
+    ...getCustomStyle(sx, theme),
+  };
+
+  return (
+    <StyledText as={Component} fontCss={fontCss}>
+      {children}
+    </StyledText>
+  );
+};
+
+type HighlightProps = {
+  sx?: TextSX;
   as?:
-    | 'h1'
-    | 'h2'
-    | 'h3'
-    | 'h4'
-    | 'h5'
-    | 'h6'
-    | 'p'
-    | 'span'
     | 'em'
     | 'i'
     | 'strong'
@@ -41,33 +69,22 @@ type TextProps = {
   children: ReactNode;
 };
 
-type StyledTextProp = {
-  textStyle: TextSX;
-};
-
-const StyledText = styled.span<StyledTextProp>`
-  ${({ textStyle }) => textStyle};
+const StyledHighlight = styled.span<StyledProp>`
+  ${({ fontCss }) => fontCss};
 `;
 
-const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
+const Highlight = ({ sx = {}, as = 'strong', children }: HighlightProps) => {
   const Component = as as ElementType;
   const theme = useTheme();
-  const getVariantStyle = () => variant && typography[variant];
-  const getCustomStyle = () =>
-    Object.entries(sx).reduce((acc, [key, value]) => {
-      acc[key] = key === 'color' ? theme.palette[value] : fonts[key][value];
-      return acc;
-    }, {});
-  const textStyle = {
-    ...getVariantStyle(),
-    ...getCustomStyle(),
-  };
+  const fontCss = getCustomStyle(sx, theme);
 
   return (
-    <StyledText as={Component} textStyle={textStyle}>
+    <StyledHighlight as={Component} fontCss={fontCss}>
       {children}
-    </StyledText>
+    </StyledHighlight>
   );
 };
+
+Text.Highlight = Highlight;
 
 export default Text;
