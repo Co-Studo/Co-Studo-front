@@ -69,19 +69,15 @@ type HighlightProps = {
   children: ReactNode;
 };
 
-const StyledHighlight = styled.span<StyledProp>`
-  ${({ fontCss }) => fontCss};
-`;
-
 const Highlight = ({ sx = {}, as = 'strong', children }: HighlightProps) => {
   const Component = as as ElementType;
   const theme = useTheme();
   const fontCss = getCustomStyle(sx, theme);
 
   return (
-    <StyledHighlight as={Component} fontCss={fontCss}>
+    <StyledText as={Component} fontCss={fontCss}>
       {children}
-    </StyledHighlight>
+    </StyledText>
   );
 };
 

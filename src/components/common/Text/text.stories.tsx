@@ -33,9 +33,7 @@ export const Default: ComponentStory<typeof Text> = () => (
       }}
     >
       여기는 문장이고,
-      <Text.Highlight as="strong" sx={{ color: 'warning' }}>
-        강조단어
-      </Text.Highlight>
+      <Text.Highlight sx={{ color: 'warning' }}>강조단어</Text.Highlight>
     </Text>
   </div>
 );
