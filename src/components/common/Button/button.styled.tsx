@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 import Button, { ButtonProps } from '@components/common/Button';
-import colors from '@theme/colors';
-import { PaletteOption } from '@theme/theme';
+import colors from '@styles/colors';
+import { PaletteOption } from '@styles/theme';
 
 export interface StyledButtonProps extends ButtonProps {
   color: PaletteOption;

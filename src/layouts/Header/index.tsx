@@ -5,7 +5,7 @@ import StyledButton from '@components/common/Button/button.styled';
 import { useMe } from '@fbase/auth';
 import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
-import colors from '@theme/colors';
+import colors from '@styles/colors';
 
 const Header = () => {
   const user = useMe();

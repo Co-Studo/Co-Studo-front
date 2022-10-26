@@ -1,7 +1,7 @@
 import { initialize, mswDecorator } from 'msw-storybook-addon';
 import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from '@theme/theme';
-import GlobalStyle from '@theme/GlobalStyle';
+import { darkTheme, lightTheme } from '@styles/theme';
+import GlobalStyle from '@styles/GlobalStyle';
 import { BrowserRouter } from 'react-router-dom';
 
 // msw init

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-import colors from '@theme/colors';
+import colors from '@styles/colors';
 
 const Paper: React.FC<{ children: ReactNode; sx?: object }> = ({
   children,

@@ -4,8 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import { useMe } from '@fbase/auth';
 import useLocalStorage from '@hooks/useLocalStorage';
 import Routes from '@pages/Routes';
-import GlobalStyle from '@theme/GlobalStyle';
-import { darkTheme, lightTheme } from '@theme/theme';
+import GlobalStyle from '@styles/GlobalStyle';
+import { darkTheme, lightTheme } from '@styles/theme';
 
 const App: React.FC = () => {
   // const isDarkMode =
