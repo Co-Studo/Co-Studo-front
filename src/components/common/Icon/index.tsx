@@ -5,7 +5,6 @@ import { icon, IconName } from '@assets/icons';
 type IconProps = {
   iconName: IconName;
   size?: 'small' | 'medium' | 'large';
-  sx?: CSSObject;
 };
 
 const iconSizes = {
@@ -14,12 +13,8 @@ const iconSizes = {
   large: '2rem',
 };
 
-const Icon = ({ iconName, size = 'small', sx }: IconProps) => (
-  <img
-    css={{ width: iconSizes[size], ...sx }}
-    src={icon(iconName)}
-    alt={iconName}
-  />
+const Icon = ({ iconName, size = 'small' }: IconProps) => (
+  <img css={{ width: iconSizes[size] }} src={icon(iconName)} alt={iconName} />
 );
 
 export default Icon;
