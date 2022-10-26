@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-type BoxSX = {
+type FlexBoxSX = {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -13,17 +13,17 @@ type BoxSX = {
   gap?: string;
 };
 
-type BoxProps = {
+type FlexBoxProps = {
   as?: React.ElementType;
   children: React.ReactNode;
-  sx?: BoxSX;
+  sx?: FlexBoxSX;
 };
 
 const Wrapper = styled.div`
   display: flex;
 `;
 
-const Box = (props: BoxProps) => {
+const FlexBox = (props: FlexBoxProps) => {
   const { sx, as = 'div', children } = props;
 
   return (
@@ -33,4 +33,4 @@ const Box = (props: BoxProps) => {
   );
 };
 
-export default Box;
+export default FlexBox;
