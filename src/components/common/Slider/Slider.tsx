@@ -3,7 +3,7 @@ import { css } from 'styled-components';
 
 import { SliderOptions } from '@components/common/Slider/context/SliderInfoContext';
 import SliderProvider from '@components/common/Slider/context/SliderProvider';
-import { isNaturalNumber } from '@utils/validation';
+import { isNaturalNumber, validate } from '@utils/validation';
 
 type SliderProps = {
   options?: Partial<SliderOptions>;
@@ -22,21 +22,14 @@ const Slider = ({ options = defaultOptions, children }: SliderProps) => {
   const sliderOptions = { ...defaultOptions, ...options };
 
   const validateOptions = () => {
-    const { slidesToShow, slidesToScroll, speed, initialSlide } = options;
     const optionsToNeedCheck = {
-      slidesToShow,
-      slidesToScroll,
-      speed,
-      initialSlide,
+      slidesToShow: options.slidesToShow || 0,
+      slidesToScroll: options.slidesToScroll || 0,
+      speed: options.speed || 0,
+      initialSlide: options.initialSlide || 0,
     };
 
-    Object.keys(optionsToNeedCheck).forEach((key) => {
-      const option = optionsToNeedCheck[key];
-      if (option && !isNaturalNumber(option))
-        throw new Error(
-          `Only natural numbers are allowed for the ${key} option value.`,
-        );
-    });
+    validate<number>(optionsToNeedCheck, [isNaturalNumber]);
   };
 
   useEffect(() => validateOptions(), [options]);
