@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 type BoxSX = {
   justifyContent?:
     | 'flex-start'
@@ -8,22 +10,27 @@ type BoxSX = {
     | 'space-evenly';
   alignItems?: 'center' | 'flex-start' | 'flex-end';
   flexDirection?: 'row' | 'column';
+  gap?: string;
 };
 
 type BoxProps = {
+  as?: React.ElementType;
   children: React.ReactNode;
   sx?: BoxSX;
 };
 
+const Wrapper = styled.div`
+  display: flex;
+`;
+
 const Box = (props: BoxProps) => {
-  const { sx, children } = props;
+  const { sx, as = 'div', children } = props;
 
-  const boxCss = {
-    display: 'flex',
-    ...sx,
-  };
-
-  return <div css={boxCss}>{children}</div>;
+  return (
+    <Wrapper as={as} css={sx}>
+      {children}
+    </Wrapper>
+  );
 };
 
 export default Box;
