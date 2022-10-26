@@ -1,5 +1,3 @@
-import { CSSObject } from 'styled-components';
-
 import { icon, IconName } from '@assets/icons';
 
 type IconProps = {
