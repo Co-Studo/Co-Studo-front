@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 import { icon, IconName } from '@assets/icons';
-import { IPalette } from '@theme/theme';
+import { Palette } from '@styles/theme';
 
 type IconProps = {
   iconName: IconName;
   size?: 'small' | 'medium' | 'large';
-  color?: keyof IPalette;
+  color?: keyof Palette;
 };
 
 const iconSizes = {

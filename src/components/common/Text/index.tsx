@@ -2,7 +2,7 @@ import { ReactNode, ElementType } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 
 import fonts from '@styles/fonts';
-import { IPalette } from '@styles/theme';
+import { Palette } from '@styles/theme';
 import { typography } from '@styles/typography';
 
 type TextSX = {
@@ -10,7 +10,7 @@ type TextSX = {
   fontWeight?: keyof typeof fonts.fontWeight;
   fontFamily?: keyof typeof fonts.fontFamily;
   fontStyle?: keyof typeof fonts.fontStyle;
-  color?: keyof IPalette;
+  color?: keyof Palette;
   lineHeight?: keyof typeof fonts.lineHeight;
   letterSpacing?: keyof typeof fonts.letterSpacing;
 };
