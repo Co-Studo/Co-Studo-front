@@ -22,17 +22,21 @@ const Slider = ({ options = defaultOptions, children }: SliderProps) => {
   const sliderOptions = { ...defaultOptions, ...options };
 
   const validateOptions = () => {
-    const optionsToNeedCheck = {
-      slidesToShow: options.slidesToShow || 0,
-      slidesToScroll: options.slidesToScroll || 0,
-      speed: options.speed || 0,
-      initialSlide: options.initialSlide || 0,
-    };
+    const naturalNumberOptions = [
+      sliderOptions.slidesToShow,
+      sliderOptions.slidesToScroll,
+      sliderOptions.speed,
+      // index가 0부터 시작하므로
+      sliderOptions.initialSlide + 1,
+    ];
 
-    validate<number>(optionsToNeedCheck, [isNaturalNumber]);
+    naturalNumberOptions.forEach((option) => {
+      const error = validate<number>(option, isNaturalNumber);
+      if (!error.ok) throw new Error(error.message);
+    });
   };
 
-  useEffect(() => validateOptions(), [options]);
+  useEffect(() => validateOptions(), [sliderOptions]);
 
   const getSlideLength = () => {
     const Children = Array.isArray(children) ? children : [children];
