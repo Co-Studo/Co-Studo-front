@@ -6,6 +6,7 @@ import { StudyEntity } from '@apis/study';
 import Avatar from '@components/common/Avatar';
 import AvatarGroup from '@components/common/AvatarGroup';
 import StyledButton from '@components/common/Button/button.styled';
+import Icon from '@components/common/Icon';
 import Paper from '@components/common/Paper';
 import Row from '@components/common/Row';
 import colors from '@styles/colors';
@@ -26,7 +27,7 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => {
         title={
           <div css={{ display: 'flex', gap: '0.5rem' }}>
             <h4>{study.title}</h4>
-            <FontAwesomeIcon icon={solid('lock')} />
+            <Icon iconName='lock' />
           </div>
         }
         description={

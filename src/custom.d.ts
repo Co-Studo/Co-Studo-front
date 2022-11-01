@@ -1,8 +1,6 @@
-import { IPalette } from '@styles/theme';
-import {} from 'styled-components/cssprop';
-
-declare module 'styled-components' {
-  export interface DefaultTheme {
-    palette: IPalette;
-  }
+declare module '*.svg' {
+  import React = require('react');
+  
+  const ReactComponent: React.FC<React.SVGProps<SVGSVGElement>>;
+  export default ReactComponent;
 }
