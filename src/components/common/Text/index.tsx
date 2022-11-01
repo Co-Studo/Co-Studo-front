@@ -48,22 +48,30 @@ const StyledText = styled.span<StyledProp>`
     }};
 `;
 
-const Text = ({
-  variant,
-  sx = {},
-  as = 'span',
-  ellipsis,
-  children,
-}: TextProps) => {
+const Text = ({ variant, sx = {}, as, ellipsis, children }: TextProps) => {
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const fontCss = {
     ...getVariantStyle(),
     ...getCustomStyle(sx, theme),
   };
+  const getAs = () => {
+    switch (variant) {
+      case 'logo':
+        return 'h1';
+      case 'sectionTitle':
+        return 'h2';
+      case 'sectionDescription' || 'articleDescription':
+        return 'p';
+      case 'articleTitle':
+        return 'h3';
+      default:
+        return as;
+    }
+  };
 
   return (
-    <StyledText as={as} fontCss={fontCss} ellipsis={ellipsis}>
+    <StyledText as={as || getAs()} fontCss={fontCss} ellipsis={ellipsis}>
       {children}
     </StyledText>
   );

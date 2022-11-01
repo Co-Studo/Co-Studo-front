@@ -10,21 +10,14 @@ export default {
 
 export const Default: ComponentStory<typeof Text> = () => (
   <div>
-    <Text variant="sectionTitle" as="h2">
-      스터디 생성
-    </Text>
-    <Text variant="sectionDescription" as="p">
+    <Text variant="sectionTitle">스터디 생성</Text>
+    <Text variant="sectionDescription">
       스터디 생성을 위해 정보를 입력해주세요.
     </Text>
-    <Text variant="articleTitle" as="h3">
-      스터디 이름
-    </Text>
-    <Text variant="sectionDescription" as="p">
-      스터디 한줄 설명
-    </Text>
+    <Text variant="articleTitle">스터디 이름</Text>
+    <Text variant="sectionDescription">스터디 한줄 설명</Text>
     <Text
       variant="sectionDescription"
-      as="p"
       sx={{
         fontSize: 'large',
         fontWeight: 'bold',
