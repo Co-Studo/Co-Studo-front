@@ -53,6 +53,7 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
     'react/jsx-no-constructed-context-values': 'off',
+    'react/no-array-index-key': 'off',
     'import/order': [
       'error',
       {
