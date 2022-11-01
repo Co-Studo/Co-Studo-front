@@ -1,9 +1,8 @@
-/* eslint-disable react/no-array-index-key */
-import { ReactNode, ReactElement, Children } from 'react';
-import { css, useTheme } from 'styled-components';
+import { ReactNode, ReactElement, ComponentProps } from 'react';
+import { css } from 'styled-components';
 
-import Text, { TextSX } from '@components/common/Text';
-import { IPalette } from '@styles/theme';
+import FlexBox from '@components/common/FlexBox';
+import Text from '@components/common/Text';
 
 type TableDefaultProps = {
   children: ReactElement | ReactElement[];
@@ -21,6 +20,7 @@ const Table = ({ caption, cellWidth, children }: TableProps) => (
       width: 100%;
       overflow: hidden;
       border-top: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
+      table-layout: fixed;
     `}
   >
     <caption
@@ -60,49 +60,27 @@ const Tbody = ({ children }: TableDefaultProps) => (
   </tbody>
 );
 
-type TrSX = {
-  background?: keyof IPalette;
-};
-
-export interface TrProps extends TableDefaultProps {
-  sx?: TrSX;
-}
-
-const Tr = ({ sx, children }: TrProps) => {
-  const theme = useTheme();
-
-  return (
-    <tr
-      css={{
-        borderBottom: `0.1rem solid ${theme.palette.borderLine}`,
-        ...sx,
-      }}
-    >
-      {children}
-    </tr>
-  );
-};
+const Tr = ({ children }: TableDefaultProps) => (
+  <tr
+    css={css`
+      border-bottom: ${({ theme }) =>
+        `0.1rem solid ${theme.palette.borderLine}`};
+    `}
+  >
+    {children}
+  </tr>
+);
 
 type CellSX = {
   width?: string;
   justifyContent?: 'center' | 'flex-start';
-  textOverflow?: 'ellipsis' | 'clip';
-  whiteSpace?: 'nowrap' | 'normal';
 };
 
-const defaultCellSX: TextSX = {
-  textAlign: 'center',
-  textOverflow: 'ellipsis',
-  whiteSpace: 'nowrap',
-};
-
-const cellCss = {
-  display: 'flex',
+const flexCss = {
+  justifyContent: 'center',
   alignItems: 'center',
   gap: '10px',
-  padding: '1.7rem 2rem',
-  overflow: 'hidden',
-};
+} as Pick<ComponentProps<typeof FlexBox>, 'sx'>;
 
 type ThProps = {
   colSpan?: number;
@@ -110,19 +88,11 @@ type ThProps = {
   children: ReactNode;
 };
 
-const Th = ({ sx, children, ...restProps }: ThProps) => (
-  <th {...restProps}>
-    <div css={{ ...cellCss, justifyContent: 'center', ...sx }}>
-      {Children.map(children, (child) =>
-        typeof child === 'string' ? (
-          <Text.Highlight as="b" sx={{ ...defaultCellSX, fontWeight: 'bold' }}>
-            {child}
-          </Text.Highlight>
-        ) : (
-          child
-        ),
-      )}
-    </div>
+const Th = ({ sx = {}, children, ...restProps }: ThProps) => (
+  <th css={{ padding: '1.7rem 2rem' }} {...restProps}>
+    <Text as="div" sx={{ fontWeight: 'bold' }}>
+      <FlexBox sx={{ ...flexCss, ...sx }}>{children}</FlexBox>
+    </Text>
   </th>
 );
 
@@ -130,19 +100,9 @@ export interface TdProps extends ThProps {
   rowSpan?: number;
 }
 
-const Td = ({ sx, children, ...restProps }: TdProps) => (
-  <td {...restProps}>
-    <div css={{ ...cellCss, ...sx }}>
-      {Children.map(children, (child) =>
-        typeof child === 'string' ? (
-          <Text as="span" sx={defaultCellSX}>
-            {child}
-          </Text>
-        ) : (
-          child
-        ),
-      )}
-    </div>
+const Td = ({ sx = {}, children, ...restProps }: TdProps) => (
+  <td css={{ padding: '1.7rem 2rem' }} {...restProps}>
+    <FlexBox sx={{ ...flexCss, ...sx }}>{children}</FlexBox>
   </td>
 );
 
