@@ -1,11 +1,11 @@
-import { ReactNode, ElementType } from 'react';
+import { ReactNode } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 
 import fonts from '@styles/fonts';
 import { Palette } from '@styles/theme';
 import { typography } from '@styles/typography';
 
-type TextSX = {
+export type TextSX = {
   fontSize?: keyof typeof fonts.fontSize;
   fontWeight?: keyof typeof fonts.fontWeight;
   fontFamily?: keyof typeof fonts.fontFamily;
@@ -13,6 +13,7 @@ type TextSX = {
   color?: keyof Palette;
   lineHeight?: keyof typeof fonts.lineHeight;
   letterSpacing?: keyof typeof fonts.letterSpacing;
+  textAlign?: keyof typeof fonts.textAlign;
 };
 
 const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
@@ -24,20 +25,38 @@ const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
 type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div' | 'span';
+  ellipsis?: boolean | number;
   children: ReactNode;
 };
 
 type StyledProp = {
   fontCss: TextSX;
+  ellipsis?: boolean | number;
 };
 
 const StyledText = styled.span<StyledProp>`
   ${({ fontCss }) => fontCss};
+  ${({ ellipsis }) =>
+    ellipsis && {
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: `${ellipsis === true ? 1 : ellipsis}`,
+      WebkitBoxOrient: 'vertical',
+      wordBreak: 'break-word',
+    }};
 `;
 
-const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
-  const Component = as as ElementType;
+const element = {
+  logo: 'h1',
+  sectionTitle: 'h2',
+  sectionDescription: 'p',
+  articleTitle: 'h3',
+  articleDescription: 'p',
+};
+
+const Text = ({ variant, sx = {}, as, ellipsis, children }: TextProps) => {
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const fontCss = {
@@ -46,7 +65,11 @@ const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
   };
 
   return (
-    <StyledText as={Component} fontCss={fontCss}>
+    <StyledText
+      as={as || (variant && element[variant])}
+      fontCss={fontCss}
+      ellipsis={ellipsis}
+    >
       {children}
     </StyledText>
   );
@@ -70,12 +93,11 @@ type HighlightProps = {
 };
 
 const Highlight = ({ sx = {}, as = 'strong', children }: HighlightProps) => {
-  const Component = as as ElementType;
   const theme = useTheme();
   const fontCss = getCustomStyle(sx, theme);
 
   return (
-    <StyledText as={Component} fontCss={fontCss}>
+    <StyledText as={as} fontCss={fontCss}>
       {children}
     </StyledText>
   );
