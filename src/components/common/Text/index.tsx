@@ -1,11 +1,11 @@
-import { ReactNode, ElementType } from 'react';
+import { ReactNode } from 'react';
 import styled, { DefaultTheme, useTheme } from 'styled-components';
 
 import fonts from '@styles/fonts';
 import { Palette } from '@styles/theme';
 import { typography } from '@styles/typography';
 
-type TextSX = {
+export type TextSX = {
   fontSize?: keyof typeof fonts.fontSize;
   fontWeight?: keyof typeof fonts.fontWeight;
   fontFamily?: keyof typeof fonts.fontFamily;
@@ -13,6 +13,9 @@ type TextSX = {
   color?: keyof Palette;
   lineHeight?: keyof typeof fonts.lineHeight;
   letterSpacing?: keyof typeof fonts.letterSpacing;
+  textAlign?: keyof typeof fonts.textAlign;
+  textOverflow?: keyof typeof fonts.textOverflow;
+  whiteSpace?: keyof typeof fonts.whiteSpace;
 };
 
 const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
@@ -24,7 +27,7 @@ const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
 type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
-  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div' | 'span';
   children: ReactNode;
 };
 
@@ -34,6 +37,8 @@ type StyledProp = {
 
 const StyledText = styled.span<StyledProp>`
   ${({ fontCss }) => fontCss};
+  overflow: ${({ fontCss }) =>
+    fontCss.textOverflow === 'ellipsis' ? 'hidden' : 'inherit'};
 `;
 
 const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
