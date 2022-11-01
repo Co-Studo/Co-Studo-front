@@ -4,7 +4,7 @@ const isInteger = (number: number) => {
   const stringNumber = number.toString();
   const ok = number === parseInt(stringNumber, 10);
 
-  if (!ok) throw Error(`${number}is not integer.`);
+  if (!ok) throw new Error(`${number} is not integer.`);
 
   return ok;
 };
@@ -12,7 +12,7 @@ const isInteger = (number: number) => {
 const isNaturalNumber = (number: number) => {
   const ok = isInteger(number) && number > 0;
 
-  if (!ok) throw Error(`${number}is not integer.`);
+  if (!ok) throw new Error(`${number} is not natural number.`);
 
   return ok;
 };
