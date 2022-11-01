@@ -89,7 +89,7 @@ type ThProps = {
 };
 
 const Th = ({ sx = {}, children, ...restProps }: ThProps) => (
-  <th css={{ padding: '1.7rem 2rem' }} {...restProps}>
+  <th scope="col" css={{ padding: '1.7rem 2rem' }} {...restProps}>
     <Text as="div" sx={{ fontWeight: 'bold' }}>
       <FlexBox sx={{ ...flexCss, ...sx }}>{children}</FlexBox>
     </Text>
