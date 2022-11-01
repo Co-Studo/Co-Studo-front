@@ -35,5 +35,15 @@ export const Default: ComponentStory<typeof Text> = () => (
       여기는 문장이고,
       <Text.Highlight sx={{ color: 'warning' }}>강조단어</Text.Highlight>
     </Text>
+    <div css={{ width: '200px' }}>
+      <Text as="p" ellipsis>
+        아주 기이이이이이이이이이이이인 1줄 문장
+      </Text>
+      <Text as="p" ellipsis={2}>
+        아주
+        기이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이이인
+        2줄 문장
+      </Text>
+    </div>
   </div>
 );

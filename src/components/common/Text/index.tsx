@@ -14,8 +14,6 @@ export type TextSX = {
   lineHeight?: keyof typeof fonts.lineHeight;
   letterSpacing?: keyof typeof fonts.letterSpacing;
   textAlign?: keyof typeof fonts.textAlign;
-  textOverflow?: keyof typeof fonts.textOverflow;
-  whiteSpace?: keyof typeof fonts.whiteSpace;
 };
 
 const getCustomStyle = (sx: TextSX, theme: DefaultTheme) =>
@@ -28,20 +26,35 @@ type TextProps = {
   variant?: keyof typeof typography;
   sx?: TextSX;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'div' | 'span';
+  ellipsis?: boolean | number;
   children: ReactNode;
 };
 
 type StyledProp = {
   fontCss: TextSX;
+  ellipsis?: boolean | number;
 };
 
 const StyledText = styled.span<StyledProp>`
   ${({ fontCss }) => fontCss};
-  overflow: ${({ fontCss }) =>
-    fontCss.textOverflow === 'ellipsis' ? 'hidden' : 'inherit'};
+  ${({ ellipsis }) =>
+    ellipsis && {
+      textOverflow: 'ellipsis',
+      overflow: 'hidden',
+      display: '-webkit-box',
+      WebkitLineClamp: `${ellipsis === true ? 1 : ellipsis}`,
+      WebkitBoxOrient: 'vertical',
+      wordBreak: 'break-word',
+    }};
 `;
 
-const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
+const Text = ({
+  variant,
+  sx = {},
+  as = 'span',
+  ellipsis,
+  children,
+}: TextProps) => {
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const fontCss = {
@@ -50,7 +63,7 @@ const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
   };
 
   return (
-    <StyledText as={as} fontCss={fontCss}>
+    <StyledText as={as} fontCss={fontCss} ellipsis={ellipsis}>
       {children}
     </StyledText>
   );
