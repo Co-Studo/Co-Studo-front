@@ -32,6 +32,11 @@ const fonts = {
   letterSpacing: {
     base: '-0.4px',
   },
+  textAlign: {
+    left: 'left',
+    right: 'right',
+    center: 'center',
+  },
 };
 
 export default fonts;
