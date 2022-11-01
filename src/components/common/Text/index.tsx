@@ -37,7 +37,6 @@ const StyledText = styled.span<StyledProp>`
 `;
 
 const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
-  const Component = as as ElementType;
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const fontCss = {
@@ -46,7 +45,7 @@ const Text = ({ variant, sx = {}, as = 'span', children }: TextProps) => {
   };
 
   return (
-    <StyledText as={Component} fontCss={fontCss}>
+    <StyledText as={as} fontCss={fontCss}>
       {children}
     </StyledText>
   );
@@ -70,12 +69,11 @@ type HighlightProps = {
 };
 
 const Highlight = ({ sx = {}, as = 'strong', children }: HighlightProps) => {
-  const Component = as as ElementType;
   const theme = useTheme();
   const fontCss = getCustomStyle(sx, theme);
 
   return (
-    <StyledText as={Component} fontCss={fontCss}>
+    <StyledText as={as} fontCss={fontCss}>
       {children}
     </StyledText>
   );
