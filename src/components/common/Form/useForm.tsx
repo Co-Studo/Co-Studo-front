@@ -10,8 +10,8 @@ type Subscribe = (validates?: (<V>(value: V) => boolean)[]) => {
 };
 
 export type FormHookReturns = {
-  values: Record<string, any>;
-  errors: Record<string, any>;
+  value: string;
+  error: string;
   subscribe: Subscribe;
 };
 
@@ -24,11 +24,14 @@ const useForm = (name: string, initValue?: string): FormHookReturns => {
     validationMode = 'onBlur',
   } = useFormContext();
 
-  const setValue = (value: string) => {
-    setValues((prev) => ({ ...prev, [name]: value }));
+  const value = values?.[name];
+  const error = errors?.[name];
+
+  const setValue = (newValue: string) => {
+    setValues((prev) => ({ ...prev, [name]: newValue }));
   };
-  const setError = (error: string) => {
-    setErrors((prev) => ({ ...prev, [name]: error }));
+  const setError = (newError: string) => {
+    setErrors((prev) => ({ ...prev, [name]: newError }));
   };
 
   useEffect(() => {
@@ -38,12 +41,12 @@ const useForm = (name: string, initValue?: string): FormHookReturns => {
 
   const subscribe: Subscribe = (validates) => {
     const handleEvent = (event: InputEvent) => {
-      const { value } = event.target;
+      const { value: targetValue } = event.target;
 
-      setValue(value);
+      setValue(targetValue);
 
       if (validates) {
-        const { ok, message = '' } = validate(value, ...validates);
+        const { ok, message = '' } = validate(targetValue, ...validates);
         setError(ok ? '' : message);
       }
     };
@@ -51,7 +54,7 @@ const useForm = (name: string, initValue?: string): FormHookReturns => {
     return { [validationMode]: handleEvent };
   };
 
-  return { values, errors, subscribe };
+  return { value, error, subscribe };
 };
 
 export default useForm;

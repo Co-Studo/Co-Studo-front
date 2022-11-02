@@ -15,7 +15,7 @@ const checkTitle = (value) => {
     throw Error(`필수 입력 정보입니다!`);
   }
 
-  if (value.length <= 8) {
+  if (value.length > 8) {
     throw Error(`스터디 이름은 8자 이하로 작성해주세요!`);
   }
 

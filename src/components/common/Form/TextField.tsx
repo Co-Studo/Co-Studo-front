@@ -28,18 +28,13 @@ const TextField = ({
   placeholder,
   ...restProps
 }: TextFieldProps) => {
-  const { subscribe, errors } = useForm(name, defaultValue);
-  const [isError, setIsError] = useState(false);
+  const { subscribe, error } = useForm(name, defaultValue);
   const inputId = useId();
-
-  useEffect(() => {
-    setIsError(errors?.[name] && errors[name] !== '');
-  }, [errors, name]);
 
   return (
     <div {...restProps}>
       {label && (
-        <label htmlFor={inputId} data-error={isError}>
+        <label htmlFor={inputId} data-error={Boolean(error)}>
           {label}
         </label>
       )}
@@ -48,13 +43,13 @@ const TextField = ({
         id={inputId}
         defaultValue={defaultValue}
         placeholder={placeholder}
-        data-error={isError}
-        aria-invalid={isError}
+        data-error={Boolean(error)}
+        aria-invalid={Boolean(error)}
         aria-labelledby={inputId}
         aria-describedby={`${inputId}-helper`}
         {...subscribe(validates)}
       />
-      {isError && <span id={`${inputId}-helper`}>{errors[name]}</span>}
+      {Boolean(error) && <span id={`${inputId}-helper`}>{error}</span>}
     </div>
   );
 };
