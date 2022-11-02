@@ -1,4 +1,4 @@
-import { ReactNode, useId, useState, useEffect } from 'react';
+import { ReactNode, useId } from 'react';
 
 import useForm from '@components/common/Form/useForm';
 
@@ -14,7 +14,7 @@ type InputTypes =
 type TextFieldProps = {
   validates?: (<V>(value: V) => boolean)[];
   defaultValue?: string;
-  label: ReactNode;
+  label?: ReactNode;
   name: string;
   type?: InputTypes;
   placeholder?: string;
