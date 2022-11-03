@@ -3,6 +3,7 @@ import { css } from 'styled-components';
 
 import FlexBox from '@components/common/FlexBox';
 import Text from '@components/common/Text';
+import { offscreen } from '@styles/commonStyles';
 
 type TableDefaultProps = {
   children: ReactElement | ReactElement[];
@@ -10,11 +11,10 @@ type TableDefaultProps = {
 
 export interface TableProps extends TableDefaultProps {
   caption: string;
-  cellWidth?: string[];
-  children: ReactElement | ReactElement[];
+  columnsWidth?: string[];
 }
 
-const Table = ({ caption, cellWidth, children }: TableProps) => (
+const Table = ({ caption, columnsWidth, children }: TableProps) => (
   <table
     css={css`
       width: 100%;
@@ -23,21 +23,10 @@ const Table = ({ caption, cellWidth, children }: TableProps) => (
       table-layout: fixed;
     `}
   >
-    <caption
-      css={css`
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        margin: -1px;
-        overflow: hidden;
-        clip-path: polygon(0 0, 0 0, 0 0);
-      `}
-    >
-      {caption}
-    </caption>
-    {cellWidth && (
+    <caption css={offscreen}>{caption}</caption>
+    {columnsWidth && (
       <colgroup>
-        {cellWidth?.map((width, index) => (
+        {columnsWidth.map((width, index) => (
           <col key={index} width={width} />
         ))}
       </colgroup>
@@ -79,7 +68,7 @@ type CellSX = {
 const flexCss = {
   justifyContent: 'center',
   alignItems: 'center',
-  gap: '10px',
+  gap: '1rem',
 } as Pick<ComponentProps<typeof FlexBox>, 'sx'>;
 
 type ThProps = {
@@ -106,10 +95,10 @@ const Td = ({ sx = {}, children, ...restProps }: TdProps) => (
   </td>
 );
 
-Table.Thead = Thead;
-Table.Tbody = Tbody;
-Table.Tr = Tr;
-Table.Th = Th;
-Table.Td = Td;
+Table.Head = Thead;
+Table.Body = Tbody;
+Table.Row = Tr;
+Table.HeadCell = Th;
+Table.BodyCell = Td;
 
 export default Table;

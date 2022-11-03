@@ -33,25 +33,28 @@ const noticeList = [
 ];
 
 export const NoticeList: ComponentStory<typeof Table> = () => (
-  <Table caption="공지사항" cellWidth={['85px', '*', '120px', '120px', '85px']}>
-    <Table.Thead>
-      <Table.Tr>
-        <Table.Th>번호</Table.Th>
-        <Table.Th>제목</Table.Th>
-        <Table.Th>작성자</Table.Th>
-        <Table.Th>날짜</Table.Th>
-        <Table.Th>조회수</Table.Th>
-      </Table.Tr>
-    </Table.Thead>
-    <Table.Tbody>
+  <Table
+    caption="공지사항"
+    columnsWidth={['85px', '*', '120px', '120px', '85px']}
+  >
+    <Table.Head>
+      <Table.Row>
+        <Table.HeadCell>번호</Table.HeadCell>
+        <Table.HeadCell>제목</Table.HeadCell>
+        <Table.HeadCell>작성자</Table.HeadCell>
+        <Table.HeadCell>날짜</Table.HeadCell>
+        <Table.HeadCell>조회수</Table.HeadCell>
+      </Table.Row>
+    </Table.Head>
+    <Table.Body>
       {noticeList
         .reverse()
         .map(({ id, title, writer, date, view, commentCount }) => (
-          <Table.Tr key={id}>
-            <Table.Td>
+          <Table.Row key={id}>
+            <Table.BodyCell>
               <Text ellipsis>{id}</Text>
-            </Table.Td>
-            <Table.Td
+            </Table.BodyCell>
+            <Table.BodyCell
               sx={{
                 justifyContent: 'flex-start',
               }}
@@ -65,19 +68,19 @@ export const NoticeList: ComponentStory<typeof Table> = () => (
                   {commentCount}
                 </Text.Highlight>
               )}
-            </Table.Td>
-            <Table.Td>
+            </Table.BodyCell>
+            <Table.BodyCell>
               <Text ellipsis>{writer}</Text>
-            </Table.Td>
-            <Table.Td>
+            </Table.BodyCell>
+            <Table.BodyCell>
               <Text ellipsis>{date}</Text>
-            </Table.Td>
-            <Table.Td>
+            </Table.BodyCell>
+            <Table.BodyCell>
               <Text ellipsis>{view}</Text>
-            </Table.Td>
-          </Table.Tr>
+            </Table.BodyCell>
+          </Table.Row>
         ))}
-    </Table.Tbody>
+    </Table.Body>
   </Table>
 );
 
@@ -136,33 +139,33 @@ const STATUS = {
 export const MemberManagementList: ComponentStory<typeof Table> = () => (
   <Table
     caption="스터디 멤버 관리"
-    cellWidth={['*', '15%', '15%', '13%', '13%', '13%', '13%']}
+    columnsWidth={['*', '15%', '15%', '13%', '13%', '13%', '13%']}
   >
-    <Table.Thead>
-      <Table.Tr>
-        <Table.Th>닉네임</Table.Th>
-        <Table.Th>상태</Table.Th>
-        <Table.Th>가입일</Table.Th>
-        <Table.Th>활동일</Table.Th>
-        <Table.Th>
+    <Table.Head>
+      <Table.Row>
+        <Table.HeadCell>닉네임</Table.HeadCell>
+        <Table.HeadCell>상태</Table.HeadCell>
+        <Table.HeadCell>가입일</Table.HeadCell>
+        <Table.HeadCell>활동일</Table.HeadCell>
+        <Table.HeadCell>
           미 체크인
           <Icon iconName="star" size="large" />
-        </Table.Th>
-        <Table.Th>
+        </Table.HeadCell>
+        <Table.HeadCell>
           미 체크아웃
           <Icon iconName="star" size="large" />
-        </Table.Th>
-        <Table.Th>벌점</Table.Th>
-      </Table.Tr>
-    </Table.Thead>
-    <Table.Tbody>
+        </Table.HeadCell>
+        <Table.HeadCell>벌점</Table.HeadCell>
+      </Table.Row>
+    </Table.Head>
+    <Table.Body>
       {memberManagementList.map((props) => (
-        <Table.Tr key={props.id}>
-          <Table.Td sx={{ justifyContent: 'flex-start' }}>
+        <Table.Row key={props.id}>
+          <Table.BodyCell sx={{ justifyContent: 'flex-start' }}>
             <Icon iconName="anonymous" size="large" color="borderLine" />
             <Text ellipsis>{props.nickName}</Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>
               <Text.Highlight
                 as="strong"
@@ -171,24 +174,24 @@ export const MemberManagementList: ComponentStory<typeof Table> = () => (
                 {STATUS[props.status].text}
               </Text.Highlight>
             </Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>{props.dateOfSubscription}</Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>{props.periodOfActivity}일</Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>{props.uncheckin}회</Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>{props.uncheckout}회</Text>
-          </Table.Td>
-          <Table.Td>
+          </Table.BodyCell>
+          <Table.BodyCell>
             <Text ellipsis>{props.penaltyPoint}점</Text>
-          </Table.Td>
-        </Table.Tr>
+          </Table.BodyCell>
+        </Table.Row>
       ))}
-    </Table.Tbody>
+    </Table.Body>
   </Table>
 );
