@@ -5,16 +5,16 @@ import Form from '@components/common/Form';
 const StyledFormRoot = styled(Form)`
   display: flex;
   flex-direction: column;
-  width: 580px;
-  gap: 12px;
+  width: 58rem;
+  gap: 1.2rem;
 `;
 
 const InputStyle = css`
-  width: 580px;
-  height: 50px;
-  border: 1px solid ${({ theme }) => theme.palette.borderLine};
-  border-radius: 10px;
-  padding: 0 10px;
+  width: 58rem;
+  height: 5rem;
+  border: 0.1rem solid ${({ theme }) => theme.palette.borderLine};
+  border-radius: 1rem;
+  padding: 0 1rem;
   font-size: 1.3rem;
   :focus {
     border-color: ${({ theme }) => theme.palette.primary};
@@ -32,13 +32,13 @@ const LabelStyle = css`
 `;
 
 const ErrorMsgStyle = css`
-  font-size: 0.8em;
+  font-size: 0.8rem;
   color: ${({ theme }) => theme.palette.danger};
 `;
 
 const TextField = styled(Form.TextField)`
   display: flex;
-  gap: 10px;
+  gap: 1rem;
   flex-direction: column;
   input {
     ${InputStyle}
