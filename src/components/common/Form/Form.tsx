@@ -49,9 +49,9 @@ const Form = ({
   const [values, setValues] = useState<Record<string, string>>({});
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (onSubmit) onSubmit(e, values);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (onSubmit) onSubmit(event, values);
   };
 
   return (
