@@ -3,6 +3,7 @@ import {
   Dispatch,
   FormEvent,
   ReactNode,
+  SetStateAction,
   useContext,
   useState,
 } from 'react';
@@ -10,10 +11,10 @@ import {
 type ValidationMode = 'onChange' | 'onBlur' | 'onSubmit';
 
 type FormContextType = {
-  values: Record<string, any>;
-  setValues: Dispatch<any>;
-  errors: Record<string, any>;
-  setErrors: Dispatch<any>;
+  values: Record<string, string>;
+  setValues: Dispatch<SetStateAction<Record<string, string>>>;
+  errors: Record<string, string>;
+  setErrors: Dispatch<SetStateAction<Record<string, string>>>;
   validationMode?: ValidationMode;
 };
 
@@ -35,7 +36,7 @@ type FormProps = {
   children: ReactNode;
   onSubmit?: (
     e: FormEvent<HTMLFormElement>,
-    values: Record<string, any>,
+    values: Record<string, string>,
   ) => void;
 };
 
@@ -45,8 +46,8 @@ const Form = ({
   onSubmit,
   ...restProps
 }: FormProps) => {
-  const [values, setValues] = useState<Record<string, any>>({});
-  const [errors, setErrors] = useState<Record<string, any>>({});
+  const [values, setValues] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
