@@ -5,17 +5,18 @@ import { Palette } from '@styles/theme';
 
 type IconProps = {
   iconName: IconName;
-  size?: 'small' | 'medium' | 'large';
+  size?: keyof typeof iconSizes;
   color?: keyof Palette;
 };
 
 const iconSizes = {
-  small: '0.5rem',
-  medium: '1rem',
-  large: '2rem',
+  small: '2rem',
+  medium: '2.5rem',
+  large: '3rem',
+  xLarge: '3.5rem',
 };
 
-const Icon = ({ iconName, size = 'small', color }: IconProps) => {
+const Icon = ({ iconName, size = 'medium', color }: IconProps) => {
   const IconComponent = icon[iconName];
 
   const StyledIcon = styled(IconComponent)`
