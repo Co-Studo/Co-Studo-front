@@ -1,10 +1,12 @@
-import styled from 'styled-components';
+import styled, { DefaultTheme, useTheme } from 'styled-components';
 
 import {
   SpacingSX,
   isSpacingProp,
   getSpacingCssProps,
 } from '@components/common/FlexBox/spacing';
+import colors from '@styles/colors';
+import { Palette } from '@styles/theme';
 
 type SizeSX = {
   width?: string;
@@ -16,7 +18,7 @@ type SizeSX = {
 };
 
 type StyleSX = {
-  background?: string;
+  bgColor?: keyof typeof colors | keyof Palette;
 };
 
 export interface FlexBoxSX extends SizeSX, SpacingSX, StyleSX {
@@ -41,18 +43,20 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
-const getFlexCssProperties = (sx: FlexBoxSX) =>
-  Object.keys(sx).reduce(
-    (css, key) =>
-      isSpacingProp(key)
-        ? { ...css, ...getSpacingCssProps(key, sx[key]) }
-        : { ...css, [key]: sx[key] },
-    {},
-  );
+const getFlexCssProperties = (sx: FlexBoxSX, theme: DefaultTheme) =>
+  Object.entries(sx).reduce((css, [key, value]) => {
+    if (key === 'bgColor') {
+      return { ...css, backgroundColor: theme.palette[value] ?? colors[value] };
+    }
+    return isSpacingProp(key)
+      ? { ...css, ...getSpacingCssProps(key, value) }
+      : { ...css, [key]: value };
+  }, {});
 
 const FlexBox = (props: FlexBoxProps) => {
   const { sx, as = 'div', children } = props;
-  const css = sx && getFlexCssProperties(sx);
+  const theme = useTheme();
+  const css = sx && getFlexCssProperties(sx, theme);
   return (
     <Wrapper as={as} css={css}>
       {children}
