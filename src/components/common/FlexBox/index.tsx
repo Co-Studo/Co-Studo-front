@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-type FlexBoxSX = {
+interface SizeSX {
+  width?: string;
+  maxWidth?: string;
+  minWidth?: string;
+  height?: string;
+  maxHeight?: string;
+  minHeight?: string;
+}
+
+export interface FlexBoxSX extends SizeSX {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -10,8 +19,7 @@ type FlexBoxSX = {
     | 'space-evenly';
   alignItems?: 'center' | 'flex-start' | 'flex-end';
   flexDirection?: 'row' | 'column';
-  gap?: string;
-};
+}
 
 type FlexBoxProps = {
   as?: React.ElementType;
