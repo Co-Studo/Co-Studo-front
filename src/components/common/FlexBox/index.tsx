@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+import {
+  SpacingSX,
+  isSpacingProp,
+  getSpacingCssProps,
+} from '@components/common/FlexBox/spacing';
+
 interface SizeSX {
   width?: string;
   maxWidth?: string;
@@ -9,7 +15,7 @@ interface SizeSX {
   minHeight?: string;
 }
 
-export interface FlexBoxSX extends SizeSX {
+export interface FlexBoxSX extends SpacingSX, SizeSX {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
@@ -31,11 +37,20 @@ const Wrapper = styled.div`
   display: flex;
 `;
 
+const getFlexCssProperties = (sx: FlexBoxSX) =>
+  Object.keys(sx).reduce(
+    (css, key) =>
+      isSpacingProp(key)
+        ? { ...css, ...getSpacingCssProps(key, sx[key]) }
+        : { ...css, [key]: sx[key] },
+    {},
+  );
+
 const FlexBox = (props: FlexBoxProps) => {
   const { sx, as = 'div', children } = props;
-
+  const css = sx && getFlexCssProperties(sx);
   return (
-    <Wrapper as={as} css={sx}>
+    <Wrapper as={as} css={css}>
       {children}
     </Wrapper>
   );
