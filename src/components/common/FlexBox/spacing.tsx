@@ -4,11 +4,8 @@ export type SpacingValue = typeof spacing[number] | string;
 
 export type Margin = Partial<Record<MarginKey, SpacingValue>>;
 export type Padding = Partial<Record<PaddingKey, SpacingValue>>;
-export type Gap = SpacingValue;
 
-export interface SpacingSX extends Margin, Padding {
-  gap?: Gap;
-}
+export interface SpacingSX extends Margin, Padding {}
 
 const spacing = [0.5, 1, 1.5, 2, 2.5] as const;
 const marginKeys = ['m', 'mt', 'mr', 'mb', 'ml', 'mx', 'my'] as const;

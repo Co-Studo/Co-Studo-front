@@ -4,6 +4,7 @@ import {
   SpacingSX,
   isSpacingProp,
   getSpacingCssProps,
+  SpacingValue,
 } from '@components/common/FlexBox/spacing';
 import colors from '@styles/colors';
 import { Palette } from '@styles/theme';
@@ -31,6 +32,7 @@ export interface FlexBoxSX extends SizeSX, SpacingSX, StyleSX {
     | 'space-evenly';
   alignItems?: 'center' | 'flex-start' | 'flex-end';
   flexDirection?: 'row' | 'column';
+  gap?: SpacingValue;
 }
 
 type FlexBoxProps = {
