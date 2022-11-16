@@ -131,8 +131,13 @@ const HeadCell = ({ name, children, ...restProps }: CellProps) => {
   return (
     <th
       scope="col"
-      className={sortConfig?.name === name ? sortConfig?.direction : undefined}
+      data-sort={sortConfig?.name === name ? sortConfig?.direction : undefined}
       onClick={sortRows}
+      css={
+        name && {
+          cursor: 'pointer',
+        }
+      }
       {...restProps}
     >
       {children}
