@@ -89,11 +89,55 @@ export type CellProps = {
   children: ReactNode;
 };
 
-const HeadCell = ({ name, children, ...restProps }: CellProps) => (
-  <th scope="col" {...restProps}>
-    {children}
-  </th>
-);
+const HeadCell = ({ name, children, ...restProps }: CellProps) => {
+  const { sortValues, sortConfig, setSortConfig } = useColumnTableContext();
+
+  const direction =
+    sortConfig?.name === name && sortConfig?.direction === DIRECTION.DESCENDING
+      ? DIRECTION.ASCENDING
+      : DIRECTION.DESCENDING;
+
+  const getRowIndices = (_sortValuesByName: (number | string)[]) => {
+    const sortValuesByName: (number | string | null)[] = [..._sortValuesByName];
+    const sortedValuesByName = [..._sortValuesByName].sort((a, b) => {
+      if (a > b) return direction === DIRECTION.ASCENDING ? 1 : -1;
+      if (a < b) return direction === DIRECTION.ASCENDING ? -1 : 1;
+      return 0;
+    });
+    const rowIndices = sortedValuesByName.map((sortedValueByName) => {
+      const prevIndex = sortValuesByName.findIndex(
+        (sortValueByName) => sortValueByName === sortedValueByName,
+      );
+      sortValuesByName[prevIndex] = null;
+
+      return prevIndex;
+    });
+
+    return rowIndices;
+  };
+
+  const sortRows = () => {
+    if (!sortValues || !name) return;
+
+    const newSortConfig = {
+      name,
+      direction,
+      rowIndices: getRowIndices(sortValues[name]),
+    };
+    setSortConfig(newSortConfig);
+  };
+
+  return (
+    <th
+      scope="col"
+      className={sortConfig?.name === name ? sortConfig?.direction : undefined}
+      onClick={sortRows}
+      {...restProps}
+    >
+      {children}
+    </th>
+  );
+};
 
 const BodyCell = ({ children, ...restProps }: CellProps) => (
   <td {...restProps}>{children}</td>
