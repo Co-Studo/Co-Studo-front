@@ -71,8 +71,8 @@ export type RowProps = {
   children: ReactElement<CellProps> | ReactElement<CellProps>[];
 };
 
-const Row = ({ isHeadCell, children }: RowProps) => (
-  <tr>
+const Row = ({ isHeadCell, children, ...restProps }: RowProps) => (
+  <tr {...restProps}>
     {isHeadCell
       ? React.Children.toArray(children).map((child) =>
           cloneElement(child as ReactElement, { isHeadCell }),
@@ -117,7 +117,8 @@ const HeadCell = ({ name, children, ...restProps }: CellProps) => {
   };
 
   const sortRows = () => {
-    if (!sortValues || !name) return;
+    if (!name || !sortValues?.[name])
+      throw new Error('Please set head cell name and sortValues[name].');
 
     const newSortConfig = {
       name,
