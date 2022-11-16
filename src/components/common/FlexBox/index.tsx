@@ -6,16 +6,20 @@ import {
   getSpacingCssProps,
 } from '@components/common/FlexBox/spacing';
 
-interface SizeSX {
+type SizeSX = {
   width?: string;
   maxWidth?: string;
   minWidth?: string;
   height?: string;
   maxHeight?: string;
   minHeight?: string;
-}
+};
 
-export interface FlexBoxSX extends SpacingSX, SizeSX {
+type StyleSX = {
+  background?: string;
+};
+
+export interface FlexBoxSX extends SizeSX, SpacingSX, StyleSX {
   justifyContent?:
     | 'flex-start'
     | 'flex-end'
