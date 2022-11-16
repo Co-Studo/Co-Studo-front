@@ -9,6 +9,8 @@ import React, {
   SetStateAction,
 } from 'react';
 
+import Button from '@components/common/Button';
+
 const DIRECTION = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
@@ -132,15 +134,15 @@ const HeadCell = ({ name, children, ...restProps }: CellProps) => {
     <th
       scope="col"
       data-sort={sortConfig?.name === name ? sortConfig?.direction : undefined}
-      onClick={sortRows}
-      css={
-        name && {
-          cursor: 'pointer',
-        }
-      }
       {...restProps}
     >
-      {children}
+      {name ? (
+        <Button type="button" onClick={sortRows}>
+          {children}
+        </Button>
+      ) : (
+        children
+      )}
     </th>
   );
 };
