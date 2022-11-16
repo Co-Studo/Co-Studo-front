@@ -79,14 +79,15 @@ const Option = ({
   ...restProps
 }: OptionProps) => {
   const { selectedValue } = useRadioContext();
-  const formController = useForm(name, selectedValue);
+  const {
+    value: formValue,
+    subscribe = () => {},
+    validationMode = 'onChange',
+  } = useForm(name, selectedValue) ?? {};
 
   const optionId = id || `option-${name}-${value}`;
-  const isChecked = (formController?.value ?? selectedValue) === value;
-
-  const handleChange =
-    onChange ??
-    Object.values({ ...formController?.subscribe(validates) }).pop();
+  const isChecked = (formValue ?? selectedValue) === value;
+  const handleChange = onChange ?? subscribe(validates)[validationMode];
 
   return (
     <div {...restProps}>

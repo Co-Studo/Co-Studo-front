@@ -8,7 +8,7 @@ import {
   useState,
 } from 'react';
 
-type ValidationMode = 'onChange' | 'onBlur' | 'onSubmit';
+export type ValidationMode = 'onChange' | 'onBlur' | 'onSubmit';
 
 type FormContextType = {
   values: Record<string, string>;

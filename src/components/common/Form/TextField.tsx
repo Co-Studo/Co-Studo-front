@@ -30,11 +30,7 @@ const TextField = ({
   placeholder,
   ...restProps
 }: TextFieldProps) => {
-  const { subscribe, error } = useForm(name, defaultValue) ?? {
-    subscribe: () => {},
-    error: null,
-  };
-
+  const { subscribe = () => {}, error } = useForm(name, defaultValue) ?? {};
   const inputId = useId();
   const isError = Boolean(error);
 

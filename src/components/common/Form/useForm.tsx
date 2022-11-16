@@ -1,6 +1,6 @@
 import { ChangeEvent, FocusEvent, useEffect } from 'react';
 
-import { useFormContext } from '@components/common/Form/Form';
+import { useFormContext, ValidationMode } from '@components/common/Form/Form';
 import { validate } from '@utils/validation';
 
 type InputEvent = ChangeEvent<HTMLInputElement> | FocusEvent<HTMLInputElement>;
@@ -13,6 +13,7 @@ export type FormHookReturns = {
   value: string;
   error: string;
   subscribe: Subscribe;
+  validationMode: ValidationMode;
 } | null;
 
 const useForm = (name: string, initValue?: string): FormHookReturns => {
@@ -58,7 +59,7 @@ const useForm = (name: string, initValue?: string): FormHookReturns => {
     return { [validationMode]: handleEvent };
   };
 
-  return { value, error, subscribe };
+  return { value, error, subscribe, validationMode };
 };
 
 export default useForm;
