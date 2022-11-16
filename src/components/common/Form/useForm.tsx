@@ -13,16 +13,25 @@ export type FormHookReturns = {
   value: string;
   error: string;
   subscribe: Subscribe;
-};
+} | null;
 
 const useForm = (name: string, initValue?: string): FormHookReturns => {
+  const context = useFormContext();
+
+  useEffect(() => {
+    context?.setValues((prev) => ({ ...prev, [name]: initValue || '' }));
+    context?.setErrors((prev) => ({ ...prev, [name]: '' }));
+  }, []);
+
+  if (!context) return null;
+
   const {
     values,
     setValues,
     errors,
     setErrors,
     validationMode = 'onBlur',
-  } = useFormContext();
+  } = context;
 
   const value = values?.[name];
   const error = errors?.[name];
@@ -33,11 +42,6 @@ const useForm = (name: string, initValue?: string): FormHookReturns => {
   const setError = (newError: string) => {
     setErrors((prev) => ({ ...prev, [name]: newError }));
   };
-
-  useEffect(() => {
-    setValue(initValue || '');
-    setError('');
-  }, []);
 
   const subscribe: Subscribe = (validates) => {
     const handleEvent = (event: InputEvent) => {
