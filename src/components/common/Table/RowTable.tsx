@@ -130,7 +130,6 @@ const HeadCell = ({
 
       return prevIndex;
     });
-    console.log(cellIndices);
 
     return cellIndices;
   };
