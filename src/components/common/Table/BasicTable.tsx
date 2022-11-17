@@ -1,18 +1,43 @@
 import { ReactElement, ReactNode } from 'react';
 
-type TableProps = {
-  children: ReactElement<RowProps> | ReactElement<RowProps>[];
+import { offscreen } from '@styles/commonStyles';
+
+export type BasicTableProps = {
+  caption: string;
+  columnsWidth?: string[];
+  children: (ReactElement | ReactElement[])[];
 };
 
-const BasicTable = ({ children }: TableProps) => <tbody>{children}</tbody>;
+const BasicTable = ({
+  caption,
+  columnsWidth,
+  children,
+  ...restProps
+}: BasicTableProps) => (
+  <table {...restProps}>
+    <caption css={offscreen}>{caption}</caption>
+    {columnsWidth && (
+      <colgroup>
+        {columnsWidth.map((width, index) => (
+          // 유동적으로 변하지 않는 리스트
+          // eslint-disable-next-line react/no-array-index-key
+          <col key={index} width={width} />
+        ))}
+      </colgroup>
+    )}
+    <tbody>{children}</tbody>
+  </table>
+);
 
-export type RowProps = {
-  children: ReactElement<CellProps> | ReactElement<CellProps>[];
+type RowProps = {
+  children: ReactElement | ReactElement[];
 };
 
-const Row = ({ children }: RowProps) => <tr>{children}</tr>;
+const Row = ({ children, ...restProps }: RowProps) => (
+  <tr {...restProps}>{children}</tr>
+);
 
-export type CellProps = {
+type CellProps = {
   colSpan?: number;
   rowSpan?: number;
   children: ReactNode;

@@ -8,15 +8,18 @@ import React, {
 } from 'react';
 
 import Button from '@components/common/Button';
+import { offscreen } from '@styles/commonStyles';
 
 const DIRECTION = {
   ASCENDING: 'ascending',
   DESCENDING: 'descending',
 };
 
-type ColumnTableProps = {
+export type ColumnTableProps = {
+  caption: string;
+  columnsWidth?: string[];
   sortValues?: { [key in string]: (string | number)[] };
-  children: ReactElement<RowProps> | ReactElement<RowProps>[];
+  children: (ReactElement | ReactElement[])[];
 };
 
 type SortState = {
@@ -31,17 +34,32 @@ type SortConfig = {
   setSortState: Dispatch<SetStateAction<SortState>>;
 };
 
-const ColumnTable = ({ sortValues, children }: ColumnTableProps) => {
+const ColumnTable = ({
+  caption,
+  columnsWidth,
+  sortValues,
+  children,
+  ...restProps
+}: ColumnTableProps) => {
   const Children = React.Children.toArray(children);
   const [headRow, bodyRows] = [Children[0], Children.splice(1)];
   const [sortState, setSortState] = useState<SortState>(null);
   const sortConfig = { sortValues, sortState, setSortState };
 
   return (
-    <>
+    <table {...restProps}>
+      <caption css={offscreen}>{caption}</caption>
+      {columnsWidth && (
+        <colgroup>
+          {columnsWidth.map((width, index) => (
+            // 유동적으로 변하지 않는 리스트
+            // eslint-disable-next-line react/no-array-index-key
+            <col key={index} width={width} />
+          ))}
+        </colgroup>
+      )}
       <thead>
         {cloneElement(headRow as ReactElement, {
-          isHeadCell: true,
           sortConfig,
         })}
       </thead>
@@ -50,21 +68,20 @@ const ColumnTable = ({ sortValues, children }: ColumnTableProps) => {
           ? sortState.rowIndices.map((index) => bodyRows[index])
           : bodyRows}
       </tbody>
-    </>
+    </table>
   );
 };
 
 export type RowProps = {
-  isHeadCell?: boolean;
   sortConfig?: SortConfig;
-  children: ReactElement<CellProps> | ReactElement<CellProps>[];
+  children: ReactElement | ReactElement[];
 };
 
-const Row = ({ isHeadCell, sortConfig, children, ...restProps }: RowProps) => (
+const Row = ({ sortConfig, children, ...restProps }: RowProps) => (
   <tr {...restProps}>
-    {isHeadCell
+    {sortConfig
       ? React.Children.toArray(children).map((child) =>
-          cloneElement(child as ReactElement, { isHeadCell, sortConfig }),
+          cloneElement(child as ReactElement, { sortConfig }),
         )
       : children}
   </tr>
@@ -74,12 +91,20 @@ export type CellProps = {
   colSpan?: number;
   rowSpan?: number;
   name?: string;
-  isHeadCell?: boolean;
-  sortConfig: SortConfig;
+  sortConfig?: SortConfig;
   children: ReactNode;
 };
 
-const HeadCell = ({ name, children, sortConfig, ...restProps }: CellProps) => {
+interface HeadCellProps extends CellProps {
+  sortConfig: SortConfig;
+}
+
+const HeadCell = ({
+  name,
+  sortConfig,
+  children,
+  ...restProps
+}: HeadCellProps) => {
   const { sortValues, sortState, setSortState } = sortConfig;
   const direction =
     sortState &&
@@ -142,9 +167,9 @@ const BodyCell = ({ children, ...restProps }: CellProps) => (
   <td {...restProps}>{children}</td>
 );
 
-const Cell = ({ name, isHeadCell, children, ...restProps }: CellProps) =>
-  isHeadCell ? (
-    <HeadCell name={name} {...restProps}>
+const Cell = ({ name, sortConfig, children, ...restProps }: CellProps) =>
+  sortConfig ? (
+    <HeadCell sortConfig={sortConfig} name={name} {...restProps}>
       {children}
     </HeadCell>
   ) : (

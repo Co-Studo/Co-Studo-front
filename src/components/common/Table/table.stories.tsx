@@ -1,13 +1,13 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { css, useTheme } from 'styled-components';
+import { css } from 'styled-components';
 
-import Table from '@components/common/Table';
+import { ColumnTable, RowTable } from '@components/common/Table';
 import Text from '@components/common/Text';
 
 export default {
   title: 'common/Table',
-  component: Table,
-} as ComponentMeta<typeof Table>;
+  component: ColumnTable,
+} as ComponentMeta<typeof ColumnTable>;
 
 const noticeList = [
   {
@@ -61,81 +61,79 @@ const sortValues = {
   view: noticeList.map(({ view }) => Number(view)),
 };
 
-export const ColumnTable: ComponentStory<typeof Table> = () => {
-  const theme = useTheme();
-  const rowCSS = { borderBottom: `0.1rem solid ${theme.palette.borderLine}` };
-  const cellCSS = { padding: '1.7rem 2rem' };
-  const headCellCSS = css`
-    &[data-sort='ascending'],
-    &[data-sort='descending'] {
-      font-weight: bold;
-    }
-    &[data-sort='ascending']:after {
-      content: '';
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      margin-left: 0.5rem;
-      border-radius: 50%;
-      background: #0091ff;
-    }
-    &[data-sort='descending']:after {
-      content: '';
-      display: inline-block;
-      width: 1rem;
-      height: 1rem;
-      margin-left: 0.5rem;
-      border-radius: 50%;
-      background: #ff0000;
-    }
-    ${cellCSS}
-  `;
+const rowCSS = css`
+  border-bottom: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
+`;
+const cellCSS = { padding: '1.7rem 2rem' };
+const headCellCSS = css`
+  &[data-sort='ascending'],
+  &[data-sort='descending'] {
+    font-weight: bold;
+  }
+  &[data-sort='ascending']:after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+    border-radius: 50%;
+    background: #0091ff;
+  }
+  &[data-sort='descending']:after {
+    content: '';
+    display: inline-block;
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+    border-radius: 50%;
+    background: #ff0000;
+  }
+  ${cellCSS}
+`;
 
-  return (
-    <Table
-      caption="공지사항"
-      headScope="col"
-      columnsWidth={['85px', '*', '120px', '120px', '85px']}
-      sortValues={sortValues}
-      css={{
-        width: '100%',
-        overflow: 'hidden',
-        borderTop: `0.1rem solid ${theme.palette.borderLine}`,
-        tableLayout: 'fixed',
-      }}
-    >
-      <Table.Row css={rowCSS}>
-        <Table.Cell css={headCellCSS}>번호</Table.Cell>
-        <Table.Cell css={headCellCSS}>제목</Table.Cell>
-        <Table.Cell name="writer" css={headCellCSS}>
-          작성자
-        </Table.Cell>
-        <Table.Cell name="date" css={headCellCSS}>
-          날짜
-        </Table.Cell>
-        <Table.Cell name="view" css={headCellCSS}>
-          조회수
-        </Table.Cell>
-      </Table.Row>
-      {noticeList.map(({ id, title, writer, date, view }) => (
-        <Table.Row key={id} css={rowCSS}>
-          <Table.Cell css={cellCSS}>
-            <Text ellipsis>{id}</Text>
-          </Table.Cell>
-          <Table.Cell css={cellCSS}>
-            <Text ellipsis>{title}</Text>
-          </Table.Cell>
-          <Table.Cell css={cellCSS}>
-            <Text ellipsis>{writer}</Text>
-          </Table.Cell>
-          <Table.Cell css={cellCSS}>
-            <Text ellipsis>{date}</Text>
-          </Table.Cell>
-          <Table.Cell css={cellCSS}>
-            <Text ellipsis>{view}</Text>
-          </Table.Cell>
-        </Table.Row>
-      ))}
-    </Table>
-  );
-};
+export const Column: ComponentStory<typeof ColumnTable> = () => (
+  <ColumnTable
+    caption="공지사항"
+    columnsWidth={['85px', '*', '120px', '120px', '85px']}
+    sortValues={sortValues}
+    css={css`
+      width: 100%;
+      overflow: hidden;
+      border-top: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
+      table-layout: fixed;
+    `}
+  >
+    <ColumnTable.Row css={rowCSS}>
+      <ColumnTable.Cell css={headCellCSS}>번호</ColumnTable.Cell>
+      <ColumnTable.Cell css={headCellCSS}>제목</ColumnTable.Cell>
+      <ColumnTable.Cell name="writer" css={headCellCSS}>
+        작성자
+      </ColumnTable.Cell>
+      <ColumnTable.Cell name="date" css={headCellCSS}>
+        날짜
+      </ColumnTable.Cell>
+      <ColumnTable.Cell name="view" css={headCellCSS}>
+        조회수
+      </ColumnTable.Cell>
+    </ColumnTable.Row>
+    {noticeList.map(({ id, title, writer, date, view }) => (
+      <ColumnTable.Row key={id} css={rowCSS}>
+        <ColumnTable.Cell css={cellCSS}>
+          <Text ellipsis>{id}</Text>
+        </ColumnTable.Cell>
+        <ColumnTable.Cell css={cellCSS}>
+          <Text ellipsis>{title}</Text>
+        </ColumnTable.Cell>
+        <ColumnTable.Cell css={cellCSS}>
+          <Text ellipsis>{writer}</Text>
+        </ColumnTable.Cell>
+        <ColumnTable.Cell css={cellCSS}>
+          <Text ellipsis>{date}</Text>
+        </ColumnTable.Cell>
+        <ColumnTable.Cell css={cellCSS}>
+          <Text ellipsis>{view}</Text>
+        </ColumnTable.Cell>
+      </ColumnTable.Row>
+    ))}
+  </ColumnTable>
+);
