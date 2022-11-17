@@ -58,11 +58,7 @@ const ColumnTable = ({
           ))}
         </colgroup>
       )}
-      <thead>
-        {cloneElement(headRow as ReactElement, {
-          sortConfig,
-        })}
-      </thead>
+      <thead>{cloneElement(headRow as ReactElement, { sortConfig })}</thead>
       <tbody>
         {sortState
           ? sortState.rowIndices.map((index) => bodyRows[index])

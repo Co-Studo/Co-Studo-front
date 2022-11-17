@@ -22,37 +22,6 @@ export type RowTableProps = {
   children: ReactElement | ReactElement[];
 };
 
-const RowTable = ({
-  caption,
-  columnsWidth,
-  sortValues,
-  children,
-  ...restProps
-}: RowTableProps) => (
-  <table {...restProps}>
-    <caption css={offscreen}>{caption}</caption>
-    {columnsWidth && (
-      <colgroup>
-        {columnsWidth.map((width, index) => (
-          // 유동적으로 변하지 않는 리스트
-          // eslint-disable-next-line react/no-array-index-key
-          <col key={index} width={width} />
-        ))}
-      </colgroup>
-    )}
-    <tbody>
-      {React.Children.toArray(children).map((child) =>
-        cloneElement(child as ReactElement, { sortValues }),
-      )}
-    </tbody>
-  </table>
-);
-
-type RowProps = {
-  sortValues?: { [key in string]: (string | number)[] };
-  children: (ReactElement | ReactElement[])[];
-};
-
 type SortState = {
   name: string;
   direction: typeof DIRECTION[keyof typeof DIRECTION];
@@ -65,21 +34,52 @@ type SortConfig = {
   setSortState: Dispatch<SetStateAction<SortState>>;
 };
 
-const Row = ({ sortValues, children, ...restProps }: RowProps) => {
+const RowTable = ({
+  caption,
+  columnsWidth,
+  sortValues,
+  children,
+  ...restProps
+}: RowTableProps) => {
   const [sortState, setSortState] = useState<SortState>(null);
   const sortConfig = { sortValues, sortState, setSortState };
-  let Children = React.Children.toArray(children);
-  if (sortState)
-    Children = sortState.cellIndices.map((index) => Children[index]);
-  const isHeadCell = (cellIndex: number) => cellIndex === 0;
+
+  return (
+    <table {...restProps}>
+      <caption css={offscreen}>{caption}</caption>
+      {columnsWidth && (
+        <colgroup>
+          {columnsWidth.map((width, index) => (
+            // 유동적으로 변하지 않는 리스트
+            // eslint-disable-next-line react/no-array-index-key
+            <col key={index} width={width} />
+          ))}
+        </colgroup>
+      )}
+      <tbody>
+        {React.Children.toArray(children).map((child) =>
+          cloneElement(child as ReactElement, { sortConfig }),
+        )}
+      </tbody>
+    </table>
+  );
+};
+
+type RowProps = {
+  sortConfig?: SortConfig;
+  children: (ReactElement | ReactElement[])[];
+};
+
+const Row = ({ sortConfig, children, ...restProps }: RowProps) => {
+  const Children = React.Children.toArray(children);
+  const [headCell, bodyCells] = [Children[0], Children.splice(1)];
 
   return (
     <tr {...restProps}>
-      {Children.map((child, index) =>
-        cloneElement(child as ReactElement, {
-          sortConfig: isHeadCell(index) ? sortConfig : undefined,
-        }),
-      )}
+      {cloneElement(headCell as ReactElement, { sortConfig })}
+      {sortConfig?.sortState
+        ? sortConfig.sortState.cellIndices.map((index) => bodyCells[index])
+        : bodyCells}
     </tr>
   );
 };
@@ -130,6 +130,7 @@ const HeadCell = ({
 
       return prevIndex;
     });
+    console.log(cellIndices);
 
     return cellIndices;
   };
@@ -144,7 +145,11 @@ const HeadCell = ({
   };
 
   return (
-    <th scope="row" {...restProps}>
+    <th
+      scope="row"
+      data-sort={sortState?.name === name ? sortState?.direction : undefined}
+      {...restProps}
+    >
       {name ? (
         <Button type="button" onClick={() => sortCells(name)}>
           {children}
