@@ -1,7 +1,7 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { css } from 'styled-components';
 
-import { ColumnTable, RowTable } from '@components/common/Table';
+import { ColumnTable, RowTable, BasicTable } from '@components/common/Table';
 import Text from '@components/common/Text';
 
 export default {
@@ -61,6 +61,12 @@ const sortValues = {
   view: noticeList.map(({ view }) => Number(view)),
 };
 
+const tableCSS = css`
+  width: 100%;
+  overflow: hidden;
+  border-top: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
+  table-layout: fixed;
+`;
 const rowCSS = css`
   border-bottom: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
 `;
@@ -96,12 +102,7 @@ export const Column: ComponentStory<typeof ColumnTable> = () => (
     caption="공지사항"
     columnsWidth={['85px', '*', '120px', '120px', '85px']}
     sortValues={sortValues}
-    css={css`
-      width: 100%;
-      overflow: hidden;
-      border-top: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
-      table-layout: fixed;
-    `}
+    css={tableCSS}
   >
     <ColumnTable.Row css={rowCSS}>
       <ColumnTable.Cell css={headCellCSS}>번호</ColumnTable.Cell>
@@ -136,4 +137,88 @@ export const Column: ComponentStory<typeof ColumnTable> = () => (
       </ColumnTable.Row>
     ))}
   </ColumnTable>
+);
+
+export const Row: ComponentStory<typeof RowTable> = () => (
+  <RowTable
+    caption="공지사항"
+    columnsWidth={['8%', '24%', '24%', '24%', '24%']}
+    sortValues={sortValues}
+    css={tableCSS}
+  >
+    <RowTable.Row css={rowCSS}>
+      <RowTable.Cell css={headCellCSS}>번호</RowTable.Cell>
+      {noticeList.map(({ id }) => (
+        <RowTable.Cell key={id} css={cellCSS}>
+          <Text ellipsis>{id}</Text>
+        </RowTable.Cell>
+      ))}
+    </RowTable.Row>
+    <RowTable.Row css={rowCSS}>
+      <RowTable.Cell css={headCellCSS}>제목</RowTable.Cell>
+      {noticeList.map(({ id, title }) => (
+        <RowTable.Cell key={id} css={cellCSS}>
+          <Text ellipsis>{title}</Text>
+        </RowTable.Cell>
+      ))}
+    </RowTable.Row>
+    <RowTable.Row css={rowCSS}>
+      <RowTable.Cell name="writer" css={headCellCSS}>
+        작성자
+      </RowTable.Cell>
+      {noticeList.map(({ id, writer }) => (
+        <RowTable.Cell key={id} css={cellCSS}>
+          <Text ellipsis>{writer}</Text>
+        </RowTable.Cell>
+      ))}
+    </RowTable.Row>
+    <RowTable.Row css={rowCSS}>
+      <RowTable.Cell name="date" css={headCellCSS}>
+        날짜
+      </RowTable.Cell>
+      {noticeList.map(({ id, date }) => (
+        <RowTable.Cell key={id} css={cellCSS}>
+          <Text ellipsis>{date}</Text>
+        </RowTable.Cell>
+      ))}
+    </RowTable.Row>
+    <RowTable.Row css={rowCSS}>
+      <RowTable.Cell name="view" css={headCellCSS}>
+        조회수
+      </RowTable.Cell>
+      {noticeList.map(({ id, view }) => (
+        <RowTable.Cell key={id} css={cellCSS}>
+          <Text ellipsis>{view}</Text>
+        </RowTable.Cell>
+      ))}
+    </RowTable.Row>
+  </RowTable>
+);
+
+export const Basic: ComponentStory<typeof BasicTable> = () => (
+  <BasicTable
+    caption="공지사항"
+    columnsWidth={['85px', '*', '120px', '120px', '85px']}
+    css={tableCSS}
+  >
+    {noticeList.map(({ id, title, writer, date, view }) => (
+      <BasicTable.Row key={id} css={rowCSS}>
+        <BasicTable.Cell css={cellCSS}>
+          <Text ellipsis>{id}</Text>
+        </BasicTable.Cell>
+        <BasicTable.Cell css={cellCSS}>
+          <Text ellipsis>{title}</Text>
+        </BasicTable.Cell>
+        <BasicTable.Cell css={cellCSS}>
+          <Text ellipsis>{writer}</Text>
+        </BasicTable.Cell>
+        <BasicTable.Cell css={cellCSS}>
+          <Text ellipsis>{date}</Text>
+        </BasicTable.Cell>
+        <BasicTable.Cell css={cellCSS}>
+          <Text ellipsis>{view}</Text>
+        </BasicTable.Cell>
+      </BasicTable.Row>
+    ))}
+  </BasicTable>
 );
