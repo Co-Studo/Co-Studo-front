@@ -1,7 +1,5 @@
 import React, {
   ReactNode,
-  createContext,
-  useContext,
   cloneElement,
   ReactElement,
   useState,
@@ -16,68 +14,57 @@ const DIRECTION = {
   DESCENDING: 'descending',
 };
 
-type SortConfig = {
-  name: string;
-  direction: typeof DIRECTION[keyof typeof DIRECTION];
-  rowIndices: number[];
-} | null;
-
-type ColumnTableContextValue = {
-  sortValues?: { [key in string]: (string | number)[] };
-  sortConfig: SortConfig;
-  setSortConfig: Dispatch<SetStateAction<SortConfig>>;
-};
-
-const ColumnTableContext = createContext<ColumnTableContextValue | null>(null);
-ColumnTableContext.displayName = 'ColumnTableContext';
-
-const useColumnTableContext = () => {
-  const context = useContext(ColumnTableContext);
-
-  if (!context)
-    throw new Error(
-      'useColumnTableContext should be used within ColumnTableContext.Provider',
-    );
-
-  return context;
-};
-
 type ColumnTableProps = {
   sortValues?: { [key in string]: (string | number)[] };
   children: ReactElement<RowProps> | ReactElement<RowProps>[];
 };
 
+type SortState = {
+  name: string;
+  direction: typeof DIRECTION[keyof typeof DIRECTION];
+  rowIndices: number[];
+} | null;
+
+type SortConfig = {
+  sortValues?: { [key in string]: (string | number)[] };
+  sortState: SortState;
+  setSortState: Dispatch<SetStateAction<SortState>>;
+};
+
 const ColumnTable = ({ sortValues, children }: ColumnTableProps) => {
   const Children = React.Children.toArray(children);
   const [headRow, bodyRows] = [Children[0], Children.splice(1)];
-  const [sortConfig, setSortConfig] = useState<SortConfig>(null);
+  const [sortState, setSortState] = useState<SortState>(null);
+  const sortConfig = { sortValues, sortState, setSortState };
 
   return (
-    <ColumnTableContext.Provider
-      value={{ sortValues, sortConfig, setSortConfig }}
-    >
+    <>
       <thead>
-        {cloneElement(headRow as ReactElement, { isHeadCell: true })}
+        {cloneElement(headRow as ReactElement, {
+          isHeadCell: true,
+          sortConfig,
+        })}
       </thead>
       <tbody>
-        {sortConfig
-          ? sortConfig.rowIndices.map((index) => bodyRows[index])
+        {sortState
+          ? sortState.rowIndices.map((index) => bodyRows[index])
           : bodyRows}
       </tbody>
-    </ColumnTableContext.Provider>
+    </>
   );
 };
 
 export type RowProps = {
   isHeadCell?: boolean;
+  sortConfig?: SortConfig;
   children: ReactElement<CellProps> | ReactElement<CellProps>[];
 };
 
-const Row = ({ isHeadCell, children, ...restProps }: RowProps) => (
+const Row = ({ isHeadCell, sortConfig, children, ...restProps }: RowProps) => (
   <tr {...restProps}>
     {isHeadCell
       ? React.Children.toArray(children).map((child) =>
-          cloneElement(child as ReactElement, { isHeadCell }),
+          cloneElement(child as ReactElement, { isHeadCell, sortConfig }),
         )
       : children}
   </tr>
@@ -88,20 +75,27 @@ export type CellProps = {
   rowSpan?: number;
   name?: string;
   isHeadCell?: boolean;
+  sortConfig: SortConfig;
   children: ReactNode;
 };
 
-const HeadCell = ({ name, children, ...restProps }: CellProps) => {
-  const { sortValues, sortConfig, setSortConfig } = useColumnTableContext();
-
+const HeadCell = ({ name, children, sortConfig, ...restProps }: CellProps) => {
+  const { sortValues, sortState, setSortState } = sortConfig;
   const direction =
-    sortConfig?.name === name && sortConfig?.direction === DIRECTION.DESCENDING
+    sortState &&
+    sortState.name === name &&
+    sortState.direction === DIRECTION.DESCENDING
       ? DIRECTION.ASCENDING
       : DIRECTION.DESCENDING;
 
-  const getRowIndices = (_sortValuesByName: (number | string)[]) => {
-    const sortValuesByName: (number | string | null)[] = [..._sortValuesByName];
-    const sortedValuesByName = [..._sortValuesByName].sort((a, b) => {
+  const getRowIndices = (cellName: string) => {
+    if (!sortValues || !sortValues[cellName])
+      throw new Error('Please set sortValues[name] in Table props.');
+
+    const sortValuesByName: (number | string | null)[] = [
+      ...sortValues[cellName],
+    ];
+    const sortedValuesByName = [...sortValues[cellName]].sort((a, b) => {
       if (a > b) return direction === DIRECTION.ASCENDING ? 1 : -1;
       if (a < b) return direction === DIRECTION.ASCENDING ? -1 : 1;
       return 0;
@@ -118,26 +112,23 @@ const HeadCell = ({ name, children, ...restProps }: CellProps) => {
     return rowIndices;
   };
 
-  const sortRows = () => {
-    if (!name || !sortValues?.[name])
-      throw new Error('Please set head cell name and sortValues[name].');
-
-    const newSortConfig = {
-      name,
+  const sortRows = (cellName: string) => {
+    const newSortState = {
+      name: cellName,
       direction,
-      rowIndices: getRowIndices(sortValues[name]),
+      rowIndices: getRowIndices(cellName),
     };
-    setSortConfig(newSortConfig);
+    setSortState(newSortState);
   };
 
   return (
     <th
       scope="col"
-      data-sort={sortConfig?.name === name ? sortConfig?.direction : undefined}
+      data-sort={sortState?.name === name ? sortState?.direction : undefined}
       {...restProps}
     >
       {name ? (
-        <Button type="button" onClick={sortRows}>
+        <Button type="button" onClick={() => sortRows(name)}>
           {children}
         </Button>
       ) : (
@@ -151,7 +142,7 @@ const BodyCell = ({ children, ...restProps }: CellProps) => (
   <td {...restProps}>{children}</td>
 );
 
-const Cell = ({ isHeadCell, name, children, ...restProps }: CellProps) =>
+const Cell = ({ name, isHeadCell, children, ...restProps }: CellProps) =>
   isHeadCell ? (
     <HeadCell name={name} {...restProps}>
       {children}
