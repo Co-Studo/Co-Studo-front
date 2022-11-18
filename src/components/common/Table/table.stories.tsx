@@ -52,7 +52,7 @@ const noticeList = [
   },
 ];
 
-const sortValues = {
+const valuesToSort = {
   writer: noticeList.map(({ writer }) => writer),
   date: noticeList.map(({ date }) => {
     const numberDate = Number(date.split('.').join(''));
@@ -70,7 +70,7 @@ const tableCSS = css`
 const rowCSS = css`
   border-bottom: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
 `;
-const cellCSS = { padding: '1.7rem 2rem' };
+const cellCSS = { margin: '1.7rem 2rem' };
 const headCellCSS = css`
   &[data-sort='ascending'],
   &[data-sort='descending'] {
@@ -94,6 +94,7 @@ const headCellCSS = css`
     border-radius: 50%;
     background: #ff0000;
   }
+  display: block;
   ${cellCSS}
 `;
 
@@ -101,38 +102,52 @@ export const Column: ComponentStory<typeof ColumnTable> = () => (
   <ColumnTable
     caption="공지사항"
     columnsWidth={['85px', '*', '120px', '120px', '85px']}
-    sortValues={sortValues}
+    valuesToSort={valuesToSort}
     css={tableCSS}
   >
     <ColumnTable.Row css={rowCSS}>
-      <ColumnTable.Cell css={headCellCSS}>번호</ColumnTable.Cell>
-      <ColumnTable.Cell css={headCellCSS}>제목</ColumnTable.Cell>
-      <ColumnTable.Cell name="writer" css={headCellCSS}>
-        작성자
+      <ColumnTable.Cell>
+        <span css={headCellCSS}>번호</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell name="date" css={headCellCSS}>
-        날짜
+      <ColumnTable.Cell>
+        <span css={headCellCSS}>제목</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell name="view" css={headCellCSS}>
-        조회수
+      <ColumnTable.Cell name="writer">
+        <span css={headCellCSS}>작성자</span>
+      </ColumnTable.Cell>
+      <ColumnTable.Cell name="date">
+        <span css={headCellCSS}>날짜</span>
+      </ColumnTable.Cell>
+      <ColumnTable.Cell name="view">
+        <span css={headCellCSS}>조회수</span>
       </ColumnTable.Cell>
     </ColumnTable.Row>
     {noticeList.map(({ id, title, writer, date, view }) => (
       <ColumnTable.Row key={id} css={rowCSS}>
-        <ColumnTable.Cell css={cellCSS}>
-          <Text ellipsis>{id}</Text>
+        <ColumnTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {id}
+          </Text>
         </ColumnTable.Cell>
-        <ColumnTable.Cell css={cellCSS}>
-          <Text ellipsis>{title}</Text>
+        <ColumnTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {title}
+          </Text>
         </ColumnTable.Cell>
-        <ColumnTable.Cell css={cellCSS}>
-          <Text ellipsis>{writer}</Text>
+        <ColumnTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {writer}
+          </Text>
         </ColumnTable.Cell>
-        <ColumnTable.Cell css={cellCSS}>
-          <Text ellipsis>{date}</Text>
+        <ColumnTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {date}
+          </Text>
         </ColumnTable.Cell>
-        <ColumnTable.Cell css={cellCSS}>
-          <Text ellipsis>{view}</Text>
+        <ColumnTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {view}
+          </Text>
         </ColumnTable.Cell>
       </ColumnTable.Row>
     ))}
@@ -143,52 +158,66 @@ export const Row: ComponentStory<typeof RowTable> = () => (
   <RowTable
     caption="공지사항"
     columnsWidth={['8%', '24%', '24%', '24%', '24%']}
-    sortValues={sortValues}
+    valuesToSort={valuesToSort}
     css={tableCSS}
   >
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell css={headCellCSS}>번호</RowTable.Cell>
+      <RowTable.Cell>
+        <span css={headCellCSS}>번호</span>
+      </RowTable.Cell>
       {noticeList.map(({ id }) => (
-        <RowTable.Cell key={id} css={cellCSS}>
-          <Text ellipsis>{id}</Text>
+        <RowTable.Cell key={id}>
+          <Text css={cellCSS} ellipsis>
+            {id}
+          </Text>
         </RowTable.Cell>
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell css={headCellCSS}>제목</RowTable.Cell>
+      <RowTable.Cell>
+        <span css={headCellCSS}>제목</span>
+      </RowTable.Cell>
       {noticeList.map(({ id, title }) => (
-        <RowTable.Cell key={id} css={cellCSS}>
-          <Text ellipsis>{title}</Text>
+        <RowTable.Cell key={id}>
+          <Text css={cellCSS} ellipsis>
+            {title}
+          </Text>
         </RowTable.Cell>
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="writer" css={headCellCSS}>
-        작성자
+      <RowTable.Cell name="writer">
+        <span css={headCellCSS}>작성자</span>
       </RowTable.Cell>
       {noticeList.map(({ id, writer }) => (
-        <RowTable.Cell key={id} css={cellCSS}>
-          <Text ellipsis>{writer}</Text>
+        <RowTable.Cell key={id}>
+          <Text css={cellCSS} ellipsis>
+            {writer}
+          </Text>
         </RowTable.Cell>
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="date" css={headCellCSS}>
-        날짜
+      <RowTable.Cell name="date">
+        <span css={headCellCSS}>날짜</span>
       </RowTable.Cell>
       {noticeList.map(({ id, date }) => (
-        <RowTable.Cell key={id} css={cellCSS}>
-          <Text ellipsis>{date}</Text>
+        <RowTable.Cell key={id}>
+          <Text css={cellCSS} ellipsis>
+            {date}
+          </Text>
         </RowTable.Cell>
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="view" css={headCellCSS}>
-        조회수
+      <RowTable.Cell name="view">
+        <span css={headCellCSS}>조회수</span>
       </RowTable.Cell>
       {noticeList.map(({ id, view }) => (
-        <RowTable.Cell key={id} css={cellCSS}>
-          <Text ellipsis>{view}</Text>
+        <RowTable.Cell key={id}>
+          <Text css={cellCSS} ellipsis>
+            {view}
+          </Text>
         </RowTable.Cell>
       ))}
     </RowTable.Row>
@@ -203,20 +232,30 @@ export const Basic: ComponentStory<typeof BasicTable> = () => (
   >
     {noticeList.map(({ id, title, writer, date, view }) => (
       <BasicTable.Row key={id} css={rowCSS}>
-        <BasicTable.Cell css={cellCSS}>
-          <Text ellipsis>{id}</Text>
+        <BasicTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {id}
+          </Text>
         </BasicTable.Cell>
-        <BasicTable.Cell css={cellCSS}>
-          <Text ellipsis>{title}</Text>
+        <BasicTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {title}
+          </Text>
         </BasicTable.Cell>
-        <BasicTable.Cell css={cellCSS}>
-          <Text ellipsis>{writer}</Text>
+        <BasicTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {writer}
+          </Text>
         </BasicTable.Cell>
-        <BasicTable.Cell css={cellCSS}>
-          <Text ellipsis>{date}</Text>
+        <BasicTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {date}
+          </Text>
         </BasicTable.Cell>
-        <BasicTable.Cell css={cellCSS}>
-          <Text ellipsis>{view}</Text>
+        <BasicTable.Cell>
+          <Text css={cellCSS} ellipsis>
+            {view}
+          </Text>
         </BasicTable.Cell>
       </BasicTable.Row>
     ))}

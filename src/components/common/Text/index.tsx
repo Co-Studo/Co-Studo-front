@@ -56,7 +56,14 @@ const element = {
   articleDescription: 'p',
 };
 
-const Text = ({ variant, sx = {}, as, ellipsis, children }: TextProps) => {
+const Text = ({
+  variant,
+  sx = {},
+  as,
+  ellipsis,
+  children,
+  ...restProps
+}: TextProps) => {
   const theme = useTheme();
   const getVariantStyle = () => variant && typography[variant];
   const fontCss = {
@@ -69,6 +76,7 @@ const Text = ({ variant, sx = {}, as, ellipsis, children }: TextProps) => {
       as={as || (variant && element[variant])}
       fontCss={fontCss}
       ellipsis={ellipsis}
+      {...restProps}
     >
       {children}
     </StyledText>
