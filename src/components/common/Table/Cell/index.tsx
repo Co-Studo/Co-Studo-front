@@ -10,11 +10,11 @@ const DIRECTION = {
 export type SortState = {
   name: string;
   direction: typeof DIRECTION[keyof typeof DIRECTION];
-  indicesToSort: number[];
+  sortIndices: number[];
 } | null;
 
 export type SortConfig = {
-  valuesToSort?: { [key in string]: (string | number)[] };
+  sortValues?: { [key in string]: (string | number)[] };
   sortState: SortState;
   setSortState: Dispatch<SetStateAction<SortState>>;
 };
@@ -33,13 +33,13 @@ interface HeadCellProps extends CellProps {
 }
 
 const HeadCell = ({
-  name,
+  name = '',
   scope,
   sortConfig,
   children,
   ...restProps
 }: HeadCellProps) => {
-  const { valuesToSort, sortState, setSortState } = sortConfig;
+  const { sortValues = {}, sortState, setSortState } = sortConfig;
   const direction =
     sortState &&
     sortState.name === name &&
@@ -47,35 +47,28 @@ const HeadCell = ({
       ? DIRECTION.ASCENDING
       : DIRECTION.DESCENDING;
 
-  const getIndicesToSort = (cellName: string) => {
-    if (!valuesToSort || !valuesToSort[cellName])
-      throw new Error('Please set valuesToSort[name] in Table props.');
-
-    const valuesToSortByName: (number | string | null)[] = [
-      ...valuesToSort[cellName],
-    ];
-    const sortedValuesByName = [...valuesToSort[cellName]].sort((a, b) => {
-      if (a > b) return direction === DIRECTION.ASCENDING ? 1 : -1;
-      if (a < b) return direction === DIRECTION.ASCENDING ? -1 : 1;
+  const getSortIndices = () => {
+    const sortValuesByName = sortValues[name].map((value, index) => ({
+      value,
+      index,
+    }));
+    sortValuesByName.sort((a, b) => {
+      if (a.value > b.value) return direction === DIRECTION.ASCENDING ? 1 : -1;
+      if (a.value < b.value) return direction === DIRECTION.ASCENDING ? -1 : 1;
       return 0;
     });
-    const indicesToSort = sortedValuesByName.map((sortedValueByName) => {
-      const prevIndex = valuesToSortByName.findIndex(
-        (sortValueByName) => sortValueByName === sortedValueByName,
-      );
-      valuesToSortByName[prevIndex] = null;
 
-      return prevIndex;
-    });
-
-    return indicesToSort;
+    return sortValuesByName.map(({ index }) => index);
   };
 
-  const sortTable = (cellName: string) => {
+  const updateSortState = () => {
+    if (!sortValues[name])
+      throw new Error('Please set sortValues[name] in Table props.');
+
     const newSortState = {
-      name: cellName,
+      name,
       direction,
-      indicesToSort: getIndicesToSort(cellName),
+      sortIndices: getSortIndices(),
     };
     setSortState(newSortState);
   };
@@ -87,7 +80,7 @@ const HeadCell = ({
       {...restProps}
     >
       {name ? (
-        <Button type="button" onClick={() => sortTable(name)}>
+        <Button type="button" onClick={updateSortState}>
           {children}
         </Button>
       ) : (

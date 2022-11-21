@@ -6,21 +6,21 @@ import { offscreen } from '@styles/commonStyles';
 export type ColumnTableProps = {
   caption: string;
   columnsWidth?: string[];
-  valuesToSort?: { [key in string]: (string | number)[] };
+  sortValues?: { [key in string]: (string | number)[] };
   children: (ReactElement | ReactElement[])[];
 };
 
 const ColumnTable = ({
   caption,
   columnsWidth,
-  valuesToSort,
+  sortValues,
   children,
   ...restProps
 }: ColumnTableProps) => {
   const Children = React.Children.toArray(children);
   const [headRow, bodyRows] = [Children[0], Children.splice(1)];
   const [sortState, setSortState] = useState<SortState>(null);
-  const sortConfig = { valuesToSort, sortState, setSortState };
+  const sortConfig = { sortValues, sortState, setSortState };
 
   return (
     <table {...restProps}>
@@ -39,7 +39,7 @@ const ColumnTable = ({
       </thead>
       <tbody>
         {sortState
-          ? sortState.indicesToSort.map((index) => bodyRows[index])
+          ? sortState.sortIndices.map((index) => bodyRows[index])
           : bodyRows}
       </tbody>
     </table>

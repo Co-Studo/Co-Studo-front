@@ -6,19 +6,19 @@ import { offscreen } from '@styles/commonStyles';
 export type RowTableProps = {
   caption: string;
   columnsWidth?: string[];
-  valuesToSort?: { [key in string]: (string | number)[] };
+  sortValues?: { [key in string]: (string | number)[] };
   children: ReactElement | ReactElement[];
 };
 
 const RowTable = ({
   caption,
   columnsWidth,
-  valuesToSort,
+  sortValues,
   children,
   ...restProps
 }: RowTableProps) => {
   const [sortState, setSortState] = useState<SortState>(null);
-  const sortConfig = { valuesToSort, sortState, setSortState };
+  const sortConfig = { sortValues, sortState, setSortState };
 
   return (
     <table {...restProps}>
@@ -55,7 +55,7 @@ const Row = ({ scope, sortConfig, children, ...restProps }: RowProps) => {
     <tr {...restProps}>
       {cloneElement(headCell as ReactElement, { scope, sortConfig })}
       {sortConfig?.sortState
-        ? sortConfig.sortState.indicesToSort.map((index) => bodyCells[index])
+        ? sortConfig.sortState.sortIndices.map((index) => bodyCells[index])
         : bodyCells}
     </tr>
   );

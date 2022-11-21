@@ -52,7 +52,7 @@ const noticeList = [
   },
 ];
 
-const valuesToSort = {
+const sortValues = {
   writer: noticeList.map(({ writer }) => writer),
   date: noticeList.map(({ date }) => {
     const numberDate = Number(date.split('.').join(''));
@@ -70,7 +70,9 @@ const tableCSS = css`
 const rowCSS = css`
   border-bottom: ${({ theme }) => `0.1rem solid ${theme.palette.borderLine}`};
 `;
-const cellCSS = { margin: '1.7rem 2rem' };
+const cellCSS = css`
+  margin: 1.7rem 2rem;
+`;
 const headCellCSS = css`
   &[data-sort='ascending'],
   &[data-sort='descending'] {
@@ -94,32 +96,31 @@ const headCellCSS = css`
     border-radius: 50%;
     background: #ff0000;
   }
-  display: block;
-  ${cellCSS}
+  padding: 1.7rem 2rem;
 `;
 
 export const Column: ComponentStory<typeof ColumnTable> = () => (
   <ColumnTable
     caption="공지사항"
     columnsWidth={['85px', '*', '120px', '120px', '85px']}
-    valuesToSort={valuesToSort}
+    sortValues={sortValues}
     css={tableCSS}
   >
     <ColumnTable.Row css={rowCSS}>
-      <ColumnTable.Cell>
-        <span css={headCellCSS}>번호</span>
+      <ColumnTable.Cell css={headCellCSS}>
+        <span>번호</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell>
-        <span css={headCellCSS}>제목</span>
+      <ColumnTable.Cell css={headCellCSS}>
+        <span>제목</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell name="writer">
-        <span css={headCellCSS}>작성자</span>
+      <ColumnTable.Cell name="writer" css={headCellCSS}>
+        <span>작성자</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell name="date">
-        <span css={headCellCSS}>날짜</span>
+      <ColumnTable.Cell name="date" css={headCellCSS}>
+        <span>날짜</span>
       </ColumnTable.Cell>
-      <ColumnTable.Cell name="view">
-        <span css={headCellCSS}>조회수</span>
+      <ColumnTable.Cell name="view" css={headCellCSS}>
+        <span>조회수</span>
       </ColumnTable.Cell>
     </ColumnTable.Row>
     {noticeList.map(({ id, title, writer, date, view }) => (
@@ -158,15 +159,15 @@ export const Row: ComponentStory<typeof RowTable> = () => (
   <RowTable
     caption="공지사항"
     columnsWidth={['8%', '24%', '24%', '24%', '24%']}
-    valuesToSort={valuesToSort}
+    sortValues={sortValues}
     css={tableCSS}
   >
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell>
-        <span css={headCellCSS}>번호</span>
+      <RowTable.Cell css={headCellCSS}>
+        <span>번호</span>
       </RowTable.Cell>
       {noticeList.map(({ id }) => (
-        <RowTable.Cell key={id}>
+        <RowTable.Cell key={id} css={headCellCSS}>
           <Text css={cellCSS} ellipsis>
             {id}
           </Text>
@@ -174,11 +175,11 @@ export const Row: ComponentStory<typeof RowTable> = () => (
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell>
-        <span css={headCellCSS}>제목</span>
+      <RowTable.Cell css={headCellCSS}>
+        <span>제목</span>
       </RowTable.Cell>
       {noticeList.map(({ id, title }) => (
-        <RowTable.Cell key={id}>
+        <RowTable.Cell key={id} css={headCellCSS}>
           <Text css={cellCSS} ellipsis>
             {title}
           </Text>
@@ -186,11 +187,11 @@ export const Row: ComponentStory<typeof RowTable> = () => (
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="writer">
-        <span css={headCellCSS}>작성자</span>
+      <RowTable.Cell name="writer" css={headCellCSS}>
+        <span>작성자</span>
       </RowTable.Cell>
       {noticeList.map(({ id, writer }) => (
-        <RowTable.Cell key={id}>
+        <RowTable.Cell key={id} css={headCellCSS}>
           <Text css={cellCSS} ellipsis>
             {writer}
           </Text>
@@ -198,11 +199,11 @@ export const Row: ComponentStory<typeof RowTable> = () => (
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="date">
-        <span css={headCellCSS}>날짜</span>
+      <RowTable.Cell name="date" css={headCellCSS}>
+        <span>날짜</span>
       </RowTable.Cell>
       {noticeList.map(({ id, date }) => (
-        <RowTable.Cell key={id}>
+        <RowTable.Cell key={id} css={headCellCSS}>
           <Text css={cellCSS} ellipsis>
             {date}
           </Text>
@@ -210,11 +211,11 @@ export const Row: ComponentStory<typeof RowTable> = () => (
       ))}
     </RowTable.Row>
     <RowTable.Row css={rowCSS}>
-      <RowTable.Cell name="view">
-        <span css={headCellCSS}>조회수</span>
+      <RowTable.Cell name="view" css={headCellCSS}>
+        <span>조회수</span>
       </RowTable.Cell>
       {noticeList.map(({ id, view }) => (
-        <RowTable.Cell key={id}>
+        <RowTable.Cell key={id} css={headCellCSS}>
           <Text css={cellCSS} ellipsis>
             {view}
           </Text>
