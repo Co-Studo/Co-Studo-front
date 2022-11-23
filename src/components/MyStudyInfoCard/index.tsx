@@ -1,13 +1,10 @@
+import { Avatar, AvatarGroup, Button, Paper } from '@cos-ui/react';
 import { solid } from '@fortawesome/fontawesome-svg-core/import.macro';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { css } from 'styled-components';
 
 import { StudyEntity } from '@apis/study';
-import Avatar from '@components/common/Avatar';
-import AvatarGroup from '@components/common/AvatarGroup';
-import StyledButton from '@components/common/Button/button.styled';
 import Icon from '@components/common/Icon';
-import Paper from '@components/common/Paper';
 import Row from '@components/common/Row';
 import colors from '@styles/colors';
 
@@ -97,8 +94,8 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => {
         />
       )}
       <div css={{ display: 'flex' }}>
-        <StyledButton width="medium">체크인</StyledButton>
-        <StyledButton width="medium">체크아웃</StyledButton>
+        <Button size="medium">체크인</Button>
+        <Button color='secondary' size="medium">체크아웃</Button>
       </div>
     </Paper>
   );

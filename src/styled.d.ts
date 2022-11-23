@@ -1,8 +1,7 @@
-import { Palette } from '@theme/theme';
 import {} from 'styled-components/cssprop';
+import { Theme } from '@cos-ui/react';
 
 declare module 'styled-components' {
-  export interface DefaultTheme {
-    palette: Palette;
-  }
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  export interface DefaultTheme extends Theme {}
 }

@@ -1,7 +1,7 @@
+import { Button } from '@cos-ui/react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import * as React from 'react';
 
-import Button from '@components/common/Button/button.styled';
 import TextEditor, {
   TextEditorHandle,
 } from '@components/common/TextEditor/index';
