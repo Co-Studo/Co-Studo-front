@@ -1,8 +1,6 @@
+import { Avatar, Dropdown } from '@cos-ui/react';
 import { User } from 'firebase/auth';
 
-import Avatar from '@components/common/Avatar';
-import Dropdown from '@components/common/Dropdown';
-import StyledDropdown from '@components/common/Dropdown/dropdown.styled';
 import { logout } from '@fbase/auth';
 import useLocalStorage from '@hooks/useLocalStorage';
 
@@ -28,11 +26,11 @@ const UserInfoCircle = ({ user }: UserInfoCircleProps) => {
           />
         }
       />
-      <StyledDropdown.List transformOrigin="right">
-        <StyledDropdown.Item onClick={handleLogoutClick}>
+      <Dropdown.List transformOrigin="right">
+        <Dropdown.Item onClick={handleLogoutClick}>
           로그아웃
-        </StyledDropdown.Item>
-      </StyledDropdown.List>
+        </Dropdown.Item>
+      </Dropdown.List>
     </Dropdown>
   );
 };

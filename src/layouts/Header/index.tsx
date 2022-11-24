@@ -1,7 +1,7 @@
+import { Button } from '@cos-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { css } from 'styled-components';
 
-import StyledButton from '@components/common/Button/button.styled';
 import { useMe } from '@fbase/auth';
 import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
@@ -39,12 +39,16 @@ const Header = () => {
           line-height: 1.7;
         `}
       >
-        Co Studo
+        CoStudo
       </h1>
       <div css={{ display: 'flex', alignItems: 'center' }}>
-        <StyledButton onClick={handleStudyCreateButtonClick}>
+        <Button
+          size="medium"
+          shape="round"
+          onClick={handleStudyCreateButtonClick}
+        >
           스터디 생성
-        </StyledButton>
+        </Button>
         {user ? <UserInfoCircle user={user} /> : <AnonymousCircle />}
       </div>
     </header>

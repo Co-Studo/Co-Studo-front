@@ -1,25 +1,23 @@
 import { initialize, mswDecorator } from 'msw-storybook-addon';
-import { ThemeProvider } from 'styled-components';
-import { darkTheme, lightTheme } from '@styles/theme';
-import GlobalStyle from '@styles/GlobalStyle';
 import { BrowserRouter } from 'react-router-dom';
+import { CosStyle, CosThemeProvider } from '@cos-ui/react';
 
 // msw init
 initialize();
 
 export const decorators = [
   (Story) => {
-    const isDarkMode = false;
+    // const isDarkMode = false;
     // window.matchMedia &&
     // window.matchMedia('(prefers-color-scheme: dark)').matches;
 
     return (
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-        <GlobalStyle />
+      <CosThemeProvider>
+        <CosStyle />
         <BrowserRouter>
           <Story />
         </BrowserRouter>
-      </ThemeProvider>
+      </CosThemeProvider>
     );
   },
   mswDecorator,

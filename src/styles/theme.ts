@@ -1,6 +1,6 @@
 import { DefaultTheme } from 'styled-components';
 
-import colors from './colors';
+import colors from '@styles/colors';
 
 export type PaletteOption = 'primary' | 'warning' | 'github' | 'danger';
 
