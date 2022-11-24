@@ -1,11 +1,12 @@
 import styled, { css } from 'styled-components';
 
 import RadioGroup from '@components/common/RadioGroup';
+import { typography } from '@styles/typography';
 
 const StyledRadioGroup = styled(RadioGroup)`
   display: flex;
   flex-direction: row;
-  width: 355px;
+  max-width: 355px;
   justify-content: space-between;
   align-items: center;
 `;
@@ -13,11 +14,11 @@ const StyledRadioGroup = styled(RadioGroup)`
 const CustomRadioButtonStyle = css`
   -webkit-appearance: none;
   appearance: none;
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   margin: 0;
-  padding: 6px;
-  border: 2px solid #0000007f;
+  padding: 0.2rem;
+  border: 0.2rem solid #0000007f;
   border-radius: 50%;
   background-clip: content-box;
 
@@ -42,8 +43,8 @@ const StyledRadioOption = styled(RadioGroup.Option)`
   }
 
   label {
-    font-size: 17px;
-    padding: 10px;
+    ${typography.sectionDescription};
+    padding: 1rem;
   }
 `;
 

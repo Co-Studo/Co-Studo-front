@@ -8,6 +8,8 @@ import {
   isValidElement,
 } from 'react';
 
+import useForm from '@components/common/Form/useForm';
+
 interface RadioState {
   selectedValue: string;
 }
@@ -36,11 +38,11 @@ const passPropsToChildren = <T,>(children: ReactNode, props: T) =>
 export interface RadioGroupProps extends RadioState {
   name: string;
   children: ReactNode;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RadioGroup = ({
-  selectedValue,
+  selectedValue = '',
   name,
   children,
   onChange,
@@ -48,6 +50,7 @@ const RadioGroup = ({
 }: RadioGroupProps) => {
   const state = { selectedValue };
   const childrenProps = { name, onChange };
+
   return (
     <RadioGroupContext.Provider value={state}>
       <div {...restProps}>{passPropsToChildren(children, childrenProps)}</div>
@@ -61,20 +64,31 @@ type OptionProps = {
   value: string;
   children: ReactNode;
   disabled?: boolean;
+  validates?: (<V>(value: V) => boolean)[];
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 };
 
 const Option = ({
   id,
-  name,
+  name = '',
   value,
   children,
   onChange,
   disabled,
+  validates,
   ...restProps
 }: OptionProps) => {
   const { selectedValue } = useRadioContext();
+  const {
+    value: formValue,
+    subscribe = () => {},
+    validationMode = 'onChange',
+  } = useForm(name, selectedValue) ?? {};
+
   const optionId = id || `option-${name}-${value}`;
+  const isChecked = (formValue ?? selectedValue) === value;
+  const handleChange = onChange ?? subscribe(validates)[validationMode];
+
   return (
     <div {...restProps}>
       <input
@@ -82,9 +96,9 @@ const Option = ({
         id={optionId}
         name={name}
         value={value}
-        onChange={onChange}
         disabled={disabled}
-        checked={value === selectedValue}
+        defaultChecked={isChecked}
+        onChange={handleChange}
       />
       <label htmlFor={optionId}>{children}</label>
     </div>

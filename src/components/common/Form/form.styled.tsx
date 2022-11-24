@@ -51,8 +51,8 @@ const TextField = styled(Form.TextField)`
   }
 `;
 
-const StyledFrom = Object.assign(StyledFormRoot, {
+const StyledForm = Object.assign(StyledFormRoot, {
   TextField,
 });
 
-export default StyledFrom;
+export default StyledForm;
