@@ -10,7 +10,8 @@
     "test:watch": "jest --watchAll",
     "test:cov": "jest --coverage",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "prepare": "husky install"
   },
   "keywords": [],
   "author": "",
@@ -72,7 +73,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-storybook": "^0.6.4",
     "html-webpack-plugin": "^5.5.0",
-    "husky": "^8.0.2",
+    "husky": "^8.0.0",
     "interpolate-html-plugin": "^4.0.0",
     "jest-environment-jsdom": "^28.1.3",
     "lint-staged": "^13.0.4",
@@ -87,13 +88,5 @@
   },
   "msw": {
     "workerDirectory": "public"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx}": "eslint && tsc -p tsconfig.json --noEmit"
   }
 }
