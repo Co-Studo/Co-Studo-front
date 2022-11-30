@@ -1,25 +1,58 @@
+import { FlexBox } from '@cos-ui/react';
 import { ReactNode } from 'react';
 
-const PageLayout: React.FC<{ children: ReactNode; sx?: object }> = (props) => {
-  const { children, sx } = props;
+type PageLayoutSX = {
+  width?: string;
+  height?: string;
+  backgroundColor?: string;
+};
 
-  return (
-    <main
-      css={{
-        marginTop: '9rem',
-        marginLeft: '2rem',
-        marginRight: '2rem',
-        width: '100vw',
-        display: 'flex',
+type PageLayoutProps = {
+  children: ReactNode;
+  size?: 'wide' | 'default';
+  sx?: PageLayoutSX;
+};
+
+const layoutSize = {
+  wide: {
+    width: '100%',
+    height: '100%',
+    padding: '6rem',
+  },
+  default: {
+    width: '100%',
+    height: '100%',
+    maxWidth: '1270px',
+    padding: '6rem',
+  },
+};
+
+const PageLayout = ({
+  sx,
+  size = 'default',
+  children,
+  ...restProps
+}: PageLayoutProps) => (
+  <FlexBox
+    as="main"
+    sx={{
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      mt: '6rem',
+    }}
+    {...restProps}
+  >
+    <FlexBox
+      sx={{
         flexDirection: 'column',
-        justifyContent: 'center',
-        ...sx,
+        bgColor: 'white',
+        ...layoutSize[size],
       }}
-      {...props}
     >
       {children}
-    </main>
-  );
-};
+    </FlexBox>
+  </FlexBox>
+);
 
 export default PageLayout;
