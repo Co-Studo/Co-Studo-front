@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { css } from 'styled-components';
 
 import { useMe } from '@fbase/auth';
-import AnonymousCircle from '@layouts/Header/AnonymousCircle';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
 import colors from '@styles/colors';
 
@@ -49,7 +48,13 @@ const Header = () => {
         >
           스터디 생성
         </Button>
-        {user ? <UserInfoCircle user={user} /> : <AnonymousCircle />}
+        {user ? (
+          <UserInfoCircle user={user} />
+        ) : (
+          <Button size="medium" shape="round">
+            로그인
+          </Button>
+        )}
       </div>
     </header>
   );
