@@ -1,34 +1,23 @@
 import { FlexBox } from '@cos-ui/react';
 import { ReactNode } from 'react';
 
-type PageLayoutSX = {
-  width?: string;
-  height?: string;
-  backgroundColor?: string;
-};
-
 type PageLayoutProps = {
   children: ReactNode;
   size?: 'wide' | 'default';
-  sx?: PageLayoutSX;
 };
+
+const HEADER_HEIGHT = '6rem';
 
 const layoutSize = {
   wide: {
-    width: '100%',
-    height: '100%',
-    padding: '6rem',
+    maxWidth: 'none',
   },
   default: {
-    width: '100%',
-    height: '100%',
     maxWidth: '1270px',
-    padding: '6rem',
   },
 };
 
 const PageLayout = ({
-  sx,
   size = 'default',
   children,
   ...restProps
@@ -36,22 +25,16 @@ const PageLayout = ({
   <FlexBox
     as="main"
     sx={{
-      flexDirection: 'column',
-      alignItems: 'center',
       width: '100%',
-      mt: '6rem',
+      height: `calc(100vh - ${HEADER_HEIGHT})`,
+      m: `${HEADER_HEIGHT} auto 0`,
+      bgColor: 'white',
+      flexDirection: 'column',
+      ...layoutSize[size],
     }}
     {...restProps}
   >
-    <FlexBox
-      sx={{
-        flexDirection: 'column',
-        bgColor: 'white',
-        ...layoutSize[size],
-      }}
-    >
-      {children}
-    </FlexBox>
+    {children}
   </FlexBox>
 );
 
