@@ -4,7 +4,6 @@ import { css } from 'styled-components';
 import { StudyEntity } from '@apis/study';
 import Icon from '@components/common/Icon';
 import Row from '@components/common/Row';
-import colors from '@styles/colors';
 
 type MyStudyInfoCardProps = {
   study: StudyEntity;
@@ -23,7 +22,6 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
         <span
           css={css`
             font-size: 0.7rem;
-            color: ${colors.grey600};
           `}
         >
           {study.description}
@@ -82,7 +80,7 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
     )}
     <div css={{ display: 'flex' }}>
       <Button size="medium">체크인</Button>
-      <Button color="secondary" size="medium">
+      <Button color="neutral" size="medium">
         체크아웃
       </Button>
     </div>

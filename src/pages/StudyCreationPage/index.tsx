@@ -1,9 +1,8 @@
-import BigText from '@components/BigText';
 import PageLayout from '@components/common/PageLayout';
 
-const StudyCreationPage: React.FC = () => (
+const StudyCreationPage = () => (
   <PageLayout>
-    <BigText>Study Create</BigText>
+    <span>Study Create</span>
   </PageLayout>
 );
 

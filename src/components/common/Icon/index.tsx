@@ -1,7 +1,7 @@
+import { Palette } from '@cos-ui/react';
 import styled from 'styled-components';
 
 import { icon, IconName } from '@assets/icons';
-import { Palette } from '@styles/theme';
 
 type IconProps = {
   iconName: IconName;

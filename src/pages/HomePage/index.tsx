@@ -1,21 +1,21 @@
+import { Text } from '@cos-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { css } from 'styled-components';
 
 import { fetchMyStudies } from '@apis/study';
-import BigText from '@components/BigText';
 import PageLayout from '@components/common/PageLayout';
 import MyStudyInfoCard from '@components/MyStudyInfoCard';
 
 // Paper List -> Carousel 가능성
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   const { data } = useQuery(['myStudies'], fetchMyStudies, {
     refetchOnWindowFocus: false,
   });
 
   return (
     <PageLayout>
-      <BigText>안녕하세요!</BigText>
+      <Text variant="sectionTitle">안녕하세요!</Text>
       <ul
         css={css`
           display: flex;
