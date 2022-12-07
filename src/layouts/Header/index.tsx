@@ -4,7 +4,6 @@ import { css } from 'styled-components';
 
 import { useMe } from '@fbase/auth';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
-import colors from '@styles/colors';
 
 const Header = () => {
   const user = useMe();
@@ -21,8 +20,8 @@ const Header = () => {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        box-shadow: 0px 4px 10px ${colors.greyOpacity100},
-          0px 0px 4px ${colors.greyOpacity500};
+        box-shadow: 0px 4px 10px ${({ theme }) => theme.palette.shadow_100},
+          0px 0px 4px ${({ theme }) => theme.palette.shadow_500};
         height: 5.875rem;
         position: fixed;
         top: 0;
