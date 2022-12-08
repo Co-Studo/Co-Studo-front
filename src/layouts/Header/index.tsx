@@ -20,8 +20,9 @@ const Header = () => {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        box-shadow: 0px 4px 10px ${({ theme }) => theme.palette.shadow_100},
-          0px 0px 4px ${({ theme }) => theme.palette.shadow_500};
+        box-shadow: 0 4px 10px ${({ theme }) => theme.palette.shadow_100},
+          0 0 4px ${({ theme }) => theme.palette.shadow_500};
+        background-color: ${({ theme }) => theme.palette.neutral_1_light};
         height: 5.875rem;
         position: fixed;
         top: 0;
