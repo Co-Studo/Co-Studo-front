@@ -3,34 +3,40 @@ import { ReactNode } from 'react';
 
 type PageLayoutProps = {
   children: ReactNode;
-  size?: 'wide' | 'default';
+  type?: 'default' | 'narrow' | 'wide';
 };
 
-const HEADER_HEIGHT = '6rem';
+export const LAYOUT_DEFAULT_PADDING = '6rem';
+const LAYOUT_DEFAULT_MAX_WIDTH = '1270px';
 
-const layoutSize = {
+const layoutStyles = {
+  default: {
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH,
+    p: LAYOUT_DEFAULT_PADDING,
+  },
+  narrow: {
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH,
+    py: LAYOUT_DEFAULT_PADDING,
+  },
   wide: {
     maxWidth: 'none',
-  },
-  default: {
-    maxWidth: '1270px',
+    py: LAYOUT_DEFAULT_PADDING,
   },
 };
 
 const PageLayout = ({
-  size = 'default',
+  type = 'default',
   children,
   ...restProps
 }: PageLayoutProps) => (
   <FlexBox
-    as="main"
     sx={{
-      width: '100%',
-      height: `calc(100vh - ${HEADER_HEIGHT})`,
-      m: `${HEADER_HEIGHT} auto 0`,
-      bgColor: 'white',
       flexDirection: 'column',
-      ...layoutSize[size],
+      width: '100%',
+      height: '100%',
+      bgColor: 'white',
+      m: `0 auto`,
+      ...layoutStyles[type],
     }}
     {...restProps}
   >
