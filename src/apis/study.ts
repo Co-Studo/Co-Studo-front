@@ -30,3 +30,8 @@ export const fetchMyStudies = () =>
   http.get<StudyEntity[]>(`__API_END_POINT__/study/mine`, {
     withCredentials: true,
   });
+
+export const fetchStudyDetail = (studyId: string) =>
+  http.get<StudyEntity>(`__API_END_POINT__/study/${studyId}`, {
+    withCredentials: true,
+  });
