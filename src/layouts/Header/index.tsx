@@ -22,7 +22,7 @@ const Header = () => {
         width: 100%;
         box-shadow: 0 4px 10px ${({ theme }) => theme.palette.shadow_100},
           0 0 4px ${({ theme }) => theme.palette.shadow_500};
-        background-color: ${({ theme }) => theme.palette.neutral_1_light};
+        background-color: ${({ theme }) => theme.palette.white};
         height: 5.875rem;
         position: fixed;
         top: 0;
