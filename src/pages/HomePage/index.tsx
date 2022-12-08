@@ -1,6 +1,6 @@
-import { Text } from '@cos-ui/react';
+import { Slider } from '@cos-ui/primitives';
+import { FlexBox, Text } from '@cos-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { css } from 'styled-components';
 
 import { fetchMyStudies } from '@apis/study';
 import PageLayout from '@components/common/PageLayout';
@@ -16,16 +16,34 @@ const HomePage = () => {
   return (
     <PageLayout>
       <Text variant="sectionTitle">안녕하세요!</Text>
-      <ul
-        css={css`
-          display: flex;
-          gap: 1rem;
-        `}
+      <Slider
+        options={{
+          slidesToShow: 4,
+          slidesToScroll: 3,
+          speed: 500,
+          slidesMargin: '10px',
+        }}
       >
-        {data?.results?.map((study) => (
-          <MyStudyInfoCard key={study.id} study={study} />
-        ))}
-      </ul>
+        <Slider.List>
+          {data?.results?.map((study) => (
+            <Slider.Item>
+              <MyStudyInfoCard key={study.id} study={study} />
+            </Slider.Item>
+          ))}
+        </Slider.List>
+        <FlexBox>
+          <Slider.PrevButton
+            css={{ width: '50px', height: '50px', border: '1px solid #000' }}
+          >
+            &lt;
+          </Slider.PrevButton>
+          <Slider.NextButton
+            css={{ width: '50px', height: '50px', border: '1px solid #000' }}
+          >
+            &gt;
+          </Slider.NextButton>
+        </FlexBox>
+      </Slider>
     </PageLayout>
   );
 };
