@@ -3,11 +3,14 @@ import styled from 'styled-components';
 
 import { icon, IconName } from '@assets/icons';
 
-type IconProps = {
-  iconName: IconName;
+type StyledIconProps = {
   size?: keyof typeof iconSizes;
   color?: keyof Palette;
 };
+
+interface IconProps extends StyledIconProps {
+  iconName: IconName;
+}
 
 const iconSizes = {
   xSmall: '1.5rem',
@@ -17,17 +20,15 @@ const iconSizes = {
   xLarge: '3.5rem',
 };
 
-const Icon = ({ iconName, size = 'medium', color }: IconProps) => {
-  const IconComponent = icon[iconName];
+const StyledIcon = styled(icon.bell)<StyledIconProps>`
+  width: ${({ size = 'medium' }) => iconSizes[size]};
+  height: auto;
+  fill: ${({ theme, color = 'primary' }) => theme.palette[color]};
+  stroke: ${({ theme, color = 'primary' }) => theme.palette[color]};
+`;
 
-  const StyledIcon = styled(IconComponent)`
-    width: ${iconSizes[size]};
-    height: auto;
-    fill: ${({ theme }) => theme.palette[color || 'primary']};
-    stroke: ${({ theme }) => theme.palette[color || 'primary']};
-  `;
-
-  return <StyledIcon />;
-};
+const Icon = ({ iconName, ...restProps }: IconProps) => (
+  <StyledIcon as={icon[iconName]} {...restProps} />
+);
 
 export default Icon;
