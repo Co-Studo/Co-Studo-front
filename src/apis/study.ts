@@ -2,10 +2,13 @@ import http from '@apis/http';
 import { UserEntity } from '@apis/user';
 import { FbaseDate } from '@mocks/constants/date';
 
-type TagEntity = {
-  id: number;
-  name: string;
-};
+// type TagEntity = {
+//   id: number;
+//   name: string;
+//   studyIds: number[];
+//   createdAt: FbaseDate;
+//   updatedAt: FbaseDate;
+// };
 
 type SortCriterion = 'new' | 'popular';
 
@@ -17,7 +20,10 @@ export type StudyEntity = {
   title: string;
   shortDescription: string;
   description?: string;
-  tags: TagEntity[];
+  tags: {
+    id: number;
+    name: string;
+  }[];
   isPublic: boolean;
   isRecruiting: boolean;
   isBookmarked: boolean;
