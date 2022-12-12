@@ -20,8 +20,8 @@ const TabBar = ({ tabs }: TabBarProps) => {
     const index = tabs.findIndex(({ link }) =>
       location.pathname.includes(link),
     );
-    setDefaultIndex(index);
-  }, []);
+    if (index !== defaultIndex) setDefaultIndex(index);
+  }, [location.pathname]);
 
   return (
     <div>
