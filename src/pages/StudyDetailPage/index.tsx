@@ -11,8 +11,26 @@ import { useParams } from 'react-router-dom';
 import { css } from 'styled-components';
 
 import { fetchStudyDetail } from '@apis/study';
+import TabBar from '@components/TabBar';
 import { useMe } from '@fbase/auth';
-import TabBar from '@pages/StudyDetailPage/TabBar';
+
+const TAB_LIST = [
+  {
+    id: 1,
+    label: '소개',
+    link: 'introduce',
+  },
+  {
+    id: 2,
+    label: '공지사항',
+    link: 'announcement',
+  },
+  {
+    id: 3,
+    label: '아티클',
+    link: 'article',
+  },
+];
 
 const StudyDetailPage = () => {
   const user = useMe();
@@ -154,7 +172,7 @@ const StudyDetailPage = () => {
           </Button>
         </FlexBox>
       </FlexBox>
-      <TabBar />
+      <TabBar tabs={TAB_LIST} />
     </div>
   );
 };
