@@ -1,10 +1,10 @@
 import http from '@apis/http';
 
 export type UserEntity = {
-  id: number;
-  email: string;
-  nickname: string;
-  avatarUrl: string;
+  id: string;
+  email?: string;
+  displayName: string;
+  photoURL: string;
 };
 
 export const fetchMe = () =>

@@ -7,10 +7,11 @@ type TagEntity = {
 };
 
 export type StudyEntity = {
-  id: number;
+  id: string;
   owner: UserEntity;
   participants: UserEntity[];
   title: string;
+  shortDescription: string;
   description?: string;
   tags: TagEntity[];
   isPublic: boolean;
@@ -18,14 +19,19 @@ export type StudyEntity = {
   isBookmarked: boolean;
   isRequireCheckIn: boolean;
   isRequireCheckOut: boolean;
-  isCheckOutRequireArticle: boolean;
+  isCheckOutIsArticle: boolean;
   checkInRangeStart?: string;
-  checkInRangeEnd: string;
+  checkInRangeEnd?: string;
   checkOutRangeStart?: string;
   checkOutRangeEnd?: string;
 };
 
 export const fetchMyStudies = () =>
   http.get<StudyEntity[]>(`__API_END_POINT__/study/mine`, {
+    withCredentials: true,
+  });
+
+export const fetchStudyDetail = (studyId: string) =>
+  http.get<StudyEntity>(`__API_END_POINT__/study/${studyId}`, {
     withCredentials: true,
   });

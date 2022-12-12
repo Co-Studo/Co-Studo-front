@@ -35,8 +35,8 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
           <Avatar
             key={user.id}
             sx={{ width: '2rem', height: '2rem' }}
-            src={user.avatarUrl}
-            alt={user.nickname}
+            src={user.photoURL}
+            alt={user.displayName}
           />
         ))}
       </AvatarGroup>
@@ -50,8 +50,8 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
         <Icon iconName="crown" />
         <Avatar
           sx={{ width: '2.5rem', height: '2.5rem' }}
-          src={study.owner.avatarUrl}
-          alt={study.owner.nickname}
+          src={study.owner.photoURL}
+          alt={study.owner.displayName}
         />
       </div>
     </div>
@@ -73,7 +73,7 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
           <span>
             {study.checkOutRangeStart}
             {study.checkOutRangeEnd ? ` ~ ${study.checkOutRangeEnd}` : ''}
-            {study.isCheckOutRequireArticle && ' (글작성 필요)'}
+            {study.isCheckOutIsArticle && ' (글작성 필요)'}
           </span>
         }
       />
