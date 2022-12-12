@@ -12,5 +12,5 @@ export const getStudyDetail = (req, res, ctx) =>
 
 export default [
   rest.get('/study/mine', getMyStudy),
-  rest.get('/study/id', getStudyDetail),
+  rest.get('/study/:studyId', getStudyDetail),
 ];
