@@ -10,6 +10,7 @@ type IconProps = {
 };
 
 const iconSizes = {
+  xSmall: '1.5rem',
   small: '2rem',
   medium: '2.5rem',
   large: '3rem',
