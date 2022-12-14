@@ -13,11 +13,13 @@ export const Default: ComponentStory<typeof PageLayout> = (args) => (
   <PageLayout {...args}>
     <FlexBox
       sx={{
+        flexDirection: 'column',
         width: '100%',
-        height: '10rem',
+        height: '100%',
         bgColor: 'primary_light',
         justifyContent: 'center',
         alignItems: 'center',
+        py: '5rem',
       }}
     >
       <Text variant="sectionTitle">Page Contents</Text>

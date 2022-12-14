@@ -2,8 +2,8 @@ import { FlexBox } from '@cos-ui/react';
 import { ReactNode } from 'react';
 
 type PageLayoutProps = {
-  children: ReactNode;
   type?: 'default' | 'narrow' | 'wide';
+  children: ReactNode;
 };
 
 const LAYOUT_DEFAULT_MAX_WIDTH = {
@@ -41,7 +41,7 @@ const PageLayout = ({
     sx={{
       flexDirection: 'column',
       width: '100%',
-      height: '100%',
+      minHeight: '100%',
       bgColor: 'white',
       m: `0 auto`,
       ...layoutStyles[type],
