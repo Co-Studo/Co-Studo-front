@@ -6,21 +6,29 @@ type PageLayoutProps = {
   type?: 'default' | 'narrow' | 'wide';
 };
 
-export const LAYOUT_DEFAULT_PADDING = '6rem';
-const LAYOUT_DEFAULT_MAX_WIDTH = '1270px';
+const LAYOUT_DEFAULT_MAX_WIDTH = {
+  NARROW: '127rem',
+  WIDE: '144rem',
+};
+
+export const LAYOUT_DEFAULT_PADDING = {
+  VERTICAL: '6rem',
+  HORIZONTAL: '4.5rem',
+};
 
 const layoutStyles = {
   default: {
-    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH,
-    p: LAYOUT_DEFAULT_PADDING,
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.NARROW,
+    px: LAYOUT_DEFAULT_PADDING.HORIZONTAL,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
   },
   narrow: {
-    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH,
-    py: LAYOUT_DEFAULT_PADDING,
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.NARROW,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
   },
   wide: {
-    maxWidth: 'none',
-    py: LAYOUT_DEFAULT_PADDING,
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.WIDE,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
   },
 };
 
