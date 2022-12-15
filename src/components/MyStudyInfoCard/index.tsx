@@ -80,9 +80,9 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
               ${study.isCheckOutIsArticle ? ' (글작성 필요)' : ''}`}
         />
       )}
-      <FlexBox sx={{ justifyContent: 'space-between' }}>
+      <FlexBox sx={{ justifyContent: 'space-between', gap: 1 }}>
         <Button size="medium">체크인</Button>
-        <Button color="neutral" size="medium">
+        <Button variant="outlined" size="medium">
           체크아웃
         </Button>
       </FlexBox>

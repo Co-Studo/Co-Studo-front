@@ -1,13 +1,13 @@
 import { Slider } from '@cos-ui/primitives';
 import { BasicTab, FlexBox, Text } from '@cos-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { css } from 'styled-components';
 
 import { fetchMyStudies } from '@apis/study';
+import Icon from '@components/common/Icon';
 import PageLayout from '@components/common/PageLayout';
 import MyStudyInfoCard from '@components/MyStudyInfoCard';
 import RecruitingStudies from '@components/RecruitingStudies';
-
-// Paper List -> Carousel 가능성
 
 const HomePage = () => {
   const { data: studies } = useQuery(['myStudies'], fetchMyStudies, {
@@ -22,11 +22,47 @@ const HomePage = () => {
           {studies?.results.length}
         </Text.Highlight>
       </Text>
-      <FlexBox sx={{ gap: 2 }}>
-        {studies?.results?.map((study) => (
-          <MyStudyInfoCard key={study.id} study={study} />
-        ))}
-      </FlexBox>
+      <Slider
+        options={{
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          speed: 500,
+        }}
+      >
+        <Slider.List>
+          {studies?.results?.map((study) => (
+            <Slider.Item>
+              <MyStudyInfoCard key={study.id} study={study} />
+            </Slider.Item>
+          ))}
+        </Slider.List>
+        <Slider.PrevButton
+          css={css`
+            position: absolute;
+            left: 0;
+            top: calc(50% - 25px);
+            color: ${({ theme }) => theme.palette.primary};
+            &::disabled {
+              color: ${({ theme }) => theme.palette.neutral_2};
+            }
+          `}
+        >
+          <Icon iconName="leftArrow" />
+        </Slider.PrevButton>
+        <Slider.NextButton
+          css={css`
+            position: absolute;
+            right: 50px;
+            top: calc(50% - 25px);
+            color: ${({ theme }) => theme.palette.primary};
+            &::disabled {
+              color: ${({ theme }) => theme.palette.neutral_2};
+            }
+          `}
+        >
+          <Icon iconName="rightArrow" />
+        </Slider.NextButton>
+      </Slider>
       <BasicTab.Group>
         <FlexBox>
           <Text variant="sectionTitle" sx={{ mr: 2 }}>
@@ -46,34 +82,6 @@ const HomePage = () => {
           </BasicTab.Panel>
         </BasicTab.Panels>
       </BasicTab.Group>
-      {/* <Slider
-        options={{
-          slidesToShow: 4,
-          slidesToScroll: 3,
-          speed: 500,
-          slidesMargin: '10px',
-        }}
-      >
-        <Slider.List>
-          {data?.results?.map((study) => (
-            <Slider.Item>
-              <MyStudyInfoCard key={study.id} study={study} />
-            </Slider.Item>
-          ))}
-        </Slider.List>
-        <FlexBox>
-          <Slider.PrevButton
-            css={{ width: '50px', height: '50px', border: '1px solid #000' }}
-          >
-            &lt;
-          </Slider.PrevButton>
-          <Slider.NextButton
-            css={{ width: '50px', height: '50px', border: '1px solid #000' }}
-          >
-            &gt;
-          </Slider.NextButton>
-        </FlexBox>
-      </Slider> */}
     </PageLayout>
   );
 };

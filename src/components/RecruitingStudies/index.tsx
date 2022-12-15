@@ -18,7 +18,7 @@ const RecruitingStudies = ({ sortBy }: RecruitingStudiesProps) => {
   );
 
   return (
-    <FlexBox as="ul">
+    <FlexBox as="ul" sx={{ gap: 2, flexWrap: 'wrap' }}>
       {recruitingStudies?.results.map((study) => (
         <RecruitingStudy study={study} />
       ))}
