@@ -1,15 +1,16 @@
-import { RefObject, useEffect, useState } from 'react';
+import { RefObject, useLayoutEffect, useState } from 'react';
 
-export const useIsOverflow = (ref: RefObject<HTMLElement>) => {
+export const useIsOverflow = (ref: RefObject<HTMLElement>, dependencies) => {
   const [isOverflow, setIsOverflow] = useState(false);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const { current } = ref;
     if (current) {
       const hasOverflow = current.scrollHeight > current.clientHeight;
       setIsOverflow(hasOverflow);
     }
-  }, [ref]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref, ...dependencies]);
 
   return isOverflow;
 };
