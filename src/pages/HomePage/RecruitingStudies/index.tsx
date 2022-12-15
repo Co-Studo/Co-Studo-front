@@ -1,29 +1,27 @@
-import { FlexBox } from '@cos-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { BasicTab, FlexBox, Text } from '@cos-ui/react';
 
-import { fetchRecruitingStudies } from '@apis/study';
-import RecruitingStudy from '@pages/HomePage/RecruitingStudies/RecruitingStudy';
+import RecruitingStudyCards from '@pages/HomePage/RecruitingStudies/RecrutingStudyCards';
 
-type RecruitingStudiesProps = {
-  sortBy: 'new' | 'popular';
-};
-
-const RecruitingStudies = ({ sortBy }: RecruitingStudiesProps) => {
-  const { data: recruitingStudies } = useQuery(
-    ['recruitingStudies'],
-    () => fetchRecruitingStudies(sortBy),
-    {
-      refetchOnWindowFocus: false,
-    },
-  );
-
-  return (
-    <FlexBox as="ul" sx={{ gap: 2, flexWrap: 'wrap' }}>
-      {recruitingStudies?.results.map((study) => (
-        <RecruitingStudy study={study} />
-      ))}
+const RecruitingStudies = () => (
+  <BasicTab.Group>
+    <FlexBox sx={{ mb: '3rem' }}>
+      <Text variant="sectionTitle" sx={{ mr: 2 }}>
+        모집중인 스터디
+      </Text>
+      <BasicTab.List>
+        <BasicTab>신규</BasicTab>
+        <BasicTab>인기</BasicTab>
+      </BasicTab.List>
     </FlexBox>
-  );
-};
+    <BasicTab.Panels>
+      <BasicTab.Panel>
+        <RecruitingStudyCards sortBy="new" />
+      </BasicTab.Panel>
+      <BasicTab.Panel>
+        <RecruitingStudyCards sortBy="popular" />
+      </BasicTab.Panel>
+    </BasicTab.Panels>
+  </BasicTab.Group>
+);
 
 export default RecruitingStudies;

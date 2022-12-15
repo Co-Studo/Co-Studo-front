@@ -1,16 +1,8 @@
-import {
-  Avatar,
-  AvatarGroup,
-  Button,
-  FlexBox,
-  Paper,
-  Text,
-} from '@cos-ui/react';
+import { Avatar, AvatarGroup, FlexBox, Paper, Text } from '@cos-ui/react';
 
 import { StudyEntity } from '@apis/study';
-import Icon from '@components/common/Icon';
 import Row from '@components/common/Row';
-import TagList from '@pages/HomePage/RecruitingStudies/TagList';
+import TagList from '@components/TagList';
 
 type RecruitingStudyProps = {
   study: StudyEntity;
