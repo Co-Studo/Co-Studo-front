@@ -2,7 +2,7 @@ import { FlexBox } from '@cos-ui/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { fetchRecruitingStudies } from '@apis/study';
-import RecruitingStudy from '@components/RecruitingStudies/RecruitingStudy';
+import RecruitingStudy from '@pages/HomePage/RecruitingStudies/RecruitingStudy';
 
 type RecruitingStudiesProps = {
   sortBy: 'new' | 'popular';

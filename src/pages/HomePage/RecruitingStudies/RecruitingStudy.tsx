@@ -10,7 +10,7 @@ import {
 import { StudyEntity } from '@apis/study';
 import Icon from '@components/common/Icon';
 import Row from '@components/common/Row';
-import TagList from '@components/RecruitingStudies/TagList';
+import TagList from '@pages/HomePage/RecruitingStudies/TagList';
 
 type RecruitingStudyProps = {
   study: StudyEntity;
@@ -38,8 +38,8 @@ const RecruitingStudy = ({ study }: RecruitingStudyProps) => (
           <Avatar
             key={user.id}
             sx={{ width: '4.2rem', height: '4.2rem' }}
-            src={user.avatarUrl}
-            alt={user.nickname}
+            src={user.photoURL}
+            alt={user.displayName}
           />
         ))}
       </AvatarGroup>

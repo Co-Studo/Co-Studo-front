@@ -6,8 +6,8 @@ import { css } from 'styled-components';
 import { fetchMyStudies } from '@apis/study';
 import Icon from '@components/common/Icon';
 import PageLayout from '@components/common/PageLayout';
-import MyStudyInfoCard from '@components/MyStudyInfoCard';
-import RecruitingStudies from '@components/RecruitingStudies';
+import MyStudyInfoCard from '@pages/HomePage/MyStudyInfoCard';
+import RecruitingStudies from '@pages/HomePage/RecruitingStudies';
 
 const HomePage = () => {
   const { data: studies } = useQuery(['myStudies'], fetchMyStudies, {
