@@ -1,25 +1,55 @@
+import { FlexBox } from '@cos-ui/react';
 import { ReactNode } from 'react';
 
-const PageLayout: React.FC<{ children: ReactNode; sx?: object }> = (props) => {
-  const { children, sx } = props;
-
-  return (
-    <main
-      css={{
-        marginTop: '9rem',
-        marginLeft: '2rem',
-        marginRight: '2rem',
-        width: '100vw',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        ...sx,
-      }}
-      {...props}
-    >
-      {children}
-    </main>
-  );
+type PageLayoutProps = {
+  type?: 'default' | 'narrow' | 'wide';
+  children: ReactNode;
 };
+
+const LAYOUT_DEFAULT_MAX_WIDTH = {
+  NARROW: '127rem',
+  WIDE: '144rem',
+};
+
+export const LAYOUT_DEFAULT_PADDING = {
+  VERTICAL: '6rem',
+  HORIZONTAL: '4.5rem',
+};
+
+const layoutStyles = {
+  default: {
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.NARROW,
+    px: LAYOUT_DEFAULT_PADDING.HORIZONTAL,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
+  },
+  narrow: {
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.NARROW,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
+  },
+  wide: {
+    maxWidth: LAYOUT_DEFAULT_MAX_WIDTH.WIDE,
+    py: LAYOUT_DEFAULT_PADDING.VERTICAL,
+  },
+};
+
+const PageLayout = ({
+  type = 'default',
+  children,
+  ...restProps
+}: PageLayoutProps) => (
+  <FlexBox
+    sx={{
+      flexDirection: 'column',
+      width: '100%',
+      minHeight: '100%',
+      bgColor: 'white',
+      m: `0 auto`,
+      ...layoutStyles[type],
+    }}
+    {...restProps}
+  >
+    {children}
+  </FlexBox>
+);
 
 export default PageLayout;
