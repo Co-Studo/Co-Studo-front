@@ -4,6 +4,7 @@ import { css } from 'styled-components';
 
 import { useMe } from '@fbase/auth';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
+import zIndex from '@styles/zindex';
 
 export const HEADER_HEIGHT = '6rem';
 
@@ -30,6 +31,7 @@ const Header = () => {
         top: 0;
         left: 0;
         padding: 1.5rem 2rem;
+        z-index: ${zIndex.header};
       `}
     >
       <h1
