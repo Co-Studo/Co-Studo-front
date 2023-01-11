@@ -5,6 +5,7 @@ import RecruitingStudies from '@pages/HomePage/RecruitingStudies';
 const HomePage = () => (
   <PageLayout>
     <MyStudies />
+    <div css="margin-bottom: 10rem;" />
     <RecruitingStudies />
   </PageLayout>
 );

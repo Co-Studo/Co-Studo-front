@@ -25,11 +25,11 @@ const RecruitingStudy = ({ study }: RecruitingStudyProps) => (
           </Text>
         }
       />
-      <AvatarGroup flexAlign="flex-end">
+      <AvatarGroup>
         {study.participants.map((user) => (
           <Avatar
             key={user.id}
-            sx={{ width: '4.2rem', height: '4.2rem' }}
+            size="medium"
             src={user.photoURL}
             alt={user.displayName}
           />

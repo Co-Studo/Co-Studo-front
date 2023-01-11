@@ -45,20 +45,15 @@ const MyStudyInfoCard = ({ study }: MyStudyInfoCardProps) => (
         rightProps={{ sx: { alignSelf: 'flex-start' } }}
       />
       <FlexBox sx={{ justifyContent: 'space-between' }}>
-        <AvatarGroup flexAlign="flex-end">
+        <AvatarGroup>
           {study.participants.map((user) => (
-            <Avatar
-              key={user.id}
-              sx={{ width: '4.2rem', height: '4.2rem' }}
-              src={user.photoURL}
-              alt={user.displayName}
-            />
+            <Avatar key={user.id} src={user.photoURL} alt={user.displayName} />
           ))}
         </AvatarGroup>
         <FlexBox sx={{ flexDirection: 'column', alignItems: 'center' }}>
           <Icon iconName="crown" />
           <Avatar
-            sx={{ width: '5.2rem', height: '5.2rem' }}
+            size="large"
             src={study.owner.photoURL}
             alt={study.owner.displayName}
           />

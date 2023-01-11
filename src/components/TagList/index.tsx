@@ -16,7 +16,7 @@ const TagList = ({ tags }: TagListProps) => {
 
   return (
     <div ref={tagListRef}>
-      <FlexBox sx={{ gap: 1, height: '5rem', flexWrap: 'wrap' }}>
+      <FlexBox as="ul" sx={{ gap: 1, height: '5rem', flexWrap: 'wrap' }}>
         {isOverflow ? (
           <Text sx={{ color: 'primary' }}>
             # 태그 {tags.length}개 모두 보기

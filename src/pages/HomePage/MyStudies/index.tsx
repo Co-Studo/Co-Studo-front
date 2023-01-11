@@ -1,10 +1,7 @@
-import { Slider } from '@cos-ui/primitives';
-import { FlexBox, Text } from '@cos-ui/react';
+import { FlexBox, Text, Slider } from '@cos-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { css } from 'styled-components';
 
 import { fetchMyStudies } from '@apis/study';
-import Icon from '@components/common/Icon';
 import MyStudyInfoCard from '@pages/HomePage/MyStudies/MyStudyInfoCard';
 
 const MyStudies = () => {
@@ -32,32 +29,8 @@ const MyStudies = () => {
             </Slider.Item>
           ))}
         </Slider.List>
-        <Slider.PrevButton
-          css={css`
-            position: absolute;
-            left: 0;
-            top: calc(50% - 25px);
-            color: ${({ theme }) => theme.palette.primary};
-            &::disabled {
-              color: ${({ theme }) => theme.palette.neutral_2};
-            }
-          `}
-        >
-          <Icon iconName="leftArrow" />
-        </Slider.PrevButton>
-        <Slider.NextButton
-          css={css`
-            position: absolute;
-            right: 50px;
-            top: calc(50% - 25px);
-            color: ${({ theme }) => theme.palette.primary};
-            &::disabled {
-              color: ${({ theme }) => theme.palette.neutral_2};
-            }
-          `}
-        >
-          <Icon iconName="rightArrow" />
-        </Slider.NextButton>
+        <Slider.PrevButton />
+        <Slider.NextButton />
       </Slider>
     </FlexBox>
   );
