@@ -4,6 +4,9 @@ import { css } from 'styled-components';
 
 import { useMe } from '@fbase/auth';
 import UserInfoCircle from '@layouts/Header/UserInfoCircle';
+import zIndex from '@styles/zindex';
+
+export const HEADER_HEIGHT = '6rem';
 
 const Header = () => {
   const user = useMe();
@@ -23,11 +26,12 @@ const Header = () => {
         box-shadow: 0 4px 10px ${({ theme }) => theme.palette.shadow_100},
           0 0 4px ${({ theme }) => theme.palette.shadow_500};
         background-color: ${({ theme }) => theme.palette.white};
-        height: 5.875rem;
+        height: ${HEADER_HEIGHT};
         position: fixed;
         top: 0;
         left: 0;
         padding: 1.5rem 2rem;
+        z-index: ${zIndex.header};
       `}
     >
       <h1
