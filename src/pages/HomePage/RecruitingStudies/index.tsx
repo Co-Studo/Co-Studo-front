@@ -5,7 +5,7 @@ import RecruitingStudyCards from '@pages/HomePage/RecruitingStudies/RecrutingStu
 const RecruitingStudies = () => (
   <BasicTab.Group>
     <FlexBox sx={{ mb: '3rem' }}>
-      <Text variant="sectionTitle" sx={{ mr: 2 }}>
+      <Text variant="sectionTitle" sx={{ mr: 10 }}>
         모집중인 스터디
       </Text>
       <BasicTab.List>

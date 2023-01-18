@@ -1,13 +1,11 @@
 import { FlexBox, Text } from '@cos-ui/react';
 import { useRef } from 'react';
 
+import { Tag } from '@apis/study';
 import { useIsOverflow } from '@hooks/useIsOverflow';
 
 type TagListProps = {
-  tags: {
-    id: number;
-    name: string;
-  }[];
+  tags: Tag[];
 };
 
 const TagList = ({ tags }: TagListProps) => {

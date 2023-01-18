@@ -18,7 +18,7 @@ const RecruitingStudyCards = ({ sortBy }: RecruitingStudyCardsProps) => {
   );
 
   return (
-    <FlexBox as="ul" sx={{ gap: 2, flexWrap: 'wrap' }}>
+    <FlexBox as="ul" sx={{ gap: 10, flexWrap: 'wrap' }}>
       {recruitingStudies?.results.map((study) => (
         <RecruitingStudyCard study={study} />
       ))}
