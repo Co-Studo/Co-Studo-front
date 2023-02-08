@@ -128,11 +128,7 @@ const StudyDetailPage = () => {
                 </Text>
               </dt>
               <dd>
-                <Avatar
-                  src={owner.photoURL}
-                  alt={owner.displayName}
-                  sx={{ width: '4rem', height: '4rem' }}
-                />
+                <Avatar src={owner.photoURL} alt={owner.displayName} />
               </dd>
             </div>
             {participants.length !== 0 && (
@@ -146,13 +142,12 @@ const StudyDetailPage = () => {
                   </Text>
                 </dt>
                 <dd>
-                  <AvatarGroup flexAlign="flex-end" max={3} spacing="small">
+                  <AvatarGroup max={3} spacing="small">
                     {participants.map((member) => (
                       <Avatar
                         key={member.id}
                         src={member.photoURL}
                         alt={member.displayName}
-                        sx={{ width: '4.2rem', height: '4.2rem' }}
                       />
                     ))}
                   </AvatarGroup>

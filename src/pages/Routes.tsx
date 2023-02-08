@@ -8,7 +8,6 @@ import {
 import Layout from '@layouts/Layout';
 import HomePage from '@pages/HomePage';
 import LoginPage from '@pages/LoginPage';
-import OAuthCallbackPage from '@pages/OAuthCallbackPage';
 import StudyCreationPage from '@pages/StudyCreationPage';
 import StudyDetailPage from '@pages/StudyDetailPage';
 
@@ -33,7 +32,6 @@ const Routes = () => (
         </Route>
       </Route>
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/callback" element={<OAuthCallbackPage />} />
     </RouterRoutes>
   </Router>
 );

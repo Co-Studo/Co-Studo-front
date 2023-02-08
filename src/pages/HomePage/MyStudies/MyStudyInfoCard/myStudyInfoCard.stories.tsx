@@ -1,6 +1,6 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { myStudy } from '@mocks/constants/study';
+import { studies } from '@mocks/constants/study';
 
 import MyStudyInfoCard from '.';
 
@@ -8,7 +8,7 @@ export default {
   title: 'Main Page/MyStudyInfoCard',
   component: MyStudyInfoCard,
   args: {
-    study: myStudy[0],
+    study: studies[0],
   },
 } as ComponentMeta<typeof MyStudyInfoCard>;
 
